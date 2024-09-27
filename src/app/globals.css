@@ -1,6 +1,8 @@
 @tailwind base;
 @tailwind components;
 @tailwind utilities;
+@import url('https://fonts.googleapis.com/css2?family=Open+Sans:wght@300;400;600;700;800&display=swap');
+
 
 :root {
   --background: #ffffff;
@@ -9,16 +11,21 @@
 
 @media (prefers-color-scheme: dark) {
   :root {
-    --background: #0a0a0a;
-    --foreground: #ededed;
+    --background: #ffffff;
+    --foreground: #000000;
   }
 }
 
 body {
   color: var(--foreground);
   background: var(--background);
-  font-family: Arial, Helvetica, sans-serif;
+  font-family: "Open Sans", sans-serif;
 }
+
+.bg-login-gradient {
+  background: linear-gradient(45deg, #007399 8%, #0099CC 38%, #33CCFF 100%);
+}
+
 
 @layer utilities {
   .text-balance {
