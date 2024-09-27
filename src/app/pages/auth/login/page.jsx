@@ -4,12 +4,12 @@ import Image from 'next/image';
 
 const Login = () => {
   return (
-    <body className='bg-lightbg min-h-screen flex items-center justify-center'>
-        <div className='container w-2/3 h-96 bg-white flex items-start'>
-            <div className="logside w-2/3 ">
-                <h1 className='font-bold text-2xl'>Login</h1>
+    <div className='bg-lightbg min-h-screen flex items-center justify-center'>
+        <div className='container w-2/3 h-96 bg-white flex items-start '>
+            <div className="logside w-2/3 p-8">
+                <h1 className='font-bold text-2xl mb-4'>Login</h1>
                 <form action="" method="post">
-                  <label htmlFor="email" className='border block mb-4'>
+                  <label htmlFor="email" className='block mb-4'>
                     Email
                     <input type="email" name="email" id="email" placeholder='email' className='border p-2 w-full mt-2'/>
                   </label>
@@ -23,9 +23,8 @@ const Login = () => {
                 <img src="/images/Logo-White.svg" alt="Refinds Logo" className='w-2/5'/>
             </div>
         </div>
-    </body>
-
+    </div>
   )
 }
 
-export default Login
+export default Login;
