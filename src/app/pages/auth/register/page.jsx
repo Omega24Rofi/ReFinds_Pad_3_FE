@@ -81,10 +81,10 @@ const Register = () => {
             </label>
 
             <label htmlFor="passwordConfirmation" className="block mb-4">
-              Password
+              Konfirmasi password
               <input
                 type="password"
-                placeholder="setPasswordConfirmation"
+                placeholder="Konfirmasi password"
                 className="border p-2 w-full mt-2"
                 id="passwordConfirmation"
                 value={passwordConfirmation}
