@@ -2,6 +2,7 @@
 import React from "react";
 import "../../../globals.css";
 import Image from "next/image";
+import Link from "next/link";
 
 // be
 import { useState } from "react";
@@ -34,30 +35,28 @@ const Login = () => {
   };
 
   return (
-    <div className="bg-lightbg min-h-screen flex items-center justify-center">
-      <div className="container w-2/3 h-96 bg-white flex items-start ">
+    <div className="bg-lightbg min-h-screen h-screen flex items-center justify-center w-full">
+      <div className="container w-2/3 h-3/4 bg-white flex rounded-3xl shadow-2xl">
         <div className="logside w-2/3 p-8">
-          <h1 className="font-bold text-2xl mb-4">Login</h1>
-          <form onSubmit={handleSubmit}>
-            <label htmlFor="email" className="block mb-4">
+          <h1 className="font-bold text-2xl mb-4 ml-7">Login</h1>
+          <form onSubmit={handleSubmit} className="w-full flex flex-col justify-center items-center">
+            <label htmlFor="email" className="block mb-4 w-[90%]">
               Email
               <input
                 type="email"
                 id="email"
-                placeholder="email"
-                className="border p-2 w-full mt-2"
+                className="border-2 p-2 w-full mt-2 rounded-full"
                 value={email}
                 onChange={(e) => setEmail(e.target.value)}
                 required
               />
             </label>
-            <label htmlFor="password" className="block mb-4">
+            <label htmlFor="password" className="block mb-4 w-[90%]">
               Password
               <input
                 type="password"
                 id="password"
-                placeholder="password"
-                className="border p-2 w-full mt-2"
+                className="border-2 p-2 w-full mt-2 rounded-full"
                 value={password}
                 onChange={(e) => setPassword(e.target.value)}
                 required
@@ -67,16 +66,24 @@ const Login = () => {
             {/* tombol login */}
             <button
               type="submit"
-              className="mt-4 bg-blue-500 text-white py-2 px-4 rounded"
-            >
+              className="my-4 bg-mainblue text-white py-2 px-4 rounded-xl w-1/6">
               Login
             </button>
+
+            <p>
+              Belum punya akun? Register{' '}
+              <Link href="/auth/register" className="text-blue-600">
+                Yuk!
+              </Link>
+            </p>
+
             <br />
             {message && <p>{message}</p>}
             {error && <p>{error}</p>}
+            
           </form>
         </div>
-        <div className="colorcard w-1/3 bg-login-gradient h-full flex items-center justify-center">
+        <div className="colorcard w-1/3 bg-login-gradient flex items-center justify-center rounded-3xl">
           <img
             src="/images/Logo-White.svg"
             alt="Refinds Logo"

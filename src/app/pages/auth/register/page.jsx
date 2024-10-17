@@ -7,7 +7,7 @@ import Image from "next/image";
 //
 import { useState } from "react";
 import axios from "axios";
-// import "bootstrap/dist/css/bootstrap.min.css";
+import Link from "next/link";
 
 const Register = () => {
   const [namaAkun, setNamaAkun] = useState("");
@@ -49,8 +49,8 @@ const Register = () => {
   };
 
   return (
-    <div className="bg-lightbg min-h-screen flex items-center justify-center">
-      <div className="container w-2/3 h-auto bg-white flex items-start">
+    <div className="bg-lightbg min-h-screen h-screen flex items-center justify-center">
+      <div className="container w-2/3  h-[90%] bg-white flex items-start rounded-3xl shadow-2xl">
         <div className="logside w-2/3 p-8">
           <h1 className="font-bold text-2xl mb-4">Register</h1>
           <form onSubmit={handleSubmit}>
@@ -59,7 +59,7 @@ const Register = () => {
               <input
                 type="email"
                 placeholder="email"
-                className="border p-2 w-full mt-2"
+                className="border p-2 w-full mt-2 rounded-full"
                 id="email"
                 value={email}
                 onChange={(e) => setEmail(e.target.value)}
@@ -67,12 +67,12 @@ const Register = () => {
               />
             </label>
 
-            <label htmlFor="password" className="block mb-4">
+            <label htmlFor="password" className="block mb-4 ">
               Password
               <input
                 type="password"
                 placeholder="password"
-                className="border p-2 w-full mt-2"
+                className="border p-2 w-full mt-2 rounded-full"
                 id="password"
                 value={password}
                 onChange={(e) => setPassword(e.target.value)}
@@ -80,12 +80,12 @@ const Register = () => {
               />
             </label>
 
-            <label htmlFor="passwordConfirmation" className="block mb-4">
+            <label htmlFor="passwordConfirmation" className="block mb-4 ">
               Konfirmasi password
               <input
                 type="password"
                 placeholder="Konfirmasi password"
-                className="border p-2 w-full mt-2"
+                className="border p-2 w-full mt-2 rounded-full"
                 id="passwordConfirmation"
                 value={passwordConfirmation}
                 onChange={(e) => setPasswordConfirmation(e.target.value)}
@@ -98,7 +98,7 @@ const Register = () => {
               <input
                 type="text"
                 placeholder="username"
-                className="border p-2 w-full mt-2"
+                className="border p-2 w-full mt-2 rounded-full"
                 id="namaAkun"
                 value={namaAkun}
                 onChange={(e) => setNamaAkun(e.target.value)}
@@ -110,7 +110,7 @@ const Register = () => {
               <input
                 type="text"
                 placeholder="name"
-                className="border p-2 w-full mt-2"
+                className="border p-2 w-full mt-2 rounded-full"
                 id="namaAsliUser"
                 value={namaAsliUser}
                 onChange={(e) => setNamaAsliUser(e.target.value)}
@@ -119,24 +119,33 @@ const Register = () => {
             </label>
 
             {/* tombol register */}
+            <div className="w-full flex justify-center">
             <button
               type="submit"
-              className="mt-4 bg-blue-500 text-white py-2 px-4 rounded"
-            >
+              className="my-2 bg-mainblue text-white py-2 px-6 rounded-xl">
               Register
             </button>
+            </div>
+            <p className="text-center">
+              Sudah punya akun? Login{' '}
+              <Link href="/auth/login" className="text-blue-600">
+                Yuk!
+              </Link>
+            </p>
+            
             <br />
             {message && <p>{message}</p>}
             {error && <p>{error}</p>}
           </form>
         </div>
-        <div className="colorcard w-1/3 bg-login-gradient h-full flex items-center justify-center">
-          <img
+        <div className="colorcard w-1/3 h-full bg-login-gradient rounded-3xl p-0 flex justify-center align-middle">
+            <img
             src="/images/Logo-White.svg"
             alt="Refinds Logo"
-            className="w-2/5"
+            className="w-2/5 h-auto"
           />
         </div>
+
         
       </div>
       
