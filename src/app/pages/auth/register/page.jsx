@@ -35,6 +35,7 @@ const Register = () => {
 
       // mengambil respons pesan dari BE
       setMessage(response.data.message); // Set success message
+      
       setError(""); // Reset error
     } catch (err) {
       if (err.response && err.response.data) {

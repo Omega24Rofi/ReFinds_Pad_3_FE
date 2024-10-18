@@ -1,10 +1,6 @@
 "use client";
-import React from "react";
+import React, { useState } from "react";
 import "../../../globals.css";
-import Image from "next/image";
-
-// be
-import { useState } from "react";
 import axios from "axios";
 
 const Login = () => {
@@ -15,27 +11,40 @@ const Login = () => {
 
   const handleSubmit = async (e) => {
     e.preventDefault();
-
+    console.log("Form submitted");
+  
     try {
+      console.log("TRY");
       const response = await axios.post("http://localhost:8000/api/login", {
         email,
-        password: password,
+        password,
       });
-
-      // Save token in localStorage
-      localStorage.setItem("token", response.data.token);
-
-      setMessage("Login successful");
-      setError("");
+  
+      // Check if the response contains a token
+      if (response.data.token) {
+        localStorage.setItem("token", response.data.token);
+        setMessage("Login successful");
+        setError("");
+      } else {
+        setError("Login failed: Invalid credentials");
+        setMessage("");
+      }
     } catch (err) {
-      setError("Login failed");
+      if (err.response && err.response.data && err.response.data.message) {
+        setError(err.response.data.message); // Display backend error message
+      } else {
+        setError("Login failed"); // Fallback error message
+      }
       setMessage("");
+      console.error("Login error:", err); // Log the error details
     }
+  
+  
   };
 
   return (
     <div className="bg-lightbg min-h-screen flex items-center justify-center">
-      <div className="container w-2/3 h-96 bg-white flex items-start ">
+      <div className="container w-2/3 h-96 bg-white flex items-start">
         <div className="logside w-2/3 p-8">
           <h1 className="font-bold text-2xl mb-4">Login</h1>
           <form onSubmit={handleSubmit}>
@@ -64,7 +73,6 @@ const Login = () => {
               />
             </label>
 
-            {/* tombol login */}
             <button
               type="submit"
               className="mt-4 bg-blue-500 text-white py-2 px-4 rounded"
