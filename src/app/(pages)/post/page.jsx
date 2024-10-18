@@ -2,7 +2,6 @@
 
 import { useEffect, useState } from "react";
 import axios from "axios";
-import "bootstrap/dist/css/bootstrap.min.css"; // Import Bootstrap CSS
 import withAuth from "@/app/component/withAuth";
 import Image from "next/image";
 

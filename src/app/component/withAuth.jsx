@@ -13,7 +13,7 @@ const withAuth = (WrappedComponent) => {
 
       // If token doesn't exist, redirect to login page
       if (!token) {
-        router.push("/pages/auth/login");
+        router.push("/login");
         return;
       }
 
@@ -31,7 +31,7 @@ const withAuth = (WrappedComponent) => {
           // console.error("Token verification failed:", error);
           // If the token is invalid or expired, remove it and redirect to login
           localStorage.removeItem("token");
-          router.push("/pages/auth/login");
+          // router.push("/login");
         }
       };
 

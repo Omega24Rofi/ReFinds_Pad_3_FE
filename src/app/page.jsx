@@ -19,9 +19,9 @@ const Homepage = () => {
       <ul>
         <li><Link href={"/login"}>Login</Link></li>
         <li><Link href={"/register"}>Register</Link></li>
-        <li><Link href={"/pages/post"}>POST</Link></li>
-        <li><Link href={"/pages/display"}>DISPLAY</Link></li>
-        <li><Link href={"/pages/user_data"}>USER DATA</Link></li>
+        <li><Link href={"/post"}>POST</Link></li>
+        <li><Link href={"/display"}>DISPLAY</Link></li>
+        <li><Link href={"/user_data"}>USER DATA</Link></li>
         <li><button onClick={logout}>Logout</button></li>
       </ul>
     </div>

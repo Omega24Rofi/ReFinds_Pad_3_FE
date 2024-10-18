@@ -5,8 +5,6 @@ import Image from "next/image";
 import Link from "next/link";
 
 // be
-import { useState } from "react";
-
 import axios from "axios";
 
 const Login = () => {
