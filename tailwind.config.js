@@ -11,7 +11,8 @@ module.exports = {
         background: "var(--background)",
         foreground: "var(--foreground)",
         lightbg:"#EBF6F6",
-        mainblue:"#0D96C4"
+        mainblue:"#0D96C4",
+        lightbluemain:"#AFDAEB"
       }
     },
   },

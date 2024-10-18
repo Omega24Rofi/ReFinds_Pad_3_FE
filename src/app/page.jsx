@@ -1,15 +1,17 @@
 import React from 'react'
 import Link from 'next/link'
+import header from './components/Header';
 
 const Homepage = () => {
   return (
-    <div>
+      <div>
       <h1>Homepage</h1>
       <ul>
-        <li><Link href={"/pages/auth/login"}>Login</Link></li>
-        <li><Link href={"/pages/auth/register"}>Register</Link></li>
+        <li><Link href={"/login"}>Login</Link></li>
+        <li><Link href={"/register"}>Register</Link></li>
       </ul>
     </div>
+    
     
   )
 };
