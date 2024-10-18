@@ -1,11 +1,12 @@
 "use client";
-import React from "react";
+import React, { useState } from "react";
 import "../../../globals.css";
 import Image from "next/image";
 import Link from "next/link";
 
 // be
 import { useState } from "react";
+
 import axios from "axios";
 
 const Login = () => {
@@ -16,22 +17,35 @@ const Login = () => {
 
   const handleSubmit = async (e) => {
     e.preventDefault();
-
+    console.log("Form submitted");
+  
     try {
+      console.log("TRY");
       const response = await axios.post("http://localhost:8000/api/login", {
         email,
-        password: password,
+        password,
       });
-
-      // Save token in localStorage
-      localStorage.setItem("token", response.data.token);
-
-      setMessage("Login successful");
-      setError("");
+  
+      // Check if the response contains a token
+      if (response.data.token) {
+        localStorage.setItem("token", response.data.token);
+        setMessage("Login successful");
+        setError("");
+      } else {
+        setError("Login failed: Invalid credentials");
+        setMessage("");
+      }
     } catch (err) {
-      setError("Login failed");
+      if (err.response && err.response.data && err.response.data.message) {
+        setError(err.response.data.message); // Display backend error message
+      } else {
+        setError("Login failed"); // Fallback error message
+      }
       setMessage("");
+      console.error("Login error:", err); // Log the error details
     }
+  
+  
   };
 
   return (
@@ -63,7 +77,6 @@ const Login = () => {
               />
             </label>
 
-            {/* tombol login */}
             <button
               type="submit"
               className="my-4 bg-mainblue text-white py-2 px-4 rounded-xl w-1/6">
