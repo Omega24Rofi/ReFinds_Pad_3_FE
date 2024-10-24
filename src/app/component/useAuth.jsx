@@ -3,7 +3,9 @@ import axios from 'axios';
 import { useRouter } from 'next/navigation';
 
 /**
- * Fungsi ini berguna untuk menampilkan komponen tertentu berdasarkan User sudah login atau belum
+ * Hooks ini memiliki dua fungsi
+ *    1. untuk menampilkan komponen tertentu berdasarkan User sudah login atau belum
+ *    2. untuk mendapatkan userData yang sudah login
  * token akan di cek 
  * jika ada dan valid maka komponen akan ditampilkan
  * jika tidak ada atau tidak valid
@@ -20,9 +22,8 @@ const useAuth = () => {
   userData berfungsi sebagai tempat menyimpan data pengguna.
   setUserData adalah fungsi yang dipanggil untuk mengubah nilai userData.
    */
-  const [user, setUser] = useState(null);  // Menyimpan data user
+  const [userData, setUserData] = useState(null);  // Menyimpan data user
   const [loading, setLoading] = useState(true);  // Menyimpan status loading
-  const router = useRouter();
 
   useEffect(() => {
     const token = localStorage.getItem('token');
@@ -41,7 +42,7 @@ const useAuth = () => {
             Authorization: `Bearer ${token}`,
           },
         });
-        setUser(response.data);  // Set user jika token valid
+        setUserData(response.data);  // Set user jika token valid
       } catch (error) {
         // Jika token tidak valid, hapus token
         localStorage.removeItem('token');
@@ -53,15 +54,15 @@ const useAuth = () => {
     };
 
     fetchUser();
-  }, [router]);
+  }, []);
 //   disini berarti antara data pengguna (ada atau tidak ada) dan loading = false
-  return { user, loading };  // Kembalikan status user dan loading
+  return { userData, loading };  // Kembalikan status user dan loading
 };
 
 export default useAuth;
 
 
-// contoh penggunaan
+/////// contoh penggunaan 1
 // import useAuth from '@/app/hooks/useAuth';
 
 // const HalamanX = () => {
@@ -91,3 +92,9 @@ export default useAuth;
 // };
 
 // export default HalamanX;
+
+
+//////// contoh penggunaan 2
+
+//   const { userData, loading } = useAuth();
+

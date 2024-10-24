@@ -16,8 +16,10 @@ Param:
 */
 
 const withLevel = (WrappedComponent, requiredLevel, shouldRender) => {
+  // console.log("WITH_LEVEL");
   const WithLevelComponent = (props) => {
     const router = useRouter();
+
     const [userData, setUserData] = useState(null); // State to hold user data
 
     useEffect(() => {
@@ -38,7 +40,10 @@ const withLevel = (WrappedComponent, requiredLevel, shouldRender) => {
             },
           });
 
-          const userLevel = response.data.level;
+          // console.log('WITH LEVEL RESPONSE', response.data);
+
+          const userLevel = response.data.user.level_account;
+          console.log("LEVEL", userLevel);
 
           // Set user data
           setUserData(response.data);

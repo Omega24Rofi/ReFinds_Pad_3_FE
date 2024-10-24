@@ -3,8 +3,11 @@ import { useEffect, useState } from "react";
 import { useRouter } from "next/navigation"; // Use Next.js's router for client-side navigation
 import axios from "axios";
 
+
+// Berfungi untuk merender page, jika user sudah login
+
 const withAuth = (WrappedComponent) => {
-  const WithAuthComponent = (props) => {
+  const WithAuthComponent = () => {
     const router = useRouter();
     const [userData, setUserData] = useState(null); // State to hold user data
 
@@ -39,7 +42,7 @@ const withAuth = (WrappedComponent) => {
     }, [router]);
 
     // Pass userData as a prop to the wrapped component// prob not safe
-    return <WrappedComponent {...props} userData={userData} />;
+    return <WrappedComponent userData={userData} />;
   };
 
   // Add a display name for easier debugging

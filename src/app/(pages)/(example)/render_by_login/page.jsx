@@ -1,11 +1,11 @@
 "use client";
 
-import useAuth from '@/app/hooks/useAuth';
+import useAuth from '@/app/component/useAuth';
 
 const HalamanX = () => {
 
   // object destructuring , mengambil parameter user dan parameter loading dari hasil menjalankan fungsi useAuth
-  const { user, loading } = useAuth();
+  const { userData, loading } = useAuth();
 
   if (loading) {
     return <p>Loading...</p>;  // Menampilkan loading saat data masih diambil
@@ -18,16 +18,23 @@ const HalamanX = () => {
       {/* Contoh penggunaan */}
 
         {/* Jika user ada, tampilkan foto profil */}
-        {user ? (
+        {userData ? (
           <div>
-            <p>Selamat datang, {user.nama_akun}!</p>
-            <img src={user.profile_picture_url} alt="Foto Profil" />
+            <p>Selamat datang, {userData.nama_akun}!</p>
+            <p>ANDA SUDAH LOGIN</p>
+            <img src={userData.profile_picture_url} alt="Foto Profil" />
           </div>
         ) : (
+
           // Jika user tidak ada, tampilkan tombol login
-          <button onClick={() => window.location.href = '/login'}>
+          <div>
+            <p>ANDA BELUM LOGIN</p>
+            <button onClick={() => window.location.href = '/login'}>
             Login
           </button>
+          <p></p>
+
+          </div>
         )}
         
     </div>
