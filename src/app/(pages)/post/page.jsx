@@ -4,6 +4,7 @@ import { useEffect, useState } from "react";
 import axios from "axios";
 import withAuth from "@/app/component/withAuth";
 import Image from "next/image";
+import Link from "next/link";
 
 const SubmitProductPage = () => {
   // State to store form input values
@@ -139,7 +140,12 @@ const SubmitProductPage = () => {
   }
 
   return (
-    <div className="container mt-4">
+    <div>
+      <header className="w-full max-h-fit h-fit py-5 px-10 bg-lightbluemain flex flex-row align-bottom">
+        <img src="/icons/left_arrow.svg" alt="back_arrow" className="w-[1:1] w-6 h-full"/>
+        <p className="h-fit ml-4 font-bold text-center align-middle block">Jual Barang</p>
+      </header>
+      <div className="container mt-4">
       <h1>Submit Product</h1>
       <form onSubmit={handleSubmit}>
         {/* Nama Produk */}
@@ -328,6 +334,8 @@ const SubmitProductPage = () => {
       {message && <div className="alert alert-success mt-3">{message}</div>}
       {error && <div className="alert alert-danger mt-3">{error}</div>}
     </div>
+    </div>
+    
   );
 };
 

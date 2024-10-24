@@ -3,11 +3,14 @@ import React, { useState } from "react";
 import "../../../globals.css";
 import Image from "next/image";
 import Link from "next/link";
+import { useRouter } from "next/navigation";
 
 // be
 import axios from "axios";
+import { redirect } from "next/dist/server/api-utils";
 
 const Login = () => {
+  const router = useRouter();
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
   const [error, setError] = useState("");
@@ -29,6 +32,8 @@ const Login = () => {
         localStorage.setItem("token", response.data.token);
         setMessage("Login successful");
         setError("");
+        router.push("/");
+      
       } else {
         setError("Login failed: Invalid credentials");
         setMessage("");
