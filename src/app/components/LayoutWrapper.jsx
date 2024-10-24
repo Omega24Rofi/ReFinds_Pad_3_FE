@@ -7,7 +7,7 @@ export default function LayoutWrapper({ children }) {
   const pathname = usePathname();
 
   // List of routes where the layout should be excluded
-  const noLayoutRoutes = ['/login', '/register'];
+  const noLayoutRoutes = ['/login', '/register', '/post'];
 
   // Conditional check to exclude layout
   if (noLayoutRoutes.includes(pathname)) {

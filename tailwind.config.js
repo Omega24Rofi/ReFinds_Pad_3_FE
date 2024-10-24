@@ -12,7 +12,9 @@ module.exports = {
         foreground: "var(--foreground)",
         lightbg:"#EBF6F6",
         mainblue:"#0D96C4",
-        lightbluemain:"#AFDAEB"
+        lightbluemain:"#AFDAEB",
+        blue_btn:"#0D96C4",
+        blue_btn_hover: "#0C6886"
       }
     },
   },
