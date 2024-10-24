@@ -8,7 +8,7 @@ const logout = () => {
   // clear the token
   localStorage.removeItem('token');
   // redirect to login page
-  window.location.href = '/pages/auth/login';
+  window.location.href = '/login';
 };
 
 
@@ -22,6 +22,7 @@ const Homepage = () => {
         <li><Link href={"/post"}>POST</Link></li>
         <li><Link href={"/display"}>DISPLAY</Link></li>
         <li><Link href={"/user_data"}>USER DATA</Link></li>
+        <li><Link href={"/admin_acc"}>ADMIN ACC</Link></li>
         <li><button onClick={logout}>Logout</button></li>
       </ul>
     </div>
