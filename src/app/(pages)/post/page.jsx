@@ -142,198 +142,203 @@ const SubmitProductPage = () => {
   return (
     <div>
       <header className="w-full max-h-fit h-fit py-5 px-10 bg-lightbluemain flex flex-row align-bottom">
-        <img src="/icons/left_arrow.svg" alt="back_arrow" className="w-[1:1] w-6 h-full"/>
+        <Link href={'/'}>
+          <img src="/icons/left_arrow.svg" alt="back_arrow" className="w-[1:1] w-6 h-full"/>
+        </Link>
         <p className="h-fit ml-4 font-bold text-center align-middle block">Jual Barang</p>
       </header>
-      <div className="container mt-4">
-      <h1>Submit Product</h1>
-      <form onSubmit={handleSubmit}>
-        {/* Nama Produk */}
-        <div className="mb-3">
-          <label htmlFor="nama_produk" className="form-label">
-            Nama Produk:
-          </label>
-          <input
-            type="text"
-            className="form-control"
-            id="nama_produk"
-            name="nama_produk"
-            maxLength="100"
-            value={formData.nama_produk}
-            onChange={handleChange}
-            required
-          />
-        </div>
+      <div className="flex justify-center align-middle">
+        <div className="container mt-4 flex justify-center align-middle ">
+          <form onSubmit={handleSubmit} className="bg-blue_sl w-[90%] p-4 rounded-2xl">
+            {/* Nama Produk */}
+            <p className="font-bold text-lg mt-4">Detail Barang</p>
+            <div className="mb-4 grid grid-cols-3 gap-2 items-center">
+              <label htmlFor="nama_produk" className="form-label ">
+                Nama Produk:
+              </label>
+              <input
+                type="text"
+                className="form-control col-span-1 border rounded-lg p-1 focus:outline-none focus:ring-2 focus:ring-blue-400"
+                id="nama_produk"
+                name="nama_produk"
+                maxLength="100"
+                value={formData.nama_produk}
+                onChange={handleChange}
+                required
+              />
+            </div>
 
-        {/* Harga */}
-        <div className="mb-3">
-          <label htmlFor="harga" className="form-label">
-            Harga (greater than 0):
-          </label>
-          <input
-            type="number"
-            step="0.01"
-            className="form-control"
-            id="harga"
-            name="harga"
-            value={formData.harga}
-            onChange={handleChange}
-            min="0.01"
-            required
-          />
-        </div>
+            {/* Harga */}
+            <div className="mb-4 grid grid-cols-3 gap-2 items-center">
+              <label htmlFor="harga" className="form-label  mr-10">
+                Harga (greater than 0):
+              </label>
+              <input
+                type="number"
+                step="0.01"
+                className="form-control col-span-1 border rounded-lg p-1 focus:outline-none focus:ring-2 focus:ring-blue-400"
+                id="harga"
+                name="harga"
+                value={formData.harga}
+                onChange={handleChange}
+                min="0.01"
+                required
+              />
+            </div>
 
-        {/* Kategori */}
-        <div className="mb-3">
-          <label htmlFor="id_subkategori" className="form-label">
-            Kategori:
-          </label>
-          <input
-            type="number"
-            className="form-control"
-            id="id_subkategori"
-            name="id_subkategori"
-            value={formData.id_subkategori}
-            onChange={handleChange}
-            required
-          />
-        </div>
+            {/* Kategori */}
+            <div className="mb-4 grid grid-cols-3 gap-2 items-center">
+              <label htmlFor="id_subkategori" className="form-label">
+                Kategori:
+              </label>
+              <input
+                type="number"
+                className="form-control col-span-1 border rounded-lg p-1 focus:outline-none focus:ring-2 focus:ring-blue-400"
+                id="id_subkategori"
+                name="id_subkategori"
+                value={formData.id_subkategori}
+                onChange={handleChange}
+                required
+              />
+            </div>
 
-        {/* Deskripsi */}
-        <div className="mb-3">
-          <label htmlFor="deskripsi" className="form-label">
-            Deskripsi (optional):
-          </label>
-          <input
-            type="text"
-            className="form-control"
-            id="deskripsi"
-            name="deskripsi"
-            value={formData.deskripsi}
-            onChange={handleChange}
-          />
-        </div>
+            {/* Deskripsi */}
+            <div className="mb-4 grid grid-cols-3 gap-2 items-center">
+              <label htmlFor="deskripsi" className="form-label">
+                Deskripsi :
+              </label>
+              <textarea 
+                rows={3}
+                className="form-control col-span-1 border rounded-lg p-1 focus:outline-none focus:ring-2 focus:ring-blue-400"
+                id="deskripsi"
+                name="deskripsi"
+                value={formData.deskripsi}
+                onChange={handleChange}
+                required></textarea>
+            </div>
 
-        {/* Alamat */}
-        <div className="mb-3">
-          <label htmlFor="id_alamat" className="form-label">
-            Alamat:
-          </label>
-          <select
-            className="form-control"
-            id="id_alamat"
-            name="id_alamat"
-            value={formData.id_alamat}
-            onChange={handleChange}
-            required
-          >
-            <option value="" disabled>
-              Pilih alamat
-            </option>
-
-            {userData &&
-            userData[0] &&
-            userData[0].alamat &&
-            userData[0].alamat.length > 0 ? (
-              // Jika alamat ada maka diiterasi
-              userData[0].alamat.map((alamat) => (
-                <option key={alamat.id_alamat} value={alamat.id_alamat}>
-                  {alamat.nama_lokasi}, Kec. {alamat.kecamatan}, Kota/Kab.{" "}
-                  {alamat.kota_kabupaten}, Prov. {alamat.provinsi}, Kode Pos.{" "}
-                  {alamat.kode_pos}
+            {/* Alamat */}
+            <div className="mb-4 grid grid-cols-3 gap-2 items-center">
+              <label htmlFor="id_alamat" className="form-label">
+                Alamat:
+              </label>
+              <select
+                className="form-control col-span-1 border rounded-lg p-1 focus:outline-none focus:ring-2 focus:ring-blue-400"
+                id="id_alamat"
+                name="id_alamat"
+                value={formData.id_alamat}
+                onChange={handleChange}
+                required
+              >
+                <option value="" disabled>
+                  Pilih alamat
                 </option>
-              ))
-            ) : (
-              // Jika tidak ada maka:
-              <option>No address available</option>
-            )}
-          </select>
+
+                {userData &&
+                userData[0] &&
+                userData[0].alamat &&
+                userData[0].alamat.length > 0 ? (
+                  // Jika alamat ada maka diiterasi
+                  userData[0].alamat.map((alamat) => (
+                    <option key={alamat.id_alamat} value={alamat.id_alamat}>
+                      {alamat.nama_lokasi}, Kec. {alamat.kecamatan}, Kota/Kab.{" "}
+                      {alamat.kota_kabupaten}, Prov. {alamat.provinsi}, Kode Pos.{" "}
+                      {alamat.kode_pos}
+                    </option>
+                  ))
+                ) : (
+                  // Jika tidak ada maka:
+                  <option>No address available</option>
+                )}
+              </select>
+            </div>
+
+            {/* Gambar Produk 1 */}
+            <div>
+              <div className="mb-3">
+                <label htmlFor="gambar_produk1" className="form-label">
+                  Gambar Produk 1:
+                </label>
+                <input
+                  type="file"
+                  className="form-control"
+                  id="gambar_produk1"
+                  name="gambar_produk1"
+                  onChange={handleChange}
+                  required
+                />
+
+                {/* prev 1 */}
+                {formData.gambar_produk1_preview ? (
+                  <Image
+                    src={formData.gambar_produk1_preview}
+                    alt="Gambar Produk 1"
+                    width={200}
+                    height={200}
+                    style={{ marginTop: "10px" }}
+                  />
+                ) : null}
+              </div>
+
+              {/* Gambar Produk 2 */}
+              <div className="mb-3">
+                <label htmlFor="gambar_produk2" className="form-label">
+                  Gambar Produk 2 (optional):
+                </label>
+                <input
+                  type="file"
+                  className="form-control"
+                  id="gambar_produk2"
+                  name="gambar_produk2"
+                  onChange={handleChange}
+                />
+                {formData.gambar_produk2_preview && (
+                  <Image
+                    src={formData.gambar_produk2_preview}
+                    alt="Gambar Produk 2"
+                    width={200}
+                    height={200}
+                    style={{ marginTop: "10px" }}
+                  />
+                )}
+              </div>
+
+              {/* Gambar Produk 3 */}
+              <div className="mb-3">
+                <label htmlFor="gambar_produk3" className="form-label">
+                  Gambar Produk 3 (optional):
+                </label>
+                <input
+                  type="file"
+                  className="form-control"
+                  id="gambar_produk3"
+                  name="gambar_produk3"
+                  onChange={handleChange}
+                />
+                {formData.gambar_produk3_preview && (
+                  <Image
+                    src={formData.gambar_produk3_preview}
+                    alt="Gambar Produk 3"
+                    width={200}
+                    height={200}
+                    style={{ marginTop: "10px" }}
+                  />
+                )}
+              </div>
+            </div>
+
+            {/* Submit Button */}
+            <button type="submit" className="btn bg-blue_btn py-1.5 px-6 rounded-lg font-bold text-white">
+              Kirim
+            </button>
+          </form>
+
+        {/* Display messages */}
+        {message && <div className="alert alert-success mt-3">{message}</div>}
+        {error && <div className="alert alert-danger mt-3">{error}</div>}
         </div>
+      </div>
 
-        {/* Gambar Produk 1 */}
-        <div>
-          <div className="mb-3">
-            <label htmlFor="gambar_produk1" className="form-label">
-              Gambar Produk 1:
-            </label>
-            <input
-              type="file"
-              className="form-control"
-              id="gambar_produk1"
-              name="gambar_produk1"
-              onChange={handleChange}
-              required
-            />
-
-            {/* prev 1 */}
-            {formData.gambar_produk1_preview ? (
-              <Image
-                src={formData.gambar_produk1_preview}
-                alt="Gambar Produk 1"
-                width={200}
-                height={200}
-                style={{ marginTop: "10px" }}
-              />
-            ) : null}
-          </div>
-
-          {/* Gambar Produk 2 */}
-          <div className="mb-3">
-            <label htmlFor="gambar_produk2" className="form-label">
-              Gambar Produk 2 (optional):
-            </label>
-            <input
-              type="file"
-              className="form-control"
-              id="gambar_produk2"
-              name="gambar_produk2"
-              onChange={handleChange}
-            />
-            {formData.gambar_produk2_preview && (
-              <Image
-                src={formData.gambar_produk2_preview}
-                alt="Gambar Produk 2"
-                width={200}
-                height={200}
-                style={{ marginTop: "10px" }}
-              />
-            )}
-          </div>
-
-          {/* Gambar Produk 3 */}
-          <div className="mb-3">
-            <label htmlFor="gambar_produk3" className="form-label">
-              Gambar Produk 3 (optional):
-            </label>
-            <input
-              type="file"
-              className="form-control"
-              id="gambar_produk3"
-              name="gambar_produk3"
-              onChange={handleChange}
-            />
-            {formData.gambar_produk3_preview && (
-              <Image
-                src={formData.gambar_produk3_preview}
-                alt="Gambar Produk 3"
-                width={200}
-                height={200}
-                style={{ marginTop: "10px" }}
-              />
-            )}
-          </div>
-        </div>
-
-        {/* Submit Button */}
-        <button type="submit" className="btn btn-primary">
-          Submit
-        </button>
-      </form>
-
-      {/* Display messages */}
-      {message && <div className="alert alert-success mt-3">{message}</div>}
-      {error && <div className="alert alert-danger mt-3">{error}</div>}
-    </div>
     </div>
     
   );
