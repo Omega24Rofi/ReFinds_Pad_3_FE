@@ -14,7 +14,8 @@ module.exports = {
         mainblue:"#0D96C4",
         lightbluemain:"#AFDAEB",
         blue_btn:"#0D96C4",
-        blue_btn_hover: "#0C6886"
+        blue_btn_hover: "#0C6886",
+        blue_sl : "#DEF1F8"
       }
     },
   },
