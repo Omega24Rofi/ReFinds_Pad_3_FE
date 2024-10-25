@@ -55,9 +55,9 @@ const ACCProduk = () => {
   };
 
   // Tampilkan loading saat produk atau data user sedang diambil
-  if (loading || loadingProduk) {
-    return <div>Loading...</div>;
-  }
+  // if (loading || loadingProduk) {
+  //   return <div>Loading...</div>;
+  // }
 
 
 
@@ -83,6 +83,7 @@ const ACCProduk = () => {
             >
               Accept
             </button>
+          <span>&nbsp;&nbsp;</span>
             
 
             {/* Tombol reject */}
