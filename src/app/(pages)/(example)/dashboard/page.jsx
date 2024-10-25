@@ -8,7 +8,8 @@ const ProdukList = () => {
   const { kategoriData } = useKategori();
   console.log("KATEGORI_DATA:", kategoriData);
 
-  ////////////// USE EFFECT UNTUK FETCHING USER DATA
+  
+  ///////////////////// USE EFFECT UNTUK FETCHING USER DATA
   const [userData, setUserData] = useState(null);
   // useEffect untuk mengambil userData
   useEffect(() => {
@@ -32,7 +33,8 @@ const ProdukList = () => {
       });
   }, []); // useEffect ini hanya akan dijalankan sekali saat komponen pertama kali di-mount.
 
-  ////////////// USE EFFECT UNTUK FETCHING PRODUK DAN GAMBAR PRODUK, akan dijalankan setiap selectedKategori berubah nilainya
+
+  ///////////////////// USE EFFECT UNTUK FETCHING PRODUK DAN GAMBAR PRODUK, akan dijalankan setiap selectedKategori berubah nilainya
   const [produks, setProduks] = useState([]); // State untuk menyimpan data produk
   const [loading, setLoading] = useState(true); // State untuk loading
 
@@ -73,7 +75,7 @@ const ProdukList = () => {
     fetchProduks(); // Panggil fungsi untuk mengambil data produk
   }, [selectedKategori]);
 
-  ///////////// HANDLECHANGE HANDLECHANGE HANDLECHANGE
+  ///////////////////// HANDLECHANGE HANDLECHANGE HANDLECHANGE
   // destructuring array WTF
 
   const handleChange = (event) => {
@@ -92,7 +94,7 @@ const ProdukList = () => {
    * klo mau pake <button> tingal menggunakan onClick = {handleChange}
    */
 
-  ///////////////////////////////////// RENDER /////////////////////////////////////
+  ///////////////////////////////////// RENDER \\\\\\\\\\\\\\\\\\\\\\\\\\\\\\
   // Menampilkan loading atau data produk
   if (loading) {
     return <div>Loading...</div>;
@@ -108,7 +110,7 @@ const ProdukList = () => {
         {/* Opsi default */}
         <option value="" >Pilih Kategori</option>
 
-        {/* Opsi kategori dari kategoriData */}
+        {/* Opsi SELECT KATEORI dari kategoriData */}
         {kategoriData.map((kategori) => (
           <option key={kategori.id_kategori} value={kategori.id_kategori}>
             {kategori.nama_kategori}

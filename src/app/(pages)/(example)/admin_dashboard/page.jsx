@@ -7,7 +7,7 @@ import withAuth from "@/app/component/withAuth";
 import useAuth from "@/app/component/useAuth";
 
 const ACCProduk = () => {
-  const { userData, loading } = useAuth(); // Mengambil loading dari useAuth
+  // const { userData, loading } = useAuth(); // Mengambil loading dari useAuth
   const [produkData, setProduks] = useState([]); // State untuk menyimpan data produk
   const [loadingProduk, setLoadingProduk] = useState(true); // State untuk loading produk
 
@@ -29,15 +29,37 @@ const ACCProduk = () => {
     fetchUnACCProduks(); // Panggil fungsi untuk mengambil data produk
   }, []); // Kosong berarti hanya dijalankan sekali setelah komponen dimount
 
-  const terima = async () => {
-    
+  const updateStatus = async (id_produk, status_post) => {
+    try {
+      const response = await axios.post(
+        `http://localhost:8000/api/produk/update-status/${id_produk}`,
+        {
+          status_post,
+        }
+      );
+      console.log("Update success:", response.data);
+      // Optionally refresh the product data or update UI
+    } catch (error) {
+      console.error("Error updating status:", error);
+    }
+  };
 
-  }
+  // Fungsi REJECT produk
+  const rejectProduct = (id_produk) => {
+    updateStatus(id_produk, "rejected");
+  };
+
+  // Fungsi ACCEPT produk
+  const acceptProduct = (id_produk) => {
+    updateStatus(id_produk, "available");
+  };
 
   // Tampilkan loading saat produk atau data user sedang diambil
   if (loading || loadingProduk) {
     return <div>Loading...</div>;
   }
+
+
 
   return (
     <div>
@@ -53,8 +75,25 @@ const ACCProduk = () => {
             <p>Harga: {produk.harga}</p>
             <img src={produk.list_url_gambar[0]} alt="gambar_produk" />
             <br />
-            <button onClick={terima}></button>
-            <button onClick={tolak}></button>
+
+            {/* tombol accept */}
+            <button
+              onClick={() => acceptProduct(produk.id_produk)}
+              id="btn_accept"
+            >
+              Accept
+            </button>
+            
+
+            {/* Tombol reject */}
+            <button
+              onClick={() => rejectProduct(produk.id_produk)}
+              id="btn_reject"
+            >
+              Reject
+            </button>
+            
+
             <br />
             <br />
           </li>
