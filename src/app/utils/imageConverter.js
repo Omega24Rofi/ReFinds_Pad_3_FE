@@ -1,35 +1,29 @@
-// Function to convert an image to JPG format
+// Fungsi untuk mengonversi gambar menjadi format JPG
 export async function imageToJPG(imageFile, quality = 0.9) {
   return new Promise((resolve, reject) => {
     const img = new Image();
-    const objectUrl = URL.createObjectURL(imageFile); // Create URL for image
-
+    const objectUrl = URL.createObjectURL(imageFile); // Buat URL untuk gambar
     img.src = objectUrl;
-
     img.onload = () => {
       const canvas = document.createElement("canvas");
       const ctx = canvas.getContext("2d");
-
-      // Set canvas dimensions to the image’s dimensions
+      // Setel dimensi canvas sesuai dengan dimensi gambar
       canvas.width = img.width;
       canvas.height = img.height;
-
-      // Draw image onto the canvas
+      // Gambar ulang gambar di atas canvas
       ctx.drawImage(img, 0, 0);
-
-      // Convert canvas to a JPG Blob
+      // Konversi canvas ke Blob format JPG
       canvas.toBlob(
         (blob) => {
-          URL.revokeObjectURL(objectUrl); // Release the URL object to free memory
-          resolve(blob); // Return the JPG blob
+          URL.revokeObjectURL(objectUrl); // Lepaskan objek URL untuk membebaskan memori
+          resolve(blob); // Kembalikan blob JPG
         },
         "image/jpeg",
-        quality // Set the quality for JPG conversion
+        quality // Setel kualitas untuk konversi JPG
       );
     };
-
     img.onerror = (error) => {
-      URL.revokeObjectURL(objectUrl); // Release URL even on error
+      URL.revokeObjectURL(objectUrl); // Lepaskan URL bahkan jika terjadi kesalahan
       reject(error);
     };
   });
