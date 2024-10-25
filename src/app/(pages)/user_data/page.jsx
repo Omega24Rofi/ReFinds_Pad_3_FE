@@ -1,6 +1,5 @@
 "use client";
 import withAuth from "@/app/component/withAuth";
-import ImageResizerAndCropper from "@/app/component/ImageCropperResizer";
 import { useEffect, useState } from "react";
 import axios from "axios";
 
