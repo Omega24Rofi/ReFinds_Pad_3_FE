@@ -21,11 +21,11 @@ const Carousel = ({ slides }) => {
   };
 
   return (
-    <div className="relative w-full max-w-lg mx-auto overflow-hidden">
+    <div className="relative w-full h-[100vh] mx-auto overflow-hidden">
       {/* Carousel Content */}
-      <div className="w-full flex transition-transform transform" style={{ transform: `translateX(-${currentIndex * 100}%)` }}>
+      <div className="w-full h-full flex transition-transform transform " style={{ transform: `translateX(-${currentIndex * 100}%)` }}>
         {slides.map((slide, index) => (
-          <div key={index} className="w-full flex-shrink-0">
+          <div key={index} className="w-full h-full flex-shrink-0">
             <img src={slide} alt={`Slide ${index}`} className="w-full h-full object-cover" />
           </div>
         ))}
@@ -52,7 +52,7 @@ const Homepage = () => {
   const slides = [
     "/images/main_slider/sliderr3.png",
     "/images/main_slider/slider2.png",
-    "/images/main_slider/slider1.png", // Add paths to your images
+    "/images/main_slider/slider1.png", 
   ];
 
   return (
