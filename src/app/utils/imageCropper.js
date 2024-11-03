@@ -1,3 +1,4 @@
+// Fungsi untuk crop gambar menjadi persegi
 export const autoCropImage = (imageSrc) => {
   return new Promise((resolve, reject) => {
     const image = new Image();

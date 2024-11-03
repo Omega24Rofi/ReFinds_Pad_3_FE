@@ -1,4 +1,4 @@
-// Fungsi untuk meresize gambar
+// Fungsi untuk meresize gambar 700x700 px
 export async function resizeImage(imageFile) {
     return new Promise((resolve, reject) => {
       const img = new Image();

@@ -12,6 +12,8 @@ const YourPage = () => {
   const handleProcessImage = async () => {
     // Path gambar sumber
     const imageSrc = "/images/testing/hyakkisaifilterV4_ph.png";
+
+    // Fungsi untuk memproses gambar
     const { processedImage } = await processImage(imageSrc);
 
     // Set URL gambar hasil processing ke state
