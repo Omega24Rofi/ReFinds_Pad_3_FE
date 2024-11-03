@@ -140,7 +140,7 @@ const SubmitProductPage = () => {
   }
 
   return (
-    <div>
+    <div className="min-h-full">
       <header className="w-full max-h-fit h-fit py-5 px-10 bg-lightbluemain flex flex-row align-bottom">
         <Link href={'/'}>
           <img src="/icons/left_arrow.svg" alt="back_arrow" className="w-[1:1] w-6 h-full"/>
