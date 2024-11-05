@@ -110,7 +110,12 @@ const Homepage = () => {
         <li><Link href={"/post"}>POST</Link></li>
         <li><Link href={"/display"}>DISPLAY</Link></li>
         <li><Link href={"/user_data"}>USER DATA</Link></li>
-        <li><Link href={"/admin_acc"}>ADMIN ACC</Link></li>
+        {/* <li><Link href={"/admin_acc"}>ADMIN ACC</Link></li> */}
+        <li><Link href={"/admin_dashboard"}>Admin DashBoard</Link></li>
+        <li><Link href={"/dashboard"}>DashBoard</Link></li>
+        <li><Link href={"/dashboard"}>DashBoard</Link></li>
+
+        <br /><br />
         <li><button onClick={logout}>Logout</button></li>
       </ul>
     </div>

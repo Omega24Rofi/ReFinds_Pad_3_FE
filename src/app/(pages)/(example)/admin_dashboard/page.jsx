@@ -83,6 +83,7 @@ const ACCProduk = () => {
             >
               Accept
             </button>
+          <span>&nbsp;&nbsp;</span>
             
 
             {/* Tombol reject */}

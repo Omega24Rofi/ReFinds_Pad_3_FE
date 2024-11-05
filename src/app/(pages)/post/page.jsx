@@ -5,10 +5,13 @@ import axios from "axios";
 import withAuth from "@/app/component/withAuth";
 import Image from "next/image";
 import Link from "next/link";
+import { processImage } from "@/app/utils/processImage"; // Impor utilitas pemrosesan gambar
+import useKategori from "@/app/component/useKategori";
 
 const SubmitProductPage = () => {
-  // State to store form input values
   const [userData, setUserData] = useState(null);
+  const { kategoriData } = useKategori();
+  const [fileName, setFileName] = useState("");
 
   useEffect(() => {
     const token = localStorage.getItem("token");
@@ -31,12 +34,12 @@ const SubmitProductPage = () => {
   }, []); // This useEffect will run only once when the component is mounted.
 
   // Additional useEffect
-  useEffect(() => {
-    // CUMA BUAT LOGGIN HEH~
-    if (userData) {
-      // console.log("userData updated:", userData); // This will log the updated userData state
-    }
-  }, [userData]); // This useEffect will run every time userData changes
+  // useEffect(() => {
+  //   // CUMA BUAT LOGGING HEH~
+  //   if (userData) {
+  //     // console.log("userData updated:", userData); // This will log the updated userData state
+  //   }
+  // }, [userData]); // This useEffect will run every time userData changes
 
   const [formData, setFormData] = useState({
     id_subkategori: "",
@@ -58,7 +61,7 @@ const SubmitProductPage = () => {
   const handleSubmit = async (e) => {
     e.preventDefault(); // Prevent default form refresh
 
-    // Ensure userData is loaded before submitting
+    // memastikan userdata sudah diisi
     if (!userData || userData.length === 0) {
       setError("User data is not loaded. Please try again.");
       return;
@@ -112,25 +115,43 @@ const SubmitProductPage = () => {
     }
   };
 
-  // Handle input change
-  const handleChange = (e) => {
+  // Fungsi untuk menangani perubahan input dari form
+
+  const handleChange = async (e) => {
     const { name, value, files } = e.target;
+
+    // Memeriksa apakah input adalah file gambar
     if (files && files.length > 0) {
       const file = files[0];
+
+      // Validasi tipe file harus berupa gambar
       if (!file.type.startsWith("image/")) {
-        setError("Only image files are allowed");
+        setError("Hanya file gambar yang diperbolehkan");
         return;
       }
-      const reader = new FileReader();
-      reader.onloadend = () => {
-        setFormData((prev) => ({
-          ...prev,
-          [name]: file,
-          [`${name}_preview`]: reader.result,
-        }));
-      };
-      reader.readAsDataURL(file);
+
+      try {
+        // Proses gambar (crop, resize, convert ke JPG)
+        const processedImage = await processImage(URL.createObjectURL(file));
+
+        // Membaca hasil gambar yang diproses untuk preview
+        const reader = new FileReader();
+        reader.onloadend = () => {
+          setFormData((prev) => ({
+            ...prev,
+            [name]: processedImage.processedImage, // Menyimpan gambar yang telah diproses
+            [`${name}_preview`]: reader.result, // Preview dari gambar
+          }));
+          setFileName(file.name); // Menyimpan nama file yang dipilih
+        };
+
+        reader.readAsDataURL(processedImage.processedImage); // Menggunakan file BLOB yang diproses untuk preview
+      } catch (error) {
+        console.error("Gagal memproses gambar:", error);
+        setError("Gagal memproses gambar. Silakan coba lagi.");
+      }
     } else {
+      // Update formData untuk input non-gambar
       setFormData((prev) => ({ ...prev, [name]: value }));
     }
   };
@@ -142,14 +163,23 @@ const SubmitProductPage = () => {
   return (
     <div className="min-h-screen">
       <header className="w-full max-h-fit h-fit py-5 px-10 bg-lightbluemain flex flex-row align-bottom">
-        <Link href={'/'}>
-          <img src="/icons/left_arrow.svg" alt="back_arrow" className="w-[1:1] w-6 h-full"/>
+        <Link href={"/"}>
+          <img
+            src="/icons/left_arrow.svg"
+            alt="back_arrow"
+            className="w-[1:1] w-6 h-full"
+          />
         </Link>
-        <p className="h-fit ml-4 font-bold text-center align-middle block">Jual Barang</p>
+        <p className="h-fit ml-4 font-bold text-center align-middle block">
+          Jual Barang
+        </p>
       </header>
       <div className="flex justify-center align-middle">
         <div className="container mt-4 flex justify-center align-middle ">
-          <form onSubmit={handleSubmit} className="bg-blue_sl w-[90%] p-4 rounded-2xl">
+          <form
+            onSubmit={handleSubmit}
+            className="bg-blue_sl w-[90%] p-4 rounded-2xl"
+          >
             {/* Nama Produk */}
             <p className="font-bold text-lg mt-4">Detail Barang</p>
             <div className="mb-4 grid grid-cols-3 gap-2 items-center">
@@ -207,14 +237,15 @@ const SubmitProductPage = () => {
               <label htmlFor="deskripsi" className="form-label">
                 Deskripsi :
               </label>
-              <textarea 
+              <textarea
                 rows={3}
                 className="form-control col-span-1 border rounded-lg p-1 focus:outline-none focus:ring-2 focus:ring-blue-400"
                 id="deskripsi"
                 name="deskripsi"
                 value={formData.deskripsi}
                 onChange={handleChange}
-                required></textarea>
+                required
+              ></textarea>
             </div>
 
             {/* Alamat */}
@@ -242,8 +273,8 @@ const SubmitProductPage = () => {
                   userData[0].alamat.map((alamat) => (
                     <option key={alamat.id_alamat} value={alamat.id_alamat}>
                       {alamat.nama_lokasi}, Kec. {alamat.kecamatan}, Kota/Kab.{" "}
-                      {alamat.kota_kabupaten}, Prov. {alamat.provinsi}, Kode Pos.{" "}
-                      {alamat.kode_pos}
+                      {alamat.kota_kabupaten}, Prov. {alamat.provinsi}, Kode
+                      Pos. {alamat.kode_pos}
                     </option>
                   ))
                 ) : (
@@ -268,8 +299,8 @@ const SubmitProductPage = () => {
                   required
                 />
 
-                {/* prev 1 */}
-                {formData.gambar_produk1_preview ? (
+                {/* Preview */}
+                {formData.gambar_produk1_preview && (
                   <Image
                     src={formData.gambar_produk1_preview}
                     alt="Gambar Produk 1"
@@ -277,7 +308,7 @@ const SubmitProductPage = () => {
                     height={200}
                     style={{ marginTop: "10px" }}
                   />
-                ) : null}
+                )}
               </div>
 
               {/* Gambar Produk 2 */}
@@ -328,19 +359,20 @@ const SubmitProductPage = () => {
             </div>
 
             {/* Submit Button */}
-            <button type="submit" className="btn bg-blue_btn py-1.5 px-6 rounded-lg font-bold text-white">
+            <button
+              type="submit"
+              className="btn bg-blue_btn py-1.5 px-6 rounded-lg font-bold text-white"
+            >
               Kirim
             </button>
           </form>
 
-        {/* Display messages */}
-        {message && <div className="alert alert-success mt-3">{message}</div>}
-        {error && <div className="alert alert-danger mt-3">{error}</div>}
+          {/* Display messages */}
+          {message && <div className="alert alert-success mt-3">{message}</div>}
+          {error && <div className="alert alert-danger mt-3">{error}</div>}
         </div>
       </div>
-
     </div>
-    
   );
 };
 

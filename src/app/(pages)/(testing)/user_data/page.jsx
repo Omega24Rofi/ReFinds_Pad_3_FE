@@ -53,7 +53,7 @@ const UserPage = () => {
       <h1><br /> <br /> <br />TABEL TABEL TABEL TABEL TABEL TABEL TABEL TABEL TABEL</h1>
       {userData ? (
         <div>
-          {/* Display User Data in a Table */}
+          {/* Display User Data  */}
           <h2>User Information</h2>
           <table>
             <thead>
@@ -72,7 +72,7 @@ const UserPage = () => {
             </tbody>
           </table>
 
-          {/* Display Addresses in a Table */}
+          {/* Display Alamat  */}
           <h2> <br /> <br /><br />Addresses</h2>
           {userData[0].alamat.length > 0 ? (
             <table>

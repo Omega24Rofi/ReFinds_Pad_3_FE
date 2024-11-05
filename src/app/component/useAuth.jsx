@@ -43,6 +43,7 @@ const useAuth = () => {
           },
         });
         setUserData(response.data);  // Set user jika token valid
+        
       } catch (error) {
         // Jika token tidak valid, hapus token
         localStorage.removeItem('token');
