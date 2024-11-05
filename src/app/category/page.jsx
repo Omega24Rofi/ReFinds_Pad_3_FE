@@ -11,11 +11,11 @@ export const Category = () => {
         </div>
         <div className="w-[80%] bg-lightbg flex flex-row flex-wrap -mt-10 m-auto py-6 rounded-2xl px-2 justify-evenly">
             {Array.from({ length: 12 }).map((_, index) => (
-                <div key={index} className="card min-h-fit bg-white box-content w-40 m-2 rounded-lg">
+                <Link href={"/contact_seller"} key={index} className="card min-h-fit bg-white box-content w-40 m-2 rounded-lg">
                     <img src="/images/testimage/image.png" alt="" className="h-36 w-full" />
                     <p className='px-2'>With Hp INFINIX SMART 5</p>
                     <p className="text-blue-300 px-2">Rp. 2.600.000</p>
-                </div>
+                </Link>
             ))}
         </div>
     </div>
