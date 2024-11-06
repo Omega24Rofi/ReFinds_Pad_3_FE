@@ -297,6 +297,7 @@ const SubmitProductPage = () => {
                   name="gambar_produk1"
                   onChange={handleChange}
                   required
+                  hidden
                 />
 
                 {/* Preview */}
