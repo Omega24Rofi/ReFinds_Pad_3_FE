@@ -161,7 +161,7 @@ const SubmitProductPage = () => {
   }
 
   return (
-    <div>
+    <div className="min-h-screen">
       <header className="w-full max-h-fit h-fit py-5 px-10 bg-lightbluemain flex flex-row align-bottom">
         <Link href={"/"}>
           <img
