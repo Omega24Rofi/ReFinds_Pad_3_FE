@@ -1,35 +1,35 @@
 "use client";
 import { useState } from "react";
-import axios from "axios";
+import api from "@/utils/axios";
 
 const SearchPage = () => {
-  const [searchInput, setSearchInput] = useState(""); // To store the form input
-  const [produkData, setProdukData] = useState([]);   // To store the returned products
+  const [searchInput, setSearchInput] = useState(""); // untuk menyimpan input form
+  const [produkData, setProdukData] = useState([]);   // untuk menyimpan data produk dari BE
 
-  // Function to handle the form submission
+  // Function untuk menangani input keyword search
   const handleSearch = async (event) => {
     event.preventDefault();
     
-    // Split the input string into an array by spaces
+    // Split input berdasarkan spasi
     const searchKeywords = searchInput.trim().split(" ");
 
     console.log("KEYWORD", searchKeywords);
     
-    // Call the search function
+    // Memanggil funsgi search dengan parameter array keyword yang sudah diolah
     await searchProduk(searchKeywords);
   };
 
-  // Function to perform the search and fetch data from the backend
+  // Function untuk melakukan pencarian
   const searchProduk = async (keywords) => {
     try {
-      const response = await axios.post("http://localhost:8000/api/produk/search_produk", {
-        keywords: keywords, // Send the keywords array to the backend
+      const response = await api.post("/api/produk/search_produk", {
+        keywords: keywords, // mengirim array keyword ke BE
         kategori: [],
         subkategori: [],
         
       });
       
-      // Set the returned data to state
+      // Set produkData dari be ke const
       setProdukData(response.data);
       console.log("HASIL SEARCH", response.data);
     } catch (error) {
@@ -41,7 +41,7 @@ const SearchPage = () => {
     <div>
       <h1>Search Products</h1>
       
-      {/* Form for entering search input */}
+      {/* Form search input */}
       <form onSubmit={handleSearch}>
         <label htmlFor="search">Search:</label>
         <input
@@ -54,9 +54,9 @@ const SearchPage = () => {
         <button type="submit">Search</button>
       </form>
       
-      {/* Displaying search results */}
+      {/* Display search results */}
       <ul>
-        {/* No display,  */}
+        {/* iterasi $produkData dilakukan disini */}
       </ul>
     </div>
   );

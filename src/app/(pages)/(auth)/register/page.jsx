@@ -6,7 +6,7 @@ import Image from "next/image";
 
 //
 import { useState } from "react";
-import axios from "axios";
+import api from "@/utils/axios";
 import Link from "next/link";
 
 const Register = () => {
@@ -20,12 +20,12 @@ const Register = () => {
 
   // fungsi untuk handle submission
   const handleSubmit = async (e) => {
-    e.preventDefault(); // Prevent form from default refresh
+    e.preventDefault(); // Mencegah default refrsh
 
     try {
       // mengirim data menggunakan axios ke API
       // menunggu response dari exios
-      const response = await axios.post("http://localhost:8000/api/register", {
+      const response = await api.post("http://localhost:8000/api/register", {
         nama_akun: namaAkun,
         nama_asli_user: namaAsliUser,
         email, // short syntaxt bc nama var sama

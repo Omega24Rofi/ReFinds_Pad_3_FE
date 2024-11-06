@@ -1,5 +1,7 @@
 import React from 'react'
 import Link from 'next/link';
+import api from '@/utils/axios'; 
+
 
 export const Category = () => {
     const title = "Category";

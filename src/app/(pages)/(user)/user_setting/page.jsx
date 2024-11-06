@@ -1,5 +1,5 @@
 "use client";
-import axios from 'axios';
+import api from "@/utils/axios";
 import { useEffect, useState } from 'react';
 
 const UserSetting = () => {
@@ -15,7 +15,7 @@ const UserSetting = () => {
   useEffect(() => {
     const fetchUserData = async () => {
       try {
-        const response = await axios.get('http://localhost:8000/api/get_user', {
+        const response = await api.get('/api/get_user', {
           headers: {
             Authorization: `Bearer ${token}`,
           },
@@ -23,7 +23,7 @@ const UserSetting = () => {
 
         console.log("RESPINSE: ", response.data);
         
-        // Set state with default values if necessary
+        // Mengisi otomatis form dengan data dari BE
         setUser({
           nama_akun: response.data[0].nama_akun || '',
           nama_asli_user: response.data[0].nama_asli_user || '',
@@ -50,13 +50,12 @@ const UserSetting = () => {
   const handleSubmit = async (e) => {
     e.preventDefault();
     try {
-      const response = await axios.post('http://localhost:8000/api/update_user', user, {
+      const response = await api.post('/api/update_user', user, {
         headers: {
           Authorization: `Bearer ${token}`,
         },
       });
-      console.log('User updated:', response.data);
-      // Optionally handle success (e.g., show a message, redirect, etc.)
+      console.log('User updated:', response.data); // log response dari BE
     } catch (error) {
       console.error('Error updating user data:', error);
     }

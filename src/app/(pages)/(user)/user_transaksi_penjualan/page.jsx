@@ -1,5 +1,5 @@
 "use client";
-import axios from 'axios';
+import api from "@/utils/axios";
 import { useEffect, useState } from 'react';
 
 const TransaksiPenjualan = () => {
@@ -9,7 +9,7 @@ const TransaksiPenjualan = () => {
   useEffect(() => {
     const fetchTransaksiJual = async () => {
       try {
-        const response = await axios.get('http://localhost:8000/api/transaksi/penjualan', {
+        const response = await api.get('/api/transaksi/penjualan', {
           headers: {
             Authorization: `Bearer ${token}`,
           },
@@ -28,6 +28,7 @@ const TransaksiPenjualan = () => {
     <div>
       <h1>Daftar Transaksi Penjualan</h1>
       <div className="transaksi-list">
+        {/* iterasi untuk menampilkan data transaksi jual */}
         {
           transaksiJual.map((transaksi) => (
             <div key={transaksi.id_transaksi} className="transaksi-card">

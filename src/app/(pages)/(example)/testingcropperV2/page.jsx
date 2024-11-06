@@ -1,6 +1,6 @@
 "use client";
 import React, { useState, useEffect } from "react";
-import { processImage } from "@/app/utils/processImage";
+import { processImage } from "@/utils/processImage";
 
 // Komponen utama
 const YourPage = () => {

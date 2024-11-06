@@ -1,8 +1,8 @@
 "use client"; // Menandakan bahwa ini adalah client component
 
 import { useEffect, useState } from "react";
-import axios from "axios";
-import useKategori from "@/app/component/useKategori";
+import api from "@/utils/axios";
+import useKategori from "@/hooks/useKategori";
 
 const ProdukList = () => {
   const { kategoriData } = useKategori();
@@ -15,8 +15,8 @@ const ProdukList = () => {
   useEffect(() => {
     const token = localStorage.getItem("token");
 
-    axios
-      .get("http://localhost:8000/api/user_data", {
+    api
+      .get("/api/user_data", {
         headers: {
           // token dikirim ke BE untuk mendapatkan user data terkait
           Authorization: `Bearer ${token}`,
@@ -42,7 +42,7 @@ const ProdukList = () => {
     // Fetch produk dari API
     const fetchAllProduks = async () => {
       try {
-        const response = await axios.get("http://localhost:8000/api/produk");
+        const response = await api.get("/api/produk");
         setProduks(response.data); // Simpan data produk ke state
         console.log("ResponseData: ", response.data);
       } catch (error) {
@@ -59,8 +59,8 @@ const ProdukList = () => {
   useEffect(() => {
     const fetchProduks = async () => {
       try {
-        const response = await axios.get(
-          `http://localhost:8000/api/produk/kategori/${selectedKategori}`
+        const response = await api.get(
+          `/api/produk/kategori/${selectedKategori}`
         );
         setProduks(response.data); // Simpan data produk ke state
 

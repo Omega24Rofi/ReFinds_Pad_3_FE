@@ -1,7 +1,7 @@
 // src/app/pages/test-auth/page.jsx
 "use client";
 import { useEffect, useState } from 'react';
-import axios from 'axios';
+import api from "@/utils/axios";
 
 const TestAuthPage = () => {
   const [userId, setUserId] = useState(null);
@@ -11,7 +11,7 @@ const TestAuthPage = () => {
   const fetchAuthTest = async () => {
     try {
       const token = localStorage.getItem('token'); // Ambil token dari localStorage
-      const response = await axios.get('http://localhost:8000/api/test-auth', {
+      const response = await api.get('/api/test-auth', {
         headers: {
           Authorization: `Bearer ${token}`,
         },

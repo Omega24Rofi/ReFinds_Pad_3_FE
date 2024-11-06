@@ -1,12 +1,12 @@
 "use client";
 
 import { useEffect, useState } from "react";
-import axios from "axios";
-import withAuth from "@/app/component/withAuth";
+import withAuth from "@/components/withAuth";
 import Image from "next/image";
 import Link from "next/link";
-import { processImage } from "@/app/utils/processImage"; // Impor utilitas pemrosesan gambar
-import useKategori from "@/app/component/useKategori";
+import { processImage } from "@/utils/processImage"; // Impor utilitas pemrosesan gambar
+import useKategori from "@/hooks/useKategori";
+import api from "@/utils/axios";
 
 const SubmitProductPage = () => {
   const [userData, setUserData] = useState(null);
@@ -16,8 +16,8 @@ const SubmitProductPage = () => {
   useEffect(() => {
     const token = localStorage.getItem("token");
 
-    axios
-      .get("http://localhost:8000/api/user_data", {
+    api
+      .get("/api/user_data", {
         headers: {
           Authorization: `Bearer ${token}`,
         },
@@ -92,8 +92,8 @@ const SubmitProductPage = () => {
     data.append("id_user", userData[0].id_user);
 
     try {
-      const response = await axios.post(
-        "http://localhost:8000/api/produk_up",
+      const response = await api.post(
+        "/api/produk_up",
         data,
         {
           headers: { "Content-Type": "multipart/form-data" },

@@ -19,6 +19,49 @@ Open [http://localhost:3000](http://localhost:3000) with your browser to see the
 You can start editing the page by modifying `app/page.js`. The page auto-updates as you edit the file.
 
 This project uses [`next/font`](https://nextjs.org/docs/basic-features/font-optimization) to automatically optimize and load Inter, a custom Google Font.
+## Struktur proyek
+
+Absolutely! You can definitely add the provided structure to your README.md file. Here's how it can be incorporated:
+
+Markdown
+## Project Structure
+
+
+my-nextjs-app/
+├── public/
+│   ├── fonts/
+│   │   └── ... (file font)
+│   ├── images/
+│   │   └── ... (file gambar)
+│   ├── favicon.ico
+│   └── ... (file publik lainnya)
+├── src/
+│   ├── components/
+│   │   └── ... (komponen umum)
+│   ├── hooks/
+│   │   └── ... (custom hooks)
+│   ├── layouts/
+│   │   └── ... (layout halaman)
+│   ├── pages/
+│   │   ├── api/
+│   │   │   └── ... (route API)
+│   │   └── ... (file halaman)
+│   ├── styles/
+│   │   ├── globals.css
+│   │   └── ... (file CSS lainnya)
+│   ├── utils/
+│   │   └── ... (utilitas atau helper)
+│   ├── context/
+│   │   └── ... (konteks React)
+│   ├── types/
+│   │   └── ... (typeScript types)
+│   └── ... (file dan folder lainnya)
+├── .env.local
+├── .gitignore
+├── next.config.js
+├── package.json
+├── README.md
+└── ... (file root lainnya)
 
 ## Learn More
 
