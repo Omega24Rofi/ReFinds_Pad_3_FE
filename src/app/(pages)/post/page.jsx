@@ -112,14 +112,18 @@ const SubmitProductPage = () => {
 
 
   useEffect(() => {
-    // Filter subkategori berdasarkan id_kategori yang dipilih
-    const filteredData = subkategoriData.filter(
-      (subkategori) => subkategori.id_kategori === formData.id_kategori,
-      console.log("ID KATEGORI TERPILIH:", formData.id_kategori )
-    );
-    setFilteredSubkategoriData(filteredData);
-    console.log("FILTERED DATA", filteredData);
-  }, [formData.id_kategori, subkategoriData]);
+    if (formData.id_kategori !== undefined && subkategoriData.length > 0) {
+        console.log("ID KATEGORI TERPILIH:", formData.id_kategori);
+
+        const filteredData = subkategoriData.filter(
+            (subkategori) => subkategori.id_kategori === Number(formData.id_kategori)
+        );
+
+        setFilteredSubkategoriData(filteredData);
+        console.log("FILTERED DATA", filteredData);
+    }
+}, [formData.id_kategori, subkategoriData]);
+
 
   // Fungsi untuk menangani perubahan input dari form
   // prosess image
