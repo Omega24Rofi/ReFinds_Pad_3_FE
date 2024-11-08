@@ -1,9 +1,9 @@
 import { useEffect, useState } from 'react';
-import axios from 'axios';
-import { useRouter } from 'next/navigation';
 import api from '@/utils/axios';
+import { useRouter } from 'next/navigation';
+
 /**
- * Hooks ini memiliki fungsi
+ * Hooks ini memiliki dua fungsi
  *    1. untuk menampilkan komponen tertentu berdasarkan User sudah login atau belum
  *    2. untuk mendapatkan userData yang sudah login
  * token akan di cek 

@@ -8,8 +8,6 @@ const ProdukList = () => {
   const { kategoriData } = useKategori();
   console.log("KATEGORI_DATA:", kategoriData);
 
-  
-  ///////////////////// USE EFFECT UNTUK FETCHING USER DATA
   const [userData, setUserData] = useState(null);
   // useEffect untuk mengambil userData
   useEffect(() => {
@@ -31,52 +29,32 @@ const ProdukList = () => {
         console.error("Error fetching user data:", error);
         setLoading(false); // Meskipun ada error, tetap hentikan state loading
       });
-  }, []); // useEffect ini hanya akan dijalankan sekali saat komponen pertama kali di-mount.
+  }, []); 
 
 
-  ///////////////////// USE EFFECT UNTUK FETCHING PRODUK DAN GAMBAR PRODUK, akan dijalankan setiap selectedKategori berubah nilainya
   const [produks, setProduks] = useState([]); // State untuk menyimpan data produk
   const [loading, setLoading] = useState(true); // State untuk loading
-
+  const [selectedKategori, setSelectedKategori] = useState("");
   useEffect(() => {
-    // Fetch produk dari API
-    const fetchAllProduks = async () => {
+    const fetchProduks = async () => {
       try {
-        const response = await api.get("/api/produk");
+        let url = "/api/produk";
+        if (selectedKategori) {
+          url = `/api/produk/kategori/${selectedKategori}`;
+        }
+        const response = await api.get(url);
         setProduks(response.data); // Simpan data produk ke state
         console.log("ResponseData: ", response.data);
       } catch (error) {
         console.error("Error fetching products:", error);
       } finally {
-        setLoading(false); // Set loading menjadi false setelah data selesai diambil
-      }
-    };
-
-    fetchAllProduks(); // Panggil fungsi untuk mengambil data produk
-  }, []); // Kosong berarti hanya dijalankan sekali setelah komponen dimount
-
-  const [selectedKategori, setSelectedKategori] = useState("");
-  useEffect(() => {
-    const fetchProduks = async () => {
-      try {
-        const response = await api.get(
-          `/api/produk/kategori/${selectedKategori}`
-        );
-        setProduks(response.data); // Simpan data produk ke state
-
-        console.log("ResponseData: ", response.data);
-      } catch (error) {
-        console.error("Error fetching products:", error); // Tangani error
-      } finally {
         setLoading(false); // Selesai loading
       }
     };
-
+  
     fetchProduks(); // Panggil fungsi untuk mengambil data produk
   }, [selectedKategori]);
-
-  ///////////////////// HANDLECHANGE HANDLECHANGE HANDLECHANGE
-  // destructuring array WTF
+  
 
   const handleChange = (event) => {
     setSelectedKategori(event.target.value);
@@ -84,18 +62,6 @@ const ProdukList = () => {
     console.log("Kategori yang dipilih:", event.target.value);
   };
 
-  /**
-   * jadi gini
-   * yang perlu diubah itu selectedKategori menggunakan fungsi setSelectedKategori()
-   *    untuk menampilkan barang berdasarkan kategori
-   * jika selectedKategori kosong maka kan menampilkan semua produk
-   * 
-   * contoh dibawah itu menggunakan <select> dan fungsi onChange untuk trigger handleChange
-   * klo mau pake <button> tingal menggunakan onClick = {handleChange}
-   */
-
-  ///////////////////////////////////// RENDER \\\\\\\\\\\\\\\\\\\\\\\\\\\\\\
-  // Menampilkan loading atau data produk
   if (loading) {
     return <div>Loading...</div>;
   }

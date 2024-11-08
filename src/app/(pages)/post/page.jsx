@@ -10,8 +10,16 @@ import api from "@/utils/axios";
 
 const SubmitProductPage = () => {
   const [userData, setUserData] = useState(null);
-  const { kategoriData } = useKategori();
+  const { kategoriData, subkategoriData } = useKategori();
   const [fileName, setFileName] = useState("");
+  const jumlahGambar = 6; // Jumlah gambar produk
+  const [message, setMessage] = useState("");
+  const [error, setError] = useState("");
+  const [loading, setLoading] = useState(true);
+  const [filteredSubkategoriData, setFilteredSubkategoriData] = useState([]);
+
+
+  // console.log("kategoriData", kategoriData);
 
   useEffect(() => {
     const token = localStorage.getItem("token");
@@ -24,38 +32,33 @@ const SubmitProductPage = () => {
       })
       .then((response) => {
         // console.log("ResponseData:", response.data); // Log response data
-        setUserData(response.data);
+        setUserData(response.data[0]);
         setLoading(false);
       })
       .catch((error) => {
         console.error("Error fetching user data:", error);
-        setLoading(false); // Even if there's an error, stop the loading state
+        setLoading(false);
       });
-  }, []); // This useEffect will run only once when the component is mounted.
+  }, []);
 
-  // Additional useEffect
-  // useEffect(() => {
-  //   // CUMA BUAT LOGGING HEH~
-  //   if (userData) {
-  //     // console.log("userData updated:", userData); // This will log the updated userData state
-  //   }
-  // }, [userData]); // This useEffect will run every time userData changes
+
 
   const [formData, setFormData] = useState({
+    // data bukan gambar
+    id_kategori: "",
     id_subkategori: "",
     id_alamat: "",
     deskripsi: "",
     nama_produk: "",
     harga: "",
-
-    gambar_produk1: null,
-    gambar_produk2: null,
-    gambar_produk3: null,
+    // data array gambar
+    gambar_produk: Array(jumlahGambar).fill(null), // Array untuk menyimpan gambar
+    gambar_produk_preview: Array(jumlahGambar).fill(null), // Array untuk preview gambar
   });
 
-  const [message, setMessage] = useState("");
-  const [error, setError] = useState("");
-  const [loading, setLoading] = useState(true);
+
+
+
 
   // Handle form submission
   const handleSubmit = async (e) => {
@@ -77,28 +80,20 @@ const SubmitProductPage = () => {
     data.append("nama_produk", formData.nama_produk);
     data.append("harga", formData.harga);
 
-    // Gambar Produk
-    data.append("gambar_produk1", formData.gambar_produk1);
-
-    // Gambar Produk Maybe Null
-    if (formData.gambar_produk2) {
-      data.append("gambar_produk2", formData.gambar_produk2);
-    }
-    if (formData.gambar_produk3) {
-      data.append("gambar_produk3", formData.gambar_produk3);
-    }
+    // Menambahkan gambar ke FormData dengan loop
+    formData.gambar_produk.forEach((gambar, index) => {
+      if (gambar) {
+        data.append(`gambar_produk[]`, gambar); // Append gambar dalam array
+      }
+    });
 
     // Isi otomatis dari user data
-    data.append("id_user", userData[0].id_user);
+    data.append("id_user", userData.id_user);
 
     try {
-      const response = await api.post(
-        "/api/produk_up",
-        data,
-        {
-          headers: { "Content-Type": "multipart/form-data" },
-        }
-      );
+      const response = await api.post("/api/produk_up", data, {
+        headers: { "Content-Type": "multipart/form-data" },
+      });
       setMessage("Product submitted successfully!");
       setError("");
     } catch (err) {
@@ -115,45 +110,58 @@ const SubmitProductPage = () => {
     }
   };
 
-  // Fungsi untuk menangani perubahan input dari form
 
-  const handleChange = async (e) => {
+  useEffect(() => {
+    // Filter subkategori berdasarkan id_kategori yang dipilih
+    const filteredData = subkategoriData.filter(
+      (subkategori) => subkategori.id_kategori === formData.id_kategori,
+      console.log("ID KATEGORI TERPILIH:", formData.id_kategori )
+    );
+    setFilteredSubkategoriData(filteredData);
+    console.log("FILTERED DATA", filteredData);
+  }, [formData.id_kategori, subkategoriData]);
+
+  // Fungsi untuk menangani perubahan input dari form
+  // prosess image
+  // membuat preview
+  // update constanta gambar_produk
+
+  const handleChange = async (e, index) => {
     const { name, value, files } = e.target;
+    const file = files && files[0]; // Ambil file pertama jika ada
 
     // Memeriksa apakah input adalah file gambar
-    if (files && files.length > 0) {
-      const file = files[0];
-
-      // Validasi tipe file harus berupa gambar
-      if (!file.type.startsWith("image/")) {
-        setError("Hanya file gambar yang diperbolehkan");
-        return;
-      }
-
+    if (file && file.type.startsWith("image/")) {
       try {
-        // Proses gambar (crop, resize, convert ke JPG)
         const processedImage = await processImage(URL.createObjectURL(file));
 
-        // Membaca hasil gambar yang diproses untuk preview
-        const reader = new FileReader();
-        reader.onloadend = () => {
-          setFormData((prev) => ({
-            ...prev,
-            [name]: processedImage.processedImage, // Menyimpan gambar yang telah diproses
-            [`${name}_preview`]: reader.result, // Preview dari gambar
-          }));
-          setFileName(file.name); // Menyimpan nama file yang dipilih
-        };
+        setFormData((prev) => {
+          const updatedGambarProduk = [...prev.gambar_produk];
+          const updatedPreview = [...prev.gambar_produk_preview];
 
-        reader.readAsDataURL(processedImage.processedImage); // Menggunakan file BLOB yang diproses untuk preview
+          // Menggunakan index untuk menentukan posisi gambar dalam array
+          updatedGambarProduk[index] = processedImage.processedImage;
+          updatedPreview[index] = URL.createObjectURL(
+            processedImage.processedImage
+          );
+
+          return {
+            ...prev,
+            gambar_produk: updatedGambarProduk,
+            gambar_produk_preview: updatedPreview,
+          };
+        });
       } catch (error) {
-        console.error("Gagal memproses gambar:", error);
-        setError("Gagal memproses gambar. Silakan coba lagi.");
+        setError("Terjadi kesalahan saat memproses gambar");
       }
     } else {
       // Update formData untuk input non-gambar
-      setFormData((prev) => ({ ...prev, [name]: value }));
+      setFormData((prev) => ({
+        ...prev,
+        [name]: value, // Simpan nilai input non-gambar
+      }));
     }
+
   };
 
   if (loading) {
@@ -216,22 +224,6 @@ const SubmitProductPage = () => {
               />
             </div>
 
-            {/* Kategori */}
-            <div className="mb-4 grid grid-cols-3 gap-2 items-center">
-              <label htmlFor="id_subkategori" className="form-label">
-                Kategori:
-              </label>
-              <input
-                type="number"
-                className="form-control col-span-1 border rounded-lg p-1 focus:outline-none focus:ring-2 focus:ring-blue-400"
-                id="id_subkategori"
-                name="id_subkategori"
-                value={formData.id_subkategori}
-                onChange={handleChange}
-                required
-              />
-            </div>
-
             {/* Deskripsi */}
             <div className="mb-4 grid grid-cols-3 gap-2 items-center">
               <label htmlFor="deskripsi" className="form-label">
@@ -248,6 +240,63 @@ const SubmitProductPage = () => {
               ></textarea>
             </div>
 
+            {/* Kategori */}
+            <div className="mb-4 grid grid-cols-3 gap-2 items-center">
+              <label htmlFor="id_kategori" className="form-label">
+                Kategori:
+              </label>
+              <select
+                type="number"
+                className="form-control col-span-1 border rounded-lg p-1 focus:outline-none focus:ring-2 focus:ring-blue-400"
+                id="id_kategori"
+                name="id_kategori"
+                value={formData.id_kategori}
+                onChange={handleChange}
+                required
+              >
+                <option value="" disabled>
+                  Pilih Kategori
+                </option>
+                {kategoriData.length > 0 ?(kategoriData.map(kategori => (
+                  <option key={kategori.id_kategori} value={kategori.id_kategori} >
+                    {kategori.nama_kategori}
+
+                  </option>
+                ))):(
+                  <option>No kategori available</option>
+                )}
+              </select>
+            </div>
+            {/* Subkategori */}
+      <div className="mb-4 grid grid-cols-3 gap-2 items-center">
+        <label htmlFor="id_subkategori" className="form-label">
+          Subkategori:
+        </label>
+        <select
+          type="number"
+          className="form-control col-span-1 border rounded-lg p-1 focus:outline-none focus:ring-2 focus:ring-blue-400"
+          id="id_subkategori"
+          name="id_subkategori"
+          value={formData.id_subkategori}
+          onChange={handleChange}
+          required
+        >
+          <option value="" disabled>
+            Pilih Subkategori
+          </option>
+          {filteredSubkategoriData.length > 0 ? (
+            filteredSubkategoriData.map((subkategori) => (
+              <option key={subkategori.id_subkategori} value={subkategori.id_subkategori}>
+                {subkategori.nama_subkategori}
+              </option>
+            ))
+          ) : (
+            <option>No subkategori available</option>
+          )}
+        </select>
+      </div>
+
+            
             {/* Alamat */}
             <div className="mb-4 grid grid-cols-3 gap-2 items-center">
               <label htmlFor="id_alamat" className="form-label">
@@ -266,11 +315,11 @@ const SubmitProductPage = () => {
                 </option>
 
                 {userData &&
-                userData[0] &&
-                userData[0].alamat &&
-                userData[0].alamat.length > 0 ? (
+                userData &&
+                userData.alamat &&
+                userData.alamat.length > 0 ? (
                   // Jika alamat ada maka diiterasi
-                  userData[0].alamat.map((alamat) => (
+                  userData.alamat.map((alamat) => (
                     <option key={alamat.id_alamat} value={alamat.id_alamat}>
                       {alamat.nama_lokasi}, Kec. {alamat.kecamatan}, Kota/Kab.{" "}
                       {alamat.kota_kabupaten}, Prov. {alamat.provinsi}, Kode
@@ -284,79 +333,36 @@ const SubmitProductPage = () => {
               </select>
             </div>
 
-            {/* Gambar Produk 1 */}
             <div>
-              <div className="mb-3">
-                <label htmlFor="gambar_produk1" className="form-label">
-                  Gambar Produk 1:
-                </label>
-                <input
-                  type="file"
-                  className="form-control"
-                  id="gambar_produk1"
-                  name="gambar_produk1"
-                  onChange={handleChange}
-                  required
-                  hidden
-                />
-
-                {/* Preview */}
-                {formData.gambar_produk1_preview && (
-                  <Image
-                    src={formData.gambar_produk1_preview}
-                    alt="Gambar Produk 1"
-                    width={200}
-                    height={200}
-                    style={{ marginTop: "10px" }}
+              {Array.from({ length: jumlahGambar }).map((_, index) => (
+                <div key={index} className="mb-3">
+                  <label
+                    htmlFor={`gambar_produk${index}`}
+                    className="form-label"
+                  >
+                    Gambar Produk {index + 1}{" "}
+                    {index === 0 ? "(required)" : "(optional)"}:
+                  </label>
+                  <input
+                    type="file"
+                    className="form-control"
+                    id={`gambar_produk${index}`}
+                    name={`gambar_produk${index}`}
+                    onChange={(e) => handleChange(e, index)}
+                    // requied = true, jika gambar index ke 0
+                    required={index === 0}
                   />
-                )}
-              </div>
-
-              {/* Gambar Produk 2 */}
-              <div className="mb-3">
-                <label htmlFor="gambar_produk2" className="form-label">
-                  Gambar Produk 2 (optional):
-                </label>
-                <input
-                  type="file"
-                  className="form-control"
-                  id="gambar_produk2"
-                  name="gambar_produk2"
-                  onChange={handleChange}
-                />
-                {formData.gambar_produk2_preview && (
-                  <Image
-                    src={formData.gambar_produk2_preview}
-                    alt="Gambar Produk 2"
-                    width={200}
-                    height={200}
-                    style={{ marginTop: "10px" }}
-                  />
-                )}
-              </div>
-
-              {/* Gambar Produk 3 */}
-              <div className="mb-3">
-                <label htmlFor="gambar_produk3" className="form-label">
-                  Gambar Produk 3 (optional):
-                </label>
-                <input
-                  type="file"
-                  className="form-control"
-                  id="gambar_produk3"
-                  name="gambar_produk3"
-                  onChange={handleChange}
-                />
-                {formData.gambar_produk3_preview && (
-                  <Image
-                    src={formData.gambar_produk3_preview}
-                    alt="Gambar Produk 3"
-                    width={200}
-                    height={200}
-                    style={{ marginTop: "10px" }}
-                  />
-                )}
-              </div>
+                  {formData.gambar_produk_preview[index] && (
+                    <Image
+                      src={formData.gambar_produk_preview[index]}
+                      alt={`Gambar Produk ${index + 1}`}
+                      width={200}
+                      height={200}
+                      style={{ marginTop: "10px" }}
+                    />
+                  )}
+                </div>
+              ))}
             </div>
 
             {/* Submit Button */}
