@@ -12,12 +12,11 @@ const SubmitProductPage = () => {
   const [userData, setUserData] = useState(null);
   const { kategoriData, subkategoriData } = useKategori();
   const [fileName, setFileName] = useState("");
-  const jumlahGambar = 6; // Jumlah gambar produk
+  const jumlahGambar = 20; // Jumlah gambar produk
   const [message, setMessage] = useState("");
   const [error, setError] = useState("");
   const [loading, setLoading] = useState(true);
   const [filteredSubkategoriData, setFilteredSubkategoriData] = useState([]);
-
 
   // console.log("kategoriData", kategoriData);
 
@@ -41,8 +40,6 @@ const SubmitProductPage = () => {
       });
   }, []);
 
-
-
   const [formData, setFormData] = useState({
     // data bukan gambar
     id_kategori: "",
@@ -55,10 +52,6 @@ const SubmitProductPage = () => {
     gambar_produk: Array(jumlahGambar).fill(null), // Array untuk menyimpan gambar
     gambar_produk_preview: Array(jumlahGambar).fill(null), // Array untuk preview gambar
   });
-
-
-
-
 
   // Handle form submission
   const handleSubmit = async (e) => {
@@ -110,20 +103,19 @@ const SubmitProductPage = () => {
     }
   };
 
-
   useEffect(() => {
     if (formData.id_kategori !== undefined && subkategoriData.length > 0) {
-        console.log("ID KATEGORI TERPILIH:", formData.id_kategori);
+      console.log("ID KATEGORI TERPILIH:", formData.id_kategori);
 
-        const filteredData = subkategoriData.filter(
-            (subkategori) => subkategori.id_kategori === Number(formData.id_kategori)
-        );
+      const filteredData = subkategoriData.filter(
+        (subkategori) =>
+          subkategori.id_kategori === Number(formData.id_kategori)
+      );
 
-        setFilteredSubkategoriData(filteredData);
-        console.log("FILTERED DATA", filteredData);
+      setFilteredSubkategoriData(filteredData);
+      console.log("FILTERED DATA", filteredData);
     }
-}, [formData.id_kategori, subkategoriData]);
-
+  }, [formData.id_kategori, subkategoriData]);
 
   // Fungsi untuk menangani perubahan input dari form
   // prosess image
@@ -165,7 +157,6 @@ const SubmitProductPage = () => {
         [name]: value, // Simpan nilai input non-gambar
       }));
     }
-
   };
 
   if (loading) {
@@ -261,46 +252,52 @@ const SubmitProductPage = () => {
                 <option value="" disabled>
                   Pilih Kategori
                 </option>
-                {kategoriData.length > 0 ?(kategoriData.map(kategori => (
-                  <option key={kategori.id_kategori} value={kategori.id_kategori} >
-                    {kategori.nama_kategori}
-
-                  </option>
-                ))):(
+                {kategoriData.length > 0 ? (
+                  kategoriData.map((kategori) => (
+                    <option
+                      key={kategori.id_kategori}
+                      value={kategori.id_kategori}
+                    >
+                      {kategori.nama_kategori}
+                    </option>
+                  ))
+                ) : (
                   <option>No kategori available</option>
                 )}
               </select>
             </div>
             {/* Subkategori */}
-      <div className="mb-4 grid grid-cols-3 gap-2 items-center">
-        <label htmlFor="id_subkategori" className="form-label">
-          Subkategori:
-        </label>
-        <select
-          type="number"
-          className="form-control col-span-1 border rounded-lg p-1 focus:outline-none focus:ring-2 focus:ring-blue-400"
-          id="id_subkategori"
-          name="id_subkategori"
-          value={formData.id_subkategori}
-          onChange={handleChange}
-          required
-        >
-          <option value="" disabled>
-            Pilih Subkategori
-          </option>
-          {filteredSubkategoriData.length > 0 ? (
-            filteredSubkategoriData.map((subkategori) => (
-              <option key={subkategori.id_subkategori} value={subkategori.id_subkategori}>
-                {subkategori.nama_subkategori}
-              </option>
-            ))
-          ) : (
-            <option>No subkategori available</option>
-          )}
-        </select>
-      </div>
+            <div className="mb-4 grid grid-cols-3 gap-2 items-center">
+              <label htmlFor="id_subkategori" className="form-label">
+                Subkategori:
+              </label>
+              <select
+                type="number"
+                className="form-control col-span-1 border rounded-lg p-1 focus:outline-none focus:ring-2 focus:ring-blue-400"
+                id="id_subkategori"
+                name="id_subkategori"
+                value={formData.id_subkategori}
+                onChange={handleChange}
+                required
+              >
+                <option value="" disabled>
+                  Pilih Subkategori
+                </option>
+                {filteredSubkategoriData.length > 0 ? (
+                  filteredSubkategoriData.map((subkategori) => (
+                    <option
+                      key={subkategori.id_subkategori}
+                      value={subkategori.id_subkategori}
+                    >
+                      {subkategori.nama_subkategori}
+                    </option>
+                  ))
+                ) : (
+                  <option>No subkategori available</option>
+                )}
+              </select>
+            </div>
 
-            
             {/* Alamat */}
             <div className="mb-4 grid grid-cols-3 gap-2 items-center">
               <label htmlFor="id_alamat" className="form-label">
@@ -356,6 +353,7 @@ const SubmitProductPage = () => {
                     // requied = true, jika gambar index ke 0
                     required={index === 0}
                   />
+
                   {formData.gambar_produk_preview[index] && (
                     <Image
                       src={formData.gambar_produk_preview[index]}
