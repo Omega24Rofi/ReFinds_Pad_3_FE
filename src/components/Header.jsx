@@ -3,11 +3,15 @@ import Link from 'next/link';
 
 const Header = () => {
   return (
-    <header className='w-full max-h-max bg-lightbluemain py-2 flex items-center justify-center sticky'>
+    <header className='w-full max-h-max bg-lightbluemain py-4 flex items-center justify-center sticky'>
       <div className="w-[100%]  flex flex-row items-center justify-between">
         <div className='flex justify-center items-center w-2/12 h-full'>
-          <img src="/images/Logo-blue.png" alt="logo-refinds-blue" className='h-12 w-auto mr-4'/>
-          <img src="/images/text-logosvg.svg" alt="logo-refinds-type" className='w-auto h-6' />
+          <Link href={"/"}>
+            <img src="/images/Logo-blue.png" alt="logo-refinds-blue" className='h-12 w-auto mr-4'/>
+          </Link>
+          <Link href={"/"}>
+            <img src="/images/text-logosvg.svg" alt="logo-refinds-type" className='w-auto h-6' />
+          </Link>
         </div>
         <div className='w-[50%]  flex items-center'>
           <form action="post" className='w-full'>

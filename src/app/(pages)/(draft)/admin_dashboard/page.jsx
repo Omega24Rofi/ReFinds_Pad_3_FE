@@ -8,6 +8,8 @@ import withLevel from "@/components/withLevel";
 import withAuth from "@/components/withAuth";
 import Popup from 'reactjs-popup';
 import 'reactjs-popup/dist/index.css';
+import DetailPopUp from "@/components/detailPopUp";
+
 // import '../../global.css';
 
 
@@ -64,8 +66,7 @@ const ACCProduk = () => {
   //   return <div>Loading...</div>;
   // }
 
-
-
+                                   
   return (
     <div className="min-h-screen">
       <h1 className="text-center mt-5 text-2xl font-bold">Persetujuan Posting Produk</h1>
@@ -100,43 +101,30 @@ const ACCProduk = () => {
               {/* tombol accept */}
               <div className="flex mr-2 items-center justify-center gap-2 my-auto">
               
-              <Popup trigger=
-                {<button>
-                  <img src="/icons/info.svg" alt="info" />  
-                </button>} 
-                modal nested 
-                className="custom-popup rounded-xl">
-                {
-                    close => (
-                        <div className='modal bg-lightbg rounded-xl p-6 max-w-lg mx-auto shadow-lg'>
-                            <div className='content'>
-                                <p className="font-bold">Detail Produk</p>
-                                <img src="/images/testimage/image2.png" alt="" className="h-48 mx-auto mb-4"/>
-                                <div>
-                                <p>Nama Produk: Produk Contoh</p>
-                                <p>Harga: Rp 100,000</p>
-                                <p>Deskripsi produk : Lorem ipsum dolor sit, amet consectetur adipisicing elit. Atque in repellendus unde quibusdam doloremque neque delectus animi, eligendi</p>
-                                </div>
-                            </div>
-                            <div>
-                                <button className="bg-red-500 text-white font-bold p-2 rounded-xl block mx-auto mt-5" onClick=
-                                    {() => close()}>
-                                        Close modal
-                                </button>
-                            </div>
-                        </div>
-                    )
-                }
-            </Popup>
-              
-              <button id="btn_accept" className="button bg-blue_btn text-white text-lg font-bold w-28 py-2  rounded-xl">
+              <DetailPopUp
+                    trigger={
+                      <button>
+                        <img src="/icons/info.svg" alt="info"/>
+                      </button>
+                    }
+                    productName="Produk Contoh"
+                    price="Rp 100,000"
+                    description="Lorem ipsum dolor sit, amet consectetur adipisicing elit. Atque in repellendus unde quibusdam doloremque neque delectus animi, eligendi"
+                    imageUrl="/images/testimage/image2.png"
+                  />
+
+<button id="btn_accept" className="button bg-blue_btn text-white text-lg font-bold w-28 py-2  rounded-xl">
                 Terima
               </button>
 
               {/* tombol reject */}
               <button id="btn_reject" className="button bg-blue_btn text-white text-lg font-bold w-28 py-2 rounded-xl">Tolak</button>
+             
+                </div>
+              
+
               </div>
-            </div>
+    
             
 
             <br />
