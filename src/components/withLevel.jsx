@@ -1,7 +1,7 @@
 "use client";
 import { useEffect, useState } from "react";
 import { useRouter } from "next/navigation"; // Use Next.js's router for client-side navigation
-import axios from "axios";
+import api from "@/utils/axios";
 
 /*
 Fungsi ini berguna untuk hanya mengizinkan User yang memiliki level tertentu yang bisa mengakses page X
@@ -34,7 +34,7 @@ const withLevel = (WrappedComponent, requiredLevel, shouldRender) => {
       // Verify the token and fetch user data
       const verifyTokenAndFetchUserData = async () => {
         try {
-          const response = await axios.get("http://localhost:8000/api/verify-token", {
+          const response = await api.get("/api/verify-token", {
             headers: {
               Authorization: `Bearer ${token}`,
             },

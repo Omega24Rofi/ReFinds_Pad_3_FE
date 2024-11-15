@@ -1,6 +1,8 @@
 "use client";
 
-import useAuth from '@/app/component/useAuth';
+import useAuth from '@/hooks/useAuth';
+import api from "@/utils/axios";
+
 
 const HalamanX = () => {
 

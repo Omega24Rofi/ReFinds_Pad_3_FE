@@ -1,6 +1,7 @@
 "use client";
-import axios from 'axios';
 import { useEffect, useState } from 'react';
+import api from '@/utils/axios'; 
+
 
 const ProdukUser = () => {
   const [produk, setProduk] = useState([]);
@@ -9,7 +10,7 @@ const ProdukUser = () => {
   useEffect(() => {
     const fetchProduk = async () => {
       try {
-        const response = await axios.get('http://localhost:8000/api/user/produk', {
+        const response = await api.get('/api/user/produk', {
           headers: {
             Authorization: `Bearer ${token}`,
           },

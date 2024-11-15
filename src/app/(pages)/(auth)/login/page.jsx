@@ -3,11 +3,10 @@ import React, { useState } from "react";
 import "../../../globals.css";
 import Image from "next/image";
 import Link from "next/link";
+import api from "@/utils/axios";
 import { useRouter } from "next/navigation";
 
-// be
-import axios from "axios";
-import { redirect } from "next/dist/server/api-utils";
+
 
 const Login = () => {
   const router = useRouter();
@@ -22,12 +21,12 @@ const Login = () => {
   
     try {
       console.log("TRY");
-      const response = await axios.post("http://localhost:8000/api/login", {
+      const response = await api.post("http://localhost:8000/api/login", {
         email,
         password,
       });
   
-      // Check if the response contains a token
+      // Cek apakah response dari mengandung token 
       if (response.data.token) {
         localStorage.setItem("token", response.data.token);
         setMessage("Login successful");
@@ -40,12 +39,12 @@ const Login = () => {
       }
     } catch (err) {
       if (err.response && err.response.data && err.response.data.message) {
-        setError(err.response.data.message); // Display backend error message
+        setError(err.response.data.message); // Menampilkan error dari backend
       } else {
-        setError("Login failed"); // Fallback error message
+        setError("Login failed"); 
       }
       setMessage("");
-      console.error("Login error:", err); // Log the error details
+      console.error("Login error:", err); // Log error
     }
   
   

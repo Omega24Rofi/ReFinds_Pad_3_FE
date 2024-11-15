@@ -1,10 +1,16 @@
 "use client"; // Menandakan bahwa ini adalah client component
 
 import { useEffect, useState } from "react";
+<<<<<<< HEAD:src/app/(pages)/(example)/admin_dashboard/page.jsx
 import axios from "axios";
 import withLevel from "@/app/component/withLevel";
 import withAuth from "@/app/component/withAuth";
 import Image from "next/image";
+=======
+import api from "@/utils/axios";
+import withLevel from "@/components/withLevel";
+import withAuth from "@/components/withAuth";
+>>>>>>> ba5b2c1d3a56d0909724e8b7644b425365996bea:src/app/(pages)/(draft)/admin_dashboard/page.jsx
 
 
 const ACCProduk = () => {
@@ -15,8 +21,8 @@ const ACCProduk = () => {
   useEffect(() => {
     const fetchUnACCProduks = async () => {
       try {
-        const response = await axios.get(
-          "http://localhost:8000/api/produk/unacc"
+        const response = await api.get(
+          "/api/produk/unacc"
         );
         setProduks(response.data); // Simpan data produk ke state
         // console.log("ResponseData: ", response.data);
@@ -32,8 +38,8 @@ const ACCProduk = () => {
 
   const updateStatus = async (id_produk, status_post) => {
     try {
-      const response = await axios.post(
-        `http://localhost:8000/api/produk/update-status/${id_produk}`,
+      const response = await api.post(
+        `/api/produk/update-status/${id_produk}`,
         {
           status_post,
         }

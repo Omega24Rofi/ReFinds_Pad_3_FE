@@ -1,7 +1,9 @@
 "use client";
-import withAuth from "@/app/component/withAuth";
+import withAuth from "@/components/withAuth";
 import { useEffect, useState } from "react";
 import axios from "axios";
+import api from '@/utils/axios'; 
+
 
 const UserPage = () => {
   const [userData, setUserData] = useState(null);
@@ -10,7 +12,7 @@ const UserPage = () => {
     const token = localStorage.getItem("token");
 
     axios
-      .get("http://localhost:8000/api/user_data", {
+      api.get("/api/user_data", {
         headers: {
           Authorization: `Bearer ${token}`,
         },

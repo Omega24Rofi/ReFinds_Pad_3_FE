@@ -1,5 +1,5 @@
 import { useEffect, useState } from 'react';
-import axios from 'axios';
+import api from '@/utils/axios';
 import { useRouter } from 'next/navigation';
 
 /**
@@ -37,7 +37,7 @@ const useAuth = () => {
     // Jika token ada, verifikasi token dan ambil data pengguna
     const fetchUser = async () => {
       try {
-        const response = await axios.get('http://localhost:8000/api/verify-token', {
+        const response = await api.get('api/verify-token', {
           headers: {
             Authorization: `Bearer ${token}`,
           },
@@ -64,7 +64,7 @@ export default useAuth;
 
 
 /////// contoh penggunaan 1
-// import useAuth from '@/app/hooks/useAuth';
+// import useAuth from '@/hooks/useAuth';
 
 // const HalamanX = () => {
 //   const { user, loading } = useAuth();

@@ -1,4 +1,6 @@
 import Link from 'next/link'
+import api from '@/utils/axios'; 
+
 
 const ContactSeller = () => {
   return (

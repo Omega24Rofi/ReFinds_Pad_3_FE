@@ -95,7 +95,7 @@ const Homepage = () => {
 
         <div className="w-[80%] bg-lightbg flex flex-row flex-wrap mt-10 m-auto py-6 rounded-2xl px-2 justify-evenly">
             
-            {Array.from({ length: 30 }).map((_, index) => (
+            {Array.from({ length: 20 }).map((_, index) => (
                 <Link href={"/contact_seller"} key={index} className="card min-h-fit bg-white box-content w-40 m-2 rounded-lg">
                     <img src="/images/testimage/image.png" alt="" className="h-36 w-full" />
                     <p className='px-2'>With Hp INFINIX SMART 5</p>
@@ -110,7 +110,7 @@ const Homepage = () => {
         <li><Link href={"/register"}>Register</Link></li>
         <li><Link href={"/post"}>POST</Link></li>
         <li><Link href={"/display"}>DISPLAY</Link></li>
-        <li><Link href={"/user_data"}>USER DATA</Link></li>
+        <li><Link href={"/testing_user_data"}>USER DATA</Link></li>
         {/* <li><Link href={"/admin_acc"}>ADMIN ACC</Link></li> */}
         <li><Link href={"/admin_dashboard"}>Admin DashBoard</Link></li>
         <li><Link href={"/dashboard"}>DashBoard</Link></li>
