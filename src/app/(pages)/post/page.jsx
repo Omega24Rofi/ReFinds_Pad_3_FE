@@ -4,6 +4,9 @@ import { useEffect, useState } from "react";
 import withAuth from "@/components/withAuth";
 import Image from "next/image";
 import Link from "next/link";
+import useKategori from "@/app/component/useKategori";
+import SplashScreen from "@/app/components/splashScreen";
+
 import { processImage } from "@/utils/processImage"; // Impor utilitas pemrosesan gambar
 import useKategori from "@/hooks/useKategori";
 import api from "@/utils/axios";
@@ -160,9 +163,11 @@ const SubmitProductPage = () => {
   };
 
   if (loading) {
-    return <div>Loading user data...</div>;
+    return <div>{SplashScreen}</div>;
   }
 
+
+  
   return (
     <div className="min-h-screen">
       <header className="w-full max-h-fit h-fit py-5 px-10 bg-lightbluemain flex flex-row align-bottom">

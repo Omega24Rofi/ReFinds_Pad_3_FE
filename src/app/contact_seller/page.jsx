@@ -19,8 +19,10 @@ const ContactSeller = () => {
                 </div>
                 
                 <div className='flex flex-row align-middle mt-10 text-center h-fit w-12'>
-                    <img src="/images/testimage/account_circle.png" alt="" />
-                    <p>Seller</p>
+                    <Link href={"/seller_view"}>
+                        <img src="/images/testimage/account_circle.png" alt="" />
+                        <p>Seller</p>
+                    </Link>
                 </div>
                 <button className='bg-[#0D96C4] p-2 text-white rounded-lg mt-36 w-24 m-auto'>Pesan</button>
             </div>
