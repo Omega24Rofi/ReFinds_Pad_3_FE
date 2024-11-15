@@ -4,6 +4,7 @@ import { useEffect, useState } from "react";
 import axios from "axios";
 import withLevel from "@/app/component/withLevel";
 import withAuth from "@/app/component/withAuth";
+import Image from "next/image";
 
 
 const ACCProduk = () => {
@@ -62,44 +63,55 @@ const ACCProduk = () => {
 
 
   return (
-    <div>
-      <h1>Daftar produk perlu ACC</h1>
+    <div className="min-h-screen">
+      <h1 className="text-center mt-5 text-2xl font-bold">Persetujuan Posting Produk</h1>
 
-      {/* Menampilkan semua data produk yang perlu acc dan data pengguna */}
-      <ul>
-        {produkData.map((produk) => (
-          <li key={produk.id_produk}>
-            <h2>Username: {produk.user.nama_akun}</h2>
-            <img src={produk.user.url_foto_profil} alt="Foto Profil" />
-            <h2>Nama Produk: {produk.nama_produk}</h2>
-            <p>Harga: {produk.harga}</p>
-            <img src={produk.list_url_gambar[0]} alt="gambar_produk" />
-            <br />
+{/* Menampilkan semua data produk yang perlu acc dan data pengguna */}
+      <div className="w-[90%] bg-lightbg mx-auto mt-5 rounded-3xl p-4">
+        <p className="mt-2 text-2xl font-bold">Produk Masuk</p>
+        <ul>
+        {/* Dummy data untuk visualisasi */}
+          <li className="flex flex-row">
+            <div className="mr-2">
+              <img
+                src="/images/testimage/account_circle.png"
+                alt="Foto Profil"
+                style={{ width: "50px", height: "50px", borderRadius: "50%" }}
+                className="mx-auto"
+                />
+                <h2>contoh_user</h2>
+            </div>
+            <div className="flex flex-row bg-white "> 
+              <img
+                src="https://via.placeholder.com/150"
+                alt="gambar_produk"
+                style={{ width: "150px", height: "150px", objectFit: "cover" }}
+              />
+              <div className="product-info ml-2 pr-5 w-[70%]">
+                <p>Nama Produk: Produk Contoh</p>
+                <p>Harga: Rp 100,000</p>
+                <p>Deskripsi produk : Lorem ipsum dolor sit, amet consectetur adipisicing elit. Atque in repellendus unde quibusdam doloremque neque delectus animi, eligendi</p>
+              </div>
 
-            {/* tombol accept */}
-            <button
-              onClick={() => acceptProduct(produk.id_produk)}
-              id="btn_accept"
-            >
-              Accept
-            </button>
-          <span>&nbsp;&nbsp;</span>
-            
+              {/* tombol accept */}
+              <div className="">
 
-            {/* Tombol reject */}
-            <button
-              onClick={() => rejectProduct(produk.id_produk)}
-              id="btn_reject"
-            >
-              Reject
-            </button>
+              <button id="btn_accept" className="button bg-blue_btn text-white text-xl font-bold py-2 px-4">
+                Terima
+              </button>
+
+              {/* tombol reject */}
+              <button id="btn_reject" className="button bg-blue_btn text-white text-xl font-bold">Tolak</button>
+              </div>
+            </div>
             
 
             <br />
             <br />
           </li>
-        ))}
-      </ul>
+        </ul>
+      </div>
+
     </div>
   );
 };
