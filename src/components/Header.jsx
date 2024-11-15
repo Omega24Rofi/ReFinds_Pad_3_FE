@@ -3,6 +3,8 @@
 import React from "react";
 import Link from "next/link";
 import useAuth from "@/hooks/useAuth";
+import Image from "next/image";
+import DropdownSetting from "./DropdownSetting";
 
 const Header = () => {
   const { userDataX } = useAuth();
@@ -30,7 +32,7 @@ const Header = () => {
         </div>
         <div className="w-[50%]  flex items-center">
           <form action="post" className="w-full">
-            <label htmlFor="search">
+            <label htmlFor="search" className="flex bg-white rounded-xl px-5">
               <input
                 type="text"
                 name="search"
@@ -38,16 +40,25 @@ const Header = () => {
                 placeholder="Cari produk berkualitas disini"
                 className="w-full p-2 rounded-xl"
               />
+              <img src="/icons/search.svg" alt="" className="h-8 my-auto"/>
             </label>
           </form>
         </div>
         <div className="w-1/4 h-full text-white flex items-center space-x-2 px-2 justify-evenly">
           {/* Jika user ada, tampilkan foto profil */}
           {userDataX ? (
-            <div>
-
+            <div className="flex align-middle gap-8">
+              <div className="my-auto">
+              <Link href={"/post"} className="flex gap-2 bg-blue_btn px-6 py-1 rounded-lg">
+                <p className="text-black font-bold text-2xl">+</p>
+                <p className="text-white font-bold text-xl">Jual</p>
+              </Link>
+              </div>
               {/* FOTO PROFIL DLL DILETAKKAN DISINI */}
-              <img src="" alt="Foto Profil" />
+              
+              <button id="dropdownDefaultButton" data-dropdown-toggle="dropdown"  type="button">
+                <img src="/images/testimage/account_circle.png" alt="Foto Profil" className=" h-[90%] "/>
+              </button>
 
             </div>
           ) : (

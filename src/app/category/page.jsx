@@ -8,7 +8,7 @@ export const Category = () => {
   return (
     <div className='min-h-screen h-screen'>
         <div className='h-[30%] w-full bg-[#68C7E7] mt-16 -z-[99] relative text-center flex flex-col align-middle justify-center'>
-            <img src="/images/categories/categoryof.png" alt="" className='w-60 '/>
+            <img src="/images/categories/categoryof.png" alt="" className='w-60 mx-auto'/>
             <h1 className='font-bold text-2xl'>{title}</h1>
         </div>
         <div className="w-[80%] bg-lightbg flex flex-row flex-wrap -mt-10 m-auto py-6 rounded-2xl px-2 justify-evenly">

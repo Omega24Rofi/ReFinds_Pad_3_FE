@@ -75,7 +75,7 @@ const handleSubkategoriChange = (id_subkategori) => {
 
 
     return (
-        <div>
+        <div className='min-h-screen'>
             <h1>Filter Produk</h1>
             <div>
                 {kategoriData.map((kategori) => (

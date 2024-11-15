@@ -14,7 +14,7 @@ const SubmitProductPage = () => {
   const [userData, setUserData] = useState(null);
   const { kategoriData, subkategoriData } = useKategori();
   const [fileName, setFileName] = useState("");
-  const jumlahGambar = 20; // Jumlah gambar produk
+  const jumlahGambar = 3; // Jumlah gambar produk
   const [message, setMessage] = useState("");
   const [error, setError] = useState("");
   const [loading, setLoading] = useState(true);

@@ -65,25 +65,32 @@ const Homepage = () => {
     <div className='min-h-screen'>
       {/* Carousel */}
       <Carousel slides={slides} />
-      <div className='w-full justify-center align-middle mt-5'>
-        <div className='flex flex-row gap-8 h-28 align-middle justify-center'>
-          <Link href={"/category"} className='bg-white rounded-2xl shadow-lg p-2' >
+      <div className="w-full justify-center align-middle my-5">
+        <div className="flex flex-row gap-8 h-28 align-middle justify-center">
+          <Link href={"/category"} className="bg-white rounded-2xl shadow-lg p-2 flex flex-col items-center">
             <img src="/images/categories/Two white plates with blue rim.png" alt="alat rumah tangga" />
+            <p className="px-2 text-center mt-4">Alat Rumah Tangga</p>
           </Link>
-          <Link href={"/category"}className='bg-white rounded-2xl shadow-lg p-2'>
+          <Link href={"/category"} className="bg-white rounded-2xl shadow-lg p-2 flex flex-col items-center">
             <img src="/images/categories/laptop white screen.png" alt="elektronik" />
+            <p className="px-2 text-center">Elektronik</p>
           </Link>
-          <Link href={"/category"} className='bg-white rounded-2xl shadow-lg p-2'>
-            <img src="/images/categories/green sofa with two pillows.png" alt="perabotan" className=''/>
+          <Link href={"/category"} className="bg-white rounded-2xl shadow-lg p-2 flex flex-col items-center">
+            <img src="/images/categories/green sofa with two pillows.png" alt="perabotan" />
+            <p className="px-2 text-center">Furniture</p>
           </Link>
-          <Link href={"/category"}  className='bg-white rounded-2xl shadow-lg p-2 '>
-            <img src="/images/categories/t-shirt mockup.png" alt="pakaian & outfit lainnya"/>
+          <Link href={"/category"} className="bg-white rounded-2xl shadow-lg p-2 flex flex-col items-center">
+            <img src="/images/categories/t-shirt mockup.png" alt="pakaian & outfit lainnya" />
+            <p className="px-2 text-center">Pakaian</p>
           </Link>
         </div>
       </div>
 
-      <div className="w-[80%] bg-lightbg flex flex-row flex-wrap mt-10 m-auto py-6 rounded-2xl px-2 justify-evenly">
-            
+      
+      <div className="w-[80%] bg-lightbg flex-wrap mt-10 m-auto py-6 rounded-2xl px-2 justify-evenly">
+            <p className='text-xl font-bold text-black px-2'>Top Product</p>
+            <div className='flex flex-wrap'>
+
             {Array.from({ length: 6 }).map((_, index) => (
                 <Link href={"/contact_seller"} key={index} className="card min-h-fit bg-white box-content w-40 m-2 rounded-lg">
                     <img src="/images/testimage/image.png" alt="" className="h-36 w-full" />
@@ -91,10 +98,12 @@ const Homepage = () => {
                     <p className="text-blue-300 px-2">Rp. 2.600.000</p>
                 </Link>
             ))}
+            </div>
         </div>
 
-        <div className="w-[80%] bg-lightbg flex flex-row flex-wrap mt-10 m-auto py-6 rounded-2xl px-2 justify-evenly">
-            
+        <div className="w-[80%] bg-lightbg flex-wrap mt-10 m-auto py-6 rounded-2xl px-2 justify-evenly">
+            <p className='text-xl font-bold text-black px-2'>Produk Terbaru</p>
+            <div className='flex flex-wrap'>
             {Array.from({ length: 20 }).map((_, index) => (
                 <Link href={"/contact_seller"} key={index} className="card min-h-fit bg-white box-content w-40 m-2 rounded-lg">
                     <img src="/images/testimage/image.png" alt="" className="h-36 w-full" />
@@ -102,6 +111,7 @@ const Homepage = () => {
                     <p className="text-blue-300 px-2">Rp. 2.600.000</p>
                 </Link>
             ))}
+            </div>
         </div>
 
       <h1>Homepage</h1>
