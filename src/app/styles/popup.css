@@ -1,0 +1,21 @@
+/* Make overlay transparent */
+.custom-popup .reactjs-popup-overlay {
+    background: transparent;
+  }
+  
+  /* Customize the popup content container */
+  .custom-popup .reactjs-popup-content {
+    border: none;
+    padding: 0;
+    background: none; /* Remove the white background */
+    display: flex;
+    justify-content: center;
+    align-items: center;
+  }
+  
+  /* Customize modal styles if needed */
+  .modal {
+    background-color: #e0f7fa; /* Use the blue color here */
+    border-radius: 1rem;
+  }
+  

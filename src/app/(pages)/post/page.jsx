@@ -4,8 +4,7 @@ import { useEffect, useState } from "react";
 import withAuth from "@/components/withAuth";
 import Image from "next/image";
 import Link from "next/link";
-import useKategori from "@/app/component/useKategori";
-import SplashScreen from "@/app/components/splashScreen";
+// import SplashScreen from "@/app/components/splashScreen";
 
 import { processImage } from "@/utils/processImage"; // Impor utilitas pemrosesan gambar
 import useKategori from "@/hooks/useKategori";
@@ -163,7 +162,7 @@ const SubmitProductPage = () => {
   };
 
   if (loading) {
-    return <div>{SplashScreen}</div>;
+    return <div>Loading...</div>;
   }
 
 

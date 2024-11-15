@@ -1,16 +1,14 @@
 "use client"; // Menandakan bahwa ini adalah client component
 
 import { useEffect, useState } from "react";
-<<<<<<< HEAD:src/app/(pages)/(example)/admin_dashboard/page.jsx
 import axios from "axios";
-import withLevel from "@/app/component/withLevel";
-import withAuth from "@/app/component/withAuth";
 import Image from "next/image";
-=======
 import api from "@/utils/axios";
 import withLevel from "@/components/withLevel";
 import withAuth from "@/components/withAuth";
->>>>>>> ba5b2c1d3a56d0909724e8b7644b425365996bea:src/app/(pages)/(draft)/admin_dashboard/page.jsx
+import Popup from 'reactjs-popup';
+import 'reactjs-popup/dist/index.css';
+// import '../../global.css';
 
 
 const ACCProduk = () => {
@@ -78,7 +76,7 @@ const ACCProduk = () => {
         <ul>
         {/* Dummy data untuk visualisasi */}
           <li className="flex flex-row">
-            <div className="mr-2">
+            <div className="mr-2 my-auto">
               <img
                 src="/images/testimage/account_circle.png"
                 alt="Foto Profil"
@@ -87,27 +85,56 @@ const ACCProduk = () => {
                 />
                 <h2>contoh_user</h2>
             </div>
-            <div className="flex flex-row bg-white "> 
+            <div className="flex flex-row bg-white justify-center align-middle rounded-xl"> 
               <img
                 src="https://via.placeholder.com/150"
                 alt="gambar_produk"
                 style={{ width: "150px", height: "150px", objectFit: "cover" }}
               />
-              <div className="product-info ml-2 pr-5 w-[70%]">
+              <div className="product-info ml-2 p-4 pr-5 w-[70%]">
                 <p>Nama Produk: Produk Contoh</p>
                 <p>Harga: Rp 100,000</p>
                 <p>Deskripsi produk : Lorem ipsum dolor sit, amet consectetur adipisicing elit. Atque in repellendus unde quibusdam doloremque neque delectus animi, eligendi</p>
               </div>
 
               {/* tombol accept */}
-              <div className="">
-
-              <button id="btn_accept" className="button bg-blue_btn text-white text-xl font-bold py-2 px-4">
+              <div className="flex mr-2 items-center justify-center gap-2 my-auto">
+              
+              <Popup trigger=
+                {<button>
+                  <img src="/icons/info.svg" alt="info" />  
+                </button>} 
+                modal nested 
+                className="custom-popup rounded-xl">
+                {
+                    close => (
+                        <div className='modal bg-lightbg rounded-xl p-6 max-w-lg mx-auto shadow-lg'>
+                            <div className='content'>
+                                <p className="font-bold">Detail Produk</p>
+                                <img src="/images/testimage/image2.png" alt="" className="h-48 mx-auto mb-4"/>
+                                <div>
+                                <p>Nama Produk: Produk Contoh</p>
+                                <p>Harga: Rp 100,000</p>
+                                <p>Deskripsi produk : Lorem ipsum dolor sit, amet consectetur adipisicing elit. Atque in repellendus unde quibusdam doloremque neque delectus animi, eligendi</p>
+                                </div>
+                            </div>
+                            <div>
+                                <button className="bg-red-500 text-white font-bold p-2 rounded-xl block mx-auto mt-5" onClick=
+                                    {() => close()}>
+                                        Close modal
+                                </button>
+                            </div>
+                        </div>
+                    )
+                }
+            </Popup>
+              
+              <button id="btn_accept" className="button bg-blue_btn text-white text-lg font-bold w-28 py-2  rounded-xl">
                 Terima
               </button>
 
               {/* tombol reject */}
-              <button id="btn_reject" className="button bg-blue_btn text-white text-xl font-bold">Tolak</button>
+              <button id="btn_reject" className="button bg-blue_btn text-white text-lg font-bold w-28 py-2 rounded-xl">Tolak</button>
               </div>
             </div>
             
