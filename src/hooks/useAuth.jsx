@@ -22,15 +22,13 @@ const useAuth = () => {
   userData berfungsi sebagai tempat menyimpan data pengguna.
   setUserData adalah fungsi yang dipanggil untuk mengubah nilai userData.
    */
-  const [userData, setUserData] = useState(null);  // Menyimpan data user
-  const [loading, setLoading] = useState(true);  // Menyimpan status loading
+  const [userDataX, setUserData] = useState(null);  // Menyimpan data user
 
   useEffect(() => {
     const token = localStorage.getItem('token');
     
     // Jika token tidak ada, artinya pengguna belum login
     if (!token) {
-      setLoading(false);
       return;
     }
 
@@ -49,15 +47,13 @@ const useAuth = () => {
         localStorage.removeItem('token');
       } finally {
 
-        // Ketika proses seleai regardless of result maka loading akan di set fasle
-        setLoading(false);
       }
     };
 
     fetchUser();
   }, []);
 //   disini berarti antara data pengguna (ada atau tidak ada) dan loading = false
-  return { userData, loading };  // Kembalikan status user dan loading
+  return { userDataX};  // Kembalikan status user dan loading
 };
 
 export default useAuth;

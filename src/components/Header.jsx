@@ -1,7 +1,12 @@
+"use client";
+
 import React from 'react';
 import Link from 'next/link';
+import useAuth from '@/hooks/useAuth';
 
 const Header = () => {
+  const {userDataX} =useAuth();
+
   return (
     <header className='w-full max-h-max bg-lightbluemain py-2 flex items-center justify-center sticky'>
       <div className="w-[100%]  flex flex-row items-center justify-between">
@@ -17,9 +22,28 @@ const Header = () => {
           </form>
         </div>
         <div className='w-1/4 h-full text-white flex items-center space-x-2 px-2 justify-evenly'>
-          <Link href={"/login"} className='rounded-md bg-blue_btn py-2 px-4 border border-transparent text-center text-sm text-white transition-all shadow-md hover:shadow-lg focus:bg-blue_btn_hover focus:shadow-none active:bg-blue_btn_hover hover:bg-blue_btn_hover active:shadow-none disabled:pointer-events-none disabled:opacity-50 disabled:shadow-none ml-2'>Login</Link>
+        
+                {/* Jika user ada, tampilkan foto profil */}
+                {userDataX ? (
+          <div>
+            {/* FOTO PROFIL DILETAKKAN DISINI */}
+
+            <p>ANDA SUDAH LOGIN</p>
+            <img src={userDataX.profile_picture_url} alt="Foto Profil" />
+            { console.log("URL PROFILE",userDataX.profile_picture_url) }
+          </div>
+        ) : (
+
+          // Jika user tidak ada, tampilkan tombol login
+          <div>
+         <Link href={"/login"} className='rounded-md bg-blue_btn py-2 px-4 border border-transparent text-center text-sm text-white transition-all shadow-md hover:shadow-lg focus:bg-blue_btn_hover focus:shadow-none active:bg-blue_btn_hover hover:bg-blue_btn_hover active:shadow-none disabled:pointer-events-none disabled:opacity-50 disabled:shadow-none ml-2'>Login</Link>
           
           <Link href={'/register'} className='rounded-md bg-blue_btn py-2 px-4 border border-transparent text-center text-sm text-white transition-all shadow-md hover:shadow-lg focus:bg-blue_btn_hover focus:shadow-none active:bg-blue_btn_hover hover:bg-blue_btn_hover active:shadow-none disabled:pointer-events-none disabled:opacity-50 disabled:shadow-none ml-2'>Daftar</Link>
+ 
+
+          </div>
+        )}
+          
         </div>
       </div>
     </header> 
