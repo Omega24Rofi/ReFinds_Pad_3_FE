@@ -129,7 +129,7 @@ const Register = () => {
             </div>
             <p className="text-center">
               Sudah punya akun? Login{' '}
-              <Link href="/auth/login" className="text-blue-600">
+              <Link href="/login" className="text-blue-600">
                 Yuk!
               </Link>
             </p>
