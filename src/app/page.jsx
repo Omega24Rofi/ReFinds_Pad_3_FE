@@ -92,7 +92,7 @@ const Homepage = () => {
             <div className='flex flex-wrap'>
 
             {Array.from({ length: 6 }).map((_, index) => (
-                <Link href={"/contact_seller"} key={index} className="card min-h-fit bg-white box-content w-40 m-2 rounded-lg">
+                <Link href={"/contact_seller"} key={index} className="card min-h-fit bg-white box-content w-[11.4rem] m-2 rounded-lg">
                     <img src="/images/testimage/image.png" alt="" className="h-36 w-full" />
                     <p className='px-2'>With Hp INFINIX SMART 5</p>
                     <p className="text-blue-300 px-2">Rp. 2.600.000</p>
@@ -105,7 +105,7 @@ const Homepage = () => {
             <p className='text-xl font-bold text-black px-2'>Produk Terbaru</p>
             <div className='flex flex-wrap'>
             {Array.from({ length: 20 }).map((_, index) => (
-                <Link href={"/contact_seller"} key={index} className="card min-h-fit bg-white box-content w-40 m-2 rounded-lg">
+                <Link href={"/contact_seller"} key={index} className="card min-h-fit bg-white box-content w-[11.4rem] m-2 rounded-lg">
                     <img src="/images/testimage/image.png" alt="" className="h-36 w-full" />
                     <p className='px-2'>With Hp INFINIX SMART 5</p>
                     <p className="text-blue-300 px-2">Rp. 2.600.000</p>

@@ -5,12 +5,27 @@ import Link from "next/link";
 import useAuth from "@/hooks/useAuth";
 import Image from "next/image";
 import DropdownSetting from "./DropdownSetting";
+import 'flowbite/dist/flowbite.min.js';
+import { useState } from "react";
 
 const Header = () => {
   const { userDataX } = useAuth();
 
+  const [IsDropDownOpen, SetIsDropDownOpen] = useState(false);
+
+  const toogleDropDown = () => {
+    SetIsDropDownOpen(!IsDropDownOpen)
+  }
+
+  const logout = () => {
+    // clear the token
+    localStorage.removeItem('token');
+    // redirect to login page
+    window.location.href = '/login';
+  };
+
   return (
-    <header className="w-full max-h-max bg-lightbluemain py-2 flex items-center justify-center sticky">
+    <header className="w-full max-h-max bg-lightbluemain py-2 flex items-center justify-center sticky z-[999] ">
       <div className="w-[100%]  flex flex-row items-center justify-between">
         <div className="flex justify-center items-center w-2/12 h-full">
           <Link href={"/"}>
@@ -56,9 +71,26 @@ const Header = () => {
               </div>
               {/* FOTO PROFIL DLL DILETAKKAN DISINI */}
               
-              <button id="dropdownDefaultButton" data-dropdown-toggle="dropdown"  type="button">
-                <img src="/images/testimage/account_circle.png" alt="Foto Profil" className=" h-[90%] "/>
-              </button>
+              <div className="relative">
+
+                <button onClick={toogleDropDown}  type="button">
+                  <img src="/images/testimage/account_circle.png" alt="Foto Profil" className=" h-[90%] "/>
+                </button>
+
+                {IsDropDownOpen && (
+                  <div className="z-[99] absolute top-full right-[0.01rem] bg-white divide-y divide-gray-100 rounded-lg shadow w-44">
+                    <ul className="py-2 text-sm text-gray-700 bg-lightbg rounded-lg">
+                        <li className="w-full px-3 py-2 bg-lightbg border-b-white border-b-2"><Link href={"/user_transaksi_penjualan"} >
+                        Profile
+                        </Link></li>
+                        <li className="w-full px-3 py-2 bg-lightbg border-b-white border-b-2"><Link href={"/user_setting"}>Setting</Link></li>
+                        <li className="w-full px-3 py-2 bg-lightbg "><button onClick={logout} >Sign Out</button></li>
+                      </ul>
+                  </div>
+                )}
+              </div>
+
+              
 
             </div>
           ) : (
@@ -81,7 +113,9 @@ const Header = () => {
           )}
         </div>
       </div>
+      <script src="../path/to/flowbite/dist/flowbite.min.js"></script>
     </header>
+    
   );
 };
 
