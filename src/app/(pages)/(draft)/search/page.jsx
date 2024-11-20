@@ -58,11 +58,11 @@ const SearchPage = () => {
       
       {/* Displaying search results */}
         <div className="w-[80%] bg-lightbg flex flex-row flex-wrap mt-10 m-auto py-6 rounded-2xl px-2 justify-evenly">
-            {Array.from({ length: 12 }).map((_, index) => (
-                <Link href={"/contact_seller"} key={index} className="card min-h-fit bg-white box-content w-40 m-2 rounded-lg">
-                    <img src="/images/testimage/image.png" alt="" className="h-36 w-full" />
-                    <p className='px-2'>With Hp INFINIX SMART 5</p>
-                    <p className="text-blue-300 px-2">Rp. 2.600.000</p>
+        {produkData.map((produk) => (
+                <Link href={"/contact_seller"} key={produk.id_produk} className="card min-h-fit bg-white box-content w-40 m-2 rounded-lg">
+                    <img src={produk.list_url_gambar[0]} alt="" className="h-36 w-full" />
+                    <p className='px-2'>{produk.nama_produk}</p>
+                    <p className="text-blue-300 px-2">Rp. {produk.harga}</p>
                 </Link>
             ))}
         </div>

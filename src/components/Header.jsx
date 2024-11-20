@@ -6,10 +6,14 @@ import useAuth from "@/hooks/useAuth";
 import Image from "next/image";
 import DropdownSetting from "./DropdownSetting";
 import 'flowbite/dist/flowbite.min.js';
+import { useRouter } from 'next/navigation';
 import { useState } from "react";
+
 
 const Header = () => {
   const { userDataX } = useAuth();
+  const router = useRouter(); // Inisialisasi router
+
 
   const [IsDropDownOpen, SetIsDropDownOpen] = useState(false);
 
@@ -22,6 +26,16 @@ const Header = () => {
     localStorage.removeItem('token');
     // redirect to login page
     window.location.href = '/login';
+  };
+
+
+  const handleSearch = (event) => {
+    event.preventDefault();
+    const searchInput = event.target.search.value; // Mengambil nilai input dari form
+    if (searchInput.trim() !== "") {
+      // Redirect ke halaman pencarian dengan keyword sebagai query
+      router.push(`/builder?keywords=${encodeURIComponent(searchInput)}`);
+    }
   };
 
   return (
@@ -46,7 +60,7 @@ const Header = () => {
           
         </div>
         <div className="w-[50%]  flex items-center">
-          <form action="post" className="w-full">
+        <form onSubmit={handleSearch} className="w-full">
             <label htmlFor="search" className="flex bg-white rounded-xl px-5">
               <input
                 type="text"
@@ -55,10 +69,11 @@ const Header = () => {
                 placeholder="Cari produk berkualitas disini"
                 className="w-full p-2 rounded-xl"
               />
-              <img src="/icons/search.svg" alt="" className="h-8 my-auto"/>
+              <img src="/icons/search.svg" alt="" className="h-8 my-auto" />
             </label>
           </form>
         </div>
+
         <div className="w-1/4 h-full text-white flex items-center space-x-2 px-2 justify-evenly">
           {/* Jika user ada, tampilkan foto profil */}
           {userDataX ? (

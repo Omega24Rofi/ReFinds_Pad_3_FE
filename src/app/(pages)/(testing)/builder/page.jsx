@@ -1,110 +1,80 @@
-"use client"; // Menandakan bahwa ini adalah client component
-
-import { useEffect, useState } from "react";
+"use client";
+import { useState, useEffect } from "react";
+import axios from "axios";
+import Link from "next/link";
 import api from "@/utils/axios";
-import useKategori from "@/hooks/useKategori";
+import { useSearchParams } from "next/navigation";
 
-const ProdukList = () => {
-  const { kategoriData } = useKategori();
-  console.log("KATEGORI_DATA:", kategoriData);
 
-  const [userData, setUserData] = useState(null);
-  // useEffect untuk mengambil userData
+
+
+const SearchPage = () => {
+  const [searchInput, setSearchInput] = useState(""); // untuk menyimpan input form
+  const [produkData, setProdukData] = useState([]); // untuk menyimpan data produk dari BE
+  const searchParams = useSearchParams(); // Hook for accessing query parameters
+
+  // Ambil keyword dari query parameter URL
+  const keywords = searchParams.get("keywords");
+
   useEffect(() => {
-    const token = localStorage.getItem("token");
+    if (keywords) {
+      // Update state dengan keyword yang diterima dari URL dan lakukan pencarian
+      setSearchInput(keywords);
+      searchProduk(keywords.trim().split(" ")); // Panggil searchProduk dengan keyword
+    }
+  }, [keywords]);
 
-    api
-      .get("/api/user_data", {
-        headers: {
-          // token dikirim ke BE untuk mendapatkan user data terkait
-          Authorization: `Bearer ${token}`,
-        },
-      })
-      .then((response) => {
-        // console.log("ResponseData:", response.data); // Log data response
-        setUserData(response.data);
-        setLoading(false);
-      })
-      .catch((error) => {
-        console.error("Error fetching user data:", error);
-        setLoading(false); // Meskipun ada error, tetap hentikan state loading
-      });
-  }, []); 
+  // Function untuk menangani input keyword search
+  const handleSearch = async (event) => {
+    event.preventDefault();
 
+    // Split input berdasarkan spasi
+    const searchKeywords = searchInput.trim().split(" ");
+    console.log("KEYWORD", searchKeywords);
 
-  const [produks, setProduks] = useState([]); // State untuk menyimpan data produk
-  const [loading, setLoading] = useState(true); // State untuk loading
-  const [selectedKategori, setSelectedKategori] = useState("");
-  useEffect(() => {
-    const fetchProduks = async () => {
-      try {
-        let url = "/api/produk";
-        if (selectedKategori) {
-          url = `/api/produk/kategori/${selectedKategori}`;
-        }
-        const response = await api.get(url);
-        setProduks(response.data); // Simpan data produk ke state
-        console.log("ResponseData: ", response.data);
-      } catch (error) {
-        console.error("Error fetching products:", error);
-      } finally {
-        setLoading(false); // Selesai loading
-      }
-    };
-  
-    fetchProduks(); // Panggil fungsi untuk mengambil data produk
-  }, [selectedKategori]);
-  
-
-  const handleChange = (event) => {
-    setSelectedKategori(event.target.value);
-    // Anda dapat menambahkan logika tambahan di sini, misalnya, memfilter produk berdasarkan kategori yang dipilih.
-    console.log("Kategori yang dipilih:", event.target.value);
+    // Memanggil fungsi search dengan parameter array keyword yang sudah diolah
+    await searchProduk(searchKeywords);
   };
 
-  if (loading) {
-    return <div>Loading...</div>;
-  }
+  // Function untuk melakukan pencarian
+  const searchProduk = async (keywords) => {
+    try {
+      const response = await api.post("/api/produk/search_produk", {
+        keywords: keywords, // mengirim array keyword ke BE
+        kategori: [],
+        subkategori: [],
+      });
+
+      // Set produkData dari BE ke const
+      setProdukData(response.data);
+      console.log("HASIL SEARCH", response.data);
+    } catch (error) {
+      console.error("Error fetching search results:", error);
+    }
+  };
 
   return (
-    <div>
-      <h1>Daftar Produk</h1>
+    <div className="min-h-screen">
+      <h1>Search Products</h1>
 
-      {/* Dropdown untuk kategori */}
-      <label htmlFor="kategori">Pilih Kategori:</label>
-      <select id="kategori" name="kategori" onChange={handleChange}>
-        {/* Opsi default */}
-        <option value="" >Pilih Kategori</option>
-
-        {/* Opsi SELECT KATEORI dari kategoriData */}
-        {kategoriData.map((kategori) => (
-          <option key={kategori.id_kategori} value={kategori.id_kategori}>
-            {kategori.nama_kategori}
-          </option>
-        ))}
-      </select>
-
-      <br />
-      <br />
-      <br />
-      <br />
-
-      {/* Menampilkan daftar produk */}
-      {/* tinggal styling */}
-      <ul>
-        {produks.map((produk) => (
-          <li key={produk.id_produk}>
-            <h2>Nama Produk: {produk.nama_produk}</h2>
-            <p>Harga: {produk.harga}</p>
-            <img src={produk.list_url_gambar[0]} alt="gambar_produk" />
-            <br />
-            <br />
-            <br />
-          </li>
-        ))}
-      </ul>
+      {/* Displaying search results */}
+      <div className="w-[80%] bg-lightbg flex flex-row flex-wrap mt-10 m-auto py-6 rounded-2xl px-2 justify-evenly">
+        {produkData.length === 0 ? (
+          <div className="flex justify-center items-center w-full text-center text-xl font-bold">
+            Produk yang Anda cari tidak ditemukan
+          </div>
+        ) : (
+          produkData.map((produk) => (
+            <Link href={"/contact_seller"} key={produk.id_produk} className="card min-h-fit bg-white box-content w-40 m-2 rounded-lg">
+              <img src={produk.list_url_gambar[0]} alt="" className="h-36 w-full" />
+              <p className="px-2">{produk.nama_produk}</p>
+              <p className="text-blue-300 px-2">Rp. {produk.harga}</p>
+            </Link>
+          ))
+        )}
+      </div>
     </div>
   );
 };
 
-export default ProdukList;
+export default SearchPage;

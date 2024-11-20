@@ -87,7 +87,7 @@ const Login = () => {
 
             <p>
               Belum punya akun? Register{' '}
-              <Link href="/auth/register" className="text-blue-600">
+              <Link href="/register" className="text-blue-600">
                 Yuk!
               </Link>
             </p>

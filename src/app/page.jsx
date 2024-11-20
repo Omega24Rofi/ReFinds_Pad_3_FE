@@ -1,13 +1,15 @@
 "use client";
-import React, { useState, useEffect } from 'react';
-import Link from 'next/link';
-import Head from 'next/head';
+import React, { useState, useEffect } from "react";
+import Link from "next/link";
+import Head from "next/head";
+import api from "@/utils/axios";
+import useKategori from "@/hooks/useKategori";
 
 const logout = () => {
   // clear the token
-  localStorage.removeItem('token');
+  localStorage.removeItem("token");
   // redirect to login page
-  window.location.href = '/login';
+  window.location.href = "/login";
 };
 
 const Carousel = ({ slides }) => {
@@ -29,14 +31,21 @@ const Carousel = ({ slides }) => {
   return (
     <div className="relative w-full h-[100vh] mx-auto overflow-hidden">
       {/* Carousel Content */}
-      <div className="w-full h-full flex transform transition-transform duration-700 ease-in-out" style={{ transform: `translateX(-${currentIndex * 100}%)` }}>
+      <div
+        className="w-full h-full flex transform transition-transform duration-700 ease-in-out"
+        style={{ transform: `translateX(-${currentIndex * 100}%)` }}
+      >
         {slides.map((slide, index) => (
           <div key={index} className="w-full h-full flex-shrink-0">
-            <img src={slide} alt={`Slide ${index}`} className="w-full h-full object-cover" />
+            <img
+              src={slide}
+              alt={`Slide ${index}`}
+              className="w-full h-full object-cover"
+            />
           </div>
         ))}
       </div>
-      
+
       {/* Navigation Buttons */}
       <button
         onClick={goToPrevious}
@@ -58,76 +67,174 @@ const Homepage = () => {
   const slides = [
     "/images/main_slider/sliderr3.png",
     "/images/main_slider/slider2.png",
-    "/images/main_slider/slider1.png", 
+    "/images/main_slider/slider1.png",
   ];
 
+  ///////////////////// USE EFFECT UNTUK FETCHING PRODUK DAN GAMBAR PRODUK TERBARU
+  const [produks, setProduks] = useState([]); // State untuk menyimpan data produk
+  const [loading, setLoading] = useState(true); // State untuk loading
+  useEffect(() => {
+    const fetchProduks = async () => {
+      try {
+        let url = "/api/produk";
+        const response = await api.get(url);
+        setProduks(response.data); // Simpan data produk ke state
+        console.log("ResponseData: ", response.data);
+      } catch (error) {
+        console.error("Error fetching products:", error);
+      } finally {
+        setLoading(false); // Selesai loading
+      }
+    };
+
+    fetchProduks(); // Panggil fungsi untuk mengambil data produk
+  }, []);
+
+  ///////////////////// USE EFFECT UNTUK FETCHING PRODUK DAN GAMBAR PRODUK TERPOPULER
+  const [topProduks, setTopProduks] = useState([]); // State untuk menyimpan data produk
+  useEffect(() => {
+    const fetchProduks = async () => {
+      try {
+        let url = "/api/top-products";
+        const response = await api.get(url);
+        setTopProduks(response.data); // Simpan data produk ke state
+        console.log("ResponseData: ", response.data);
+      } catch (error) {
+        console.error("Error fetching products:", error);
+      } finally {
+        // setLoading(false); // Selesai loading
+      }
+    };
+
+    fetchProduks(); // Panggil fungsi untuk mengambil data produk
+  }, []);
+
   return (
-    <div className='min-h-screen'>
+    <div className="min-h-screen">
       {/* Carousel */}
       <Carousel slides={slides} />
       <div className="w-full justify-center align-middle my-5">
         <div className="flex flex-row gap-8 h-28 align-middle justify-center">
-          <Link href={"/category"} className="bg-white rounded-2xl shadow-lg p-2 flex flex-col items-center">
-            <img src="/images/categories/Two white plates with blue rim.png" alt="alat rumah tangga" />
+          <Link
+            href={"/category"}
+            className="bg-white rounded-2xl shadow-lg p-2 flex flex-col items-center"
+          >
+            <img
+              src="/images/categories/Two white plates with blue rim.png"
+              alt="alat rumah tangga"
+            />
             <p className="px-2 text-center mt-4">Alat Rumah Tangga</p>
           </Link>
-          <Link href={"/category"} className="bg-white rounded-2xl shadow-lg p-2 flex flex-col items-center">
-            <img src="/images/categories/laptop white screen.png" alt="elektronik" />
+          <Link
+            href={"/category"}
+            className="bg-white rounded-2xl shadow-lg p-2 flex flex-col items-center"
+          >
+            <img
+              src="/images/categories/laptop white screen.png"
+              alt="elektronik"
+            />
             <p className="px-2 text-center">Elektronik</p>
           </Link>
-          <Link href={"/category"} className="bg-white rounded-2xl shadow-lg p-2 flex flex-col items-center">
-            <img src="/images/categories/green sofa with two pillows.png" alt="perabotan" />
+          <Link
+            href={"/category"}
+            className="bg-white rounded-2xl shadow-lg p-2 flex flex-col items-center"
+          >
+            <img
+              src="/images/categories/green sofa with two pillows.png"
+              alt="perabotan"
+            />
             <p className="px-2 text-center">Furniture</p>
           </Link>
-          <Link href={"/category"} className="bg-white rounded-2xl shadow-lg p-2 flex flex-col items-center">
-            <img src="/images/categories/t-shirt mockup.png" alt="pakaian & outfit lainnya" />
+          <Link
+            href={"/category"}
+            className="bg-white rounded-2xl shadow-lg p-2 flex flex-col items-center"
+          >
+            <img
+              src="/images/categories/t-shirt mockup.png"
+              alt="pakaian & outfit lainnya"
+            />
             <p className="px-2 text-center">Pakaian</p>
           </Link>
         </div>
       </div>
 
-      
+      {/* top produk */}
       <div className="w-[80%] bg-lightbg flex-wrap mt-10 m-auto py-6 rounded-2xl px-2 justify-evenly">
-            <p className='text-xl font-bold text-black px-2'>Top Product</p>
-            <div className='flex flex-wrap'>
-
-            {Array.from({ length: 6 }).map((_, index) => (
-                <Link href={"/contact_seller"} key={index} className="card min-h-fit bg-white box-content w-[11.4rem] m-2 rounded-lg">
-                    <img src="/images/testimage/image.png" alt="" className="h-36 w-full" />
-                    <p className='px-2'>With Hp INFINIX SMART 5</p>
-                    <p className="text-blue-300 px-2">Rp. 2.600.000</p>
-                </Link>
-            ))}
-            </div>
+        <p className="text-xl font-bold text-black px-2">Top Product</p>
+        <div className="flex flex-wrap">
+          {topProduks.map((TopProduk) => (
+            <Link
+              href={"/contact_seller"}
+              key={TopProduk.id_produk}
+              className="card min-h-fit bg-white box-content w-[11.4rem] m-2 rounded-lg"
+            >
+              <img
+                src={TopProduk.list_url_gambar[0]}
+                alt=""
+                className="h-36 w-full"
+              />
+              <p className="px-2">{TopProduk.nama_produk}</p>
+              <p className="text-blue-300 px-2">Rp. {TopProduk.harga}</p>
+            </Link>
+          ))}
         </div>
+      </div>
 
-        <div className="w-[80%] bg-lightbg flex-wrap mt-10 m-auto py-6 rounded-2xl px-2 justify-evenly">
-            <p className='text-xl font-bold text-black px-2'>Produk Terbaru</p>
-            <div className='flex flex-wrap'>
-            {Array.from({ length: 20 }).map((_, index) => (
-                <Link href={"/contact_seller"} key={index} className="card min-h-fit bg-white box-content w-[11.4rem] m-2 rounded-lg">
-                    <img src="/images/testimage/image.png" alt="" className="h-36 w-full" />
-                    <p className='px-2'>With Hp INFINIX SMART 5</p>
-                    <p className="text-blue-300 px-2">Rp. 2.600.000</p>
-                </Link>
-            ))}
-            </div>
+      {/* produk terbaru        */}
+      <div className="w-[80%] bg-lightbg flex-wrap mt-10 m-auto py-6 rounded-2xl px-2 justify-evenly">
+        <p className="text-xl font-bold text-black px-2">Produk Terbaru</p>
+        <div className="flex flex-wrap">
+          {produks.map((produk) => (
+            <Link
+              href={"/contact_seller"}
+              key={produk.id_produk}
+              className="card min-h-fit bg-white box-content w-[11.4rem] m-2 rounded-lg"
+            >
+              <img
+                src={produk.list_url_gambar[0]}
+                alt=""
+                className="h-36 w-full"
+              />
+              <p className="px-2">{produk.nama_produk}</p>
+              <p className="text-blue-300 px-2">Rp. {produk.harga}</p>
+            </Link>
+          ))}
         </div>
+      </div>
 
       <h1>Homepage</h1>
       <ul>
-        <li><Link href={"/login"}>Login</Link></li>
-        <li><Link href={"/register"}>Register</Link></li>
-        <li><Link href={"/post"}>POST</Link></li>
-        <li><Link href={"/display"}>DISPLAY</Link></li>
-        <li><Link href={"/testing_user_data"}>USER DATA</Link></li>
+        <li>
+          <Link href={"/login"}>Login</Link>
+        </li>
+        <li>
+          <Link href={"/register"}>Register</Link>
+        </li>
+        <li>
+          <Link href={"/post"}>POST</Link>
+        </li>
+        <li>
+          <Link href={"/display"}>DISPLAY</Link>
+        </li>
+        <li>
+          <Link href={"/testing_user_data"}>USER DATA</Link>
+        </li>
         {/* <li><Link href={"/admin_acc"}>ADMIN ACC</Link></li> */}
-        <li><Link href={"/admin_dashboard"}>Admin DashBoard</Link></li>
-        <li><Link href={"/dashboard"}>DashBoard</Link></li>
-        <li><Link href={"/dashboard"}>DashBoard</Link></li>
+        <li>
+          <Link href={"/admin_dashboard"}>Admin DashBoard</Link>
+        </li>
+        <li>
+          <Link href={"/dashboard"}>DashBoard</Link>
+        </li>
+        <li>
+          <Link href={"/dashboard"}>DashBoard</Link>
+        </li>
 
-        <br /><br />
-        <li><button onClick={logout}>Logout</button></li>
+        <br />
+        <br />
+        <li>
+          <button onClick={logout}>Logout</button>
+        </li>
       </ul>
     </div>
   );
