@@ -69,7 +69,7 @@ const SellerView = () => {
     if (token) fetchProduk();
   }, [token]);
 
-  const cancelOrder = async (id) => {
+  const cancelOrderBySeller = async (id) => {
     try {
       // Mengirimkan request ke API untuk membatalkan pesanan
       const response = await api.get(`/api/transaksi/${id}/batalkan-penjual`, {
@@ -87,6 +87,52 @@ const SellerView = () => {
       }
     } catch (error) {
       console.error("Error membatalkan pesanan:", error);
+      alert("Terjadi kesalahan, coba lagi nanti.");
+    }
+  };
+
+  const cancelOrderByBuyer = async (id) => {
+    try {
+      // Mengirimkan request ke API untuk membatalkan pesanan
+      const response = await api.get(`/api/transaksi/${id}/batalkan-pembeli`, {
+        headers: {
+          Authorization: `Bearer ${token}`,
+        },
+      });
+
+      // Tanggapan sukses
+      if (response.status === 200) {
+        alert("Pesanan berhasil dibatalkan.");
+        // Reload atau update data setelah pembatalan
+        // Misalnya, reload halaman atau update state untuk menunjukkan pesanan sudah dibatalkan
+        window.location.reload(); // Reload halaman
+      }
+    } catch (error) {
+      console.error("Error membatalkan pesanan:", error);
+      alert("Terjadi kesalahan, coba lagi nanti.");
+    }
+  };
+
+  const selesaikanPesanan = async (id) => {
+    try {
+      // Mengirimkan request ke API untuk menyelesaikan pesanan
+      const response = await api.get(
+        `/api/transaksi/${id}/konfirmasi-selesai-pembeli`,
+        {
+          headers: {
+            Authorization: `Bearer ${token}`,
+          },
+        }
+      );
+
+      // Tanggapan sukses
+      if (response.status === 200) {
+        alert("Pesanan berhasil diselesaikan.");
+
+        window.location.reload(); // Reload halaman
+      }
+    } catch (error) {
+      console.error("Error menyelesaikan pesanan:", error);
       alert("Terjadi kesalahan, coba lagi nanti.");
     }
   };
@@ -134,7 +180,7 @@ const SellerView = () => {
             <Tab>Pembelian</Tab>
           </TabList>
 
-          {/* produk */}
+          {/* tab users produk */}
           <TabPanel>
             <div className="flex flex-row flex-wrap -mt-10 m-auto py-6 rounded-2xl px-2 justify-evenly">
               {userProduks.map((userProduk) => (
@@ -155,7 +201,7 @@ const SellerView = () => {
             </div>
           </TabPanel>
 
-          {/* penjualan */}
+          {/* tab transaksi penjualan */}
           <TabPanel>
             {transaksiJual.map((transJual) => {
               const statusPesanan = getStatusPesanan(transJual); // Mendapatkan status pesanan
@@ -190,22 +236,23 @@ const SellerView = () => {
                       <span className="font-semibold">Tanggal Post :</span>
                       {transJual.produk.tanggal_post}
                     </p>
+                  </div>
 
+                  <div className="flex items-center space-x-4 ml-auto">
                     {/* Render status pesanan atau tombol batalkan pesanan */}
                     {statusPesanan ? (
                       <p>
-                        <span className="font-semibold">Status Pesanan:</span>{" "}
-                        {statusPesanan}
+                        <span className="font-semibold"></span> {statusPesanan}
                       </p>
                     ) : (
-                      <div className="ml-auto mr-4">
-                        <button
-                          onClick={() => cancelOrder(transJual.id_transaksi)} // Memanggil fungsi cancelOrder
-                          className="bg-[#0D96C4] text-white px-4 py-2 rounded-lg hover:bg-[#0C7BA8] transition"
-                        >
-                          Batalkan Pesanan
-                        </button>
-                      </div>
+                      <button
+                        onClick={() =>
+                          cancelOrderBySeller(transJual.id_transaksi)
+                        } // Memanggil fungsi cancelOrder
+                        className="bg-[#0D96C4] text-white px-4 py-2 rounded-lg hover:bg-[#0C7BA8] transition"
+                      >
+                        Batalkan Pesanan
+                      </button>
                     )}
                   </div>
                 </div>
@@ -213,49 +260,81 @@ const SellerView = () => {
             })}
           </TabPanel>
 
+          {/* tabl transaksi pembelian */}
           <TabPanel>
-            {Array.from({ length: 6 }).map((_, index) => (
-              <div className="flex items-center bg-white rounded-lg shadow-md mt-2 px-4 py-4">
-                {/* Image Section */}
-                <div className="">
-                  <img
-                    src="/images/testimage/image.png"
-                    alt="Product Image"
-                    width={200}
-                    height={30}
-                    className="rounded-lg"
-                  />
-                </div>
+            {transaksiBeli.map((transBeli) => {
+              const statusPesananBeli = getStatusPesanan(transBeli); // Mendapatkan status pesanan
 
-                {/* Status Card */}
-                <div className="ml-4 flex-1 max-w-md">
-                  <p>
-                    <span className="font-semibold">Nama Produk</span> : HP
-                    INFINIX SMART 5
-                  </p>
-                  <p>
-                    <span className="font-semibold">Harga Produk</span> :
-                    Rp.35.700
-                  </p>
-                  <p>
-                    <span className="font-semibold">Deskripsi Produk</span> :
-                    Memiliki layar 6,6 inci dengan resolusi 720 x 1600 pixels,
-                    dual kamera 8 MP dengan chipset Mediatek Helio A20 (12nm)
-                    Octa-Core 1,8 Ghz.
-                  </p>
-                </div>
+              return (
+                <div
+                  key={transBeli.id_transaksi}
+                  className="flex items-center bg-white rounded-lg shadow-md mt-2"
+                >
+                  {/* Image Section */}
+                  <div className="">
+                    <img
+                      src={transBeli.produk.list_url_gambar[0]}
+                      alt="Product Image"
+                      width={200}
+                      height={30}
+                      className="rounded-lg"
+                    />
+                  </div>
 
-                {/* Button Section */}
-                <div className="flex items-center space-x-4 ml-auto">
-                  <button className="bg-[#0D96C4] text-white px-4 py-2 rounded-lg hover:bg-[#0C7BA8] transition">
-                    Batalkan Pesanan
-                  </button>
-                  <button className="bg-[#0D96C4] text-white px-4 py-2 rounded-lg hover:bg-[#0C7BA8] transition">
-                    Pesanan Selesai
-                  </button>
+                  {/* Status card */}
+                  <div className="ml-4 flex-1 max-w-md">
+                    <p>
+                      <span className="font-semibold">Nama Produk :</span>
+                      {transBeli.produk.nama_produk}
+                    </p>
+                    <p>
+                      <span className="font-semibold">Harga Produk :</span>
+                      {transBeli.produk.harga}
+                    </p>
+                    <p>
+                      <span className="font-semibold">Tanggal Post :</span>
+                      {transBeli.produk.tanggal_post}
+                    </p>
+
+                    <p>
+                      <span className="font-semibold">Deskripsi Produk</span>
+                      {transBeli.produk.url_teks_deskripsi}
+                    </p>
+                  </div>
+
+                  {/* Render status pesanan atau tombol batalkan pesanan */}
+
+                  {statusPesananBeli ? (
+                    <div className="flex items-center space-x-4 ml-auto">
+                      <p>
+                        <span className="font-semibold"></span>{" "}
+                        {statusPesananBeli}
+                      </p>
+                    </div>
+                  ) : (
+                    <div className="flex items-center space-x-4 ml-auto">
+                      <button
+                        onClick={() =>
+                          cancelOrderByBuyer(transBeli.id_transaksi)
+                        } // Memanggil fungsi cancelOrder
+                        className="bg-[#0D96C4] text-white px-4 py-2 rounded-lg hover:bg-[#0C7BA8] transition"
+                      >
+                        Batalkan Pesanan
+                      </button>
+
+                      <button
+                        onClick={() =>
+                          selesaikanPesanan(transBeli.id_transaksi)
+                        } // Memanggil fungsi selesaikanPesanan()
+                        className="bg-[#0D96C4] text-white px-4 py-2 rounded-lg hover:bg-[#0C7BA8] transition"
+                      >
+                        Pesanan Selesai
+                      </button>
+                    </div>
+                  )}
                 </div>
-              </div>
-            ))}
+              );
+            })}
           </TabPanel>
         </Tabs>
       </div>
