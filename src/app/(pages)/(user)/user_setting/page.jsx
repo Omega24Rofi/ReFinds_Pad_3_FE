@@ -9,8 +9,13 @@ const UserSetting = () => {
     nama_asli_user: "",
     email: "",
     no_telepon: "",
+    url_foto_profil: "", // Menyimpan URL foto profil
+
   });
   const token = localStorage.getItem("token");
+
+  const apiBaseUrl = process.env.NEXT_PUBLIC_API_BASE_URL;
+
 
   const [profilePicture, setProfilePicture] = useState(null);
   const [profilePicturePreview, setProfilePicturePreview] = useState(null);
@@ -32,7 +37,13 @@ const UserSetting = () => {
           nama_asli_user: response.data[0].nama_asli_user || "",
           email: response.data[0].email || "",
           no_telepon: response.data[0].no_telepon || "",
+          url_foto_profil: response.data[0].url_foto_profil || "", // Menyimpan URL foto profil lama
+
         });
+
+        // Menampilkan foto profil lama di preview jika ada
+        setProfilePicturePreview(`${apiBaseUrl}/${response.data[0].url_foto_profil}`); // Menambahkan apiBaseUrl di depan URL foto profil
+        
       } catch (error) {
         console.error("Error fetching user data:", error);
       }
@@ -91,6 +102,9 @@ const UserSetting = () => {
       });
 
       console.log("User updated:", response.data); // Log response dari BE
+
+      window.location.reload(); // Ini akan melakukan reload halaman
+
     } catch (error) {
       console.error("Error updating user data:", error);
     }
