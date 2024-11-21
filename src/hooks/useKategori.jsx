@@ -11,7 +11,7 @@ const useKategori = () => { // Mengubah nama menjadi useKategori untuk mengikuti
       try {
         const kategoriResponse = await api.get("/api/kategori");
         setKategoriData(kategoriResponse.data); // Memperbarui state dengan data kategori yang diambil
-        console.log("use Kategori:", kategoriResponse.data); // Log data yang diambil
+        console.log("Kategori Data:", kategoriResponse.data); // Log data yang diambil
 
         const subkategoriResponse = await api.get("/api/subkategori");
         setSubkategoriData(subkategoriResponse.data); // Menyimpan data subkategori

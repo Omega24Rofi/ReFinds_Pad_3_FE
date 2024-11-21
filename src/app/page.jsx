@@ -151,7 +151,7 @@ const Homepage = () => {
       <div className="w-full justify-center align-middle my-5">
         <div className="flex flex-row gap-8 h-28 align-middle justify-center">
           <Link
-            href={"/category"}
+            href={"/category/4"}
             className="bg-white rounded-2xl shadow-lg p-2 flex flex-col items-center"
           >
             <img
@@ -160,8 +160,11 @@ const Homepage = () => {
             />
             <p className="px-2 text-center mt-4">Alat Rumah Tangga</p>
           </Link>
+
+
+          
           <Link
-            href={"/category"}
+            href={"/category/1"}
             className="bg-white rounded-2xl shadow-lg p-2 flex flex-col items-center"
           >
             <img
@@ -170,8 +173,11 @@ const Homepage = () => {
             />
             <p className="px-2 text-center">Elektronik</p>
           </Link>
+
+
+
           <Link
-            href={"/category"}
+            href={"/category/2"}
             className="bg-white rounded-2xl shadow-lg p-2 flex flex-col items-center"
           >
             <img
@@ -180,8 +186,11 @@ const Homepage = () => {
             />
             <p className="px-2 text-center">Furniture</p>
           </Link>
+
+
+
           <Link
-            href={"/category"}
+            href={"/category/3"}
             className="bg-white rounded-2xl shadow-lg p-2 flex flex-col items-center"
           >
             <img
