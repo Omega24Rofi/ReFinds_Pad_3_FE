@@ -40,7 +40,8 @@ const useAuth = () => {
             Authorization: `Bearer ${token}`,
           },
         });
-        setUserData(response.data);  // Set user jika token valid
+        setUserData(response.data.user);  // Set user jika token valid
+        console.log("HooksUserDataX", response.data.user);
         
       } catch (error) {
         // Jika token tidak valid, hapus token

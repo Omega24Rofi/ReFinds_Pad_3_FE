@@ -4,6 +4,7 @@ import Link from "next/link";
 import Head from "next/head";
 import api from "@/utils/axios";
 import useKategori from "@/hooks/useKategori";
+import { useRouter } from 'next/navigation';
 
 const logout = () => {
   // clear the token
@@ -96,7 +97,6 @@ const Carousel = ({ slides }) => {
     </div>
   );
 };
-
 
 const Homepage = () => {
   const slides = [
@@ -199,7 +199,7 @@ const Homepage = () => {
         <div className="flex flex-wrap">
           {topProduks.map((TopProduk) => (
             <Link
-              href={"/contact_seller"}
+            href={`/detail_produk/${TopProduk.id_produk}`} // URL dinamis dengan id_produk
               key={TopProduk.id_produk}
               className="card min-h-fit bg-white box-content w-[11.4rem] m-2 rounded-lg"
             >
@@ -221,13 +221,13 @@ const Homepage = () => {
         <div className="flex flex-wrap">
           {produks.map((produk) => (
             <Link
-              href={"/contact_seller"}
+              href={`/detail_produk/${produk.id_produk}`} // URL dinamis dengan id_produk
               key={produk.id_produk}
               className="card min-h-fit bg-white box-content w-[11.4rem] m-2 rounded-lg"
             >
               <img
                 src={produk.list_url_gambar[0]}
-                alt=""
+                alt={`Gambar ${produk.nama_produk}`}
                 className="h-36 w-full"
               />
               <p className="px-2">{produk.nama_produk}</p>

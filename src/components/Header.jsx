@@ -14,6 +14,9 @@ const Header = () => {
   const { userDataX } = useAuth();
   const router = useRouter(); // Inisialisasi router
 
+  const apiBaseUrl = process.env.NEXT_PUBLIC_API_BASE_URL;
+
+
 
   const [IsDropDownOpen, SetIsDropDownOpen] = useState(false);
 
@@ -89,7 +92,7 @@ const Header = () => {
               <div className="relative">
 
                 <button onClick={toogleDropDown}  type="button">
-                  <img src="/images/testimage/account_circle.png" alt="Foto Profil" className=" h-[90%] "/>
+                  <img src={`${apiBaseUrl}/${userDataX.url_foto_profil}`} alt="Foto Profil" className=" h-[90%] "/>
                 </button>
 
                 {IsDropDownOpen && (
