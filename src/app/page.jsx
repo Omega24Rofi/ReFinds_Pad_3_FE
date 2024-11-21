@@ -14,28 +14,62 @@ const logout = () => {
 
 const Carousel = ({ slides }) => {
   const [currentIndex, setCurrentIndex] = useState(0);
+  const [isTransitioning, setIsTransitioning] = useState(false);
 
-  const goToPrevious = () => {
-    setCurrentIndex(currentIndex === 0 ? slides.length - 1 : currentIndex - 1);
-  };
+  // Tambahkan duplikasi slide pertama di akhir
+  const extendedSlides = [...slides, slides[0]];
 
   const goToNext = () => {
-    setCurrentIndex(currentIndex === slides.length - 1 ? 0 : currentIndex + 1);
+    if (isTransitioning) return;
+
+    setIsTransitioning(true);
+    setCurrentIndex((prevIndex) => prevIndex + 1);
+  };
+
+  const goToPrevious = () => {
+    if (isTransitioning) return;
+
+    setIsTransitioning(true);
+    setCurrentIndex((prevIndex) =>
+      prevIndex === 0 ? slides.length - 1 : prevIndex - 1
+    );
   };
 
   useEffect(() => {
-    const interval = setInterval(goToNext, 4000); // Change slides every 3 seconds
-    return () => clearInterval(interval); // Cleanup on component unmount
+    const handleTransitionEnd = () => {
+      if (currentIndex === slides.length) {
+        // Jika mencapai slide duplikat, lompat ke slide pertama tanpa transisi
+        setIsTransitioning(false);
+        setCurrentIndex(0);
+      } else {
+        setIsTransitioning(false);
+      }
+    };
+
+    const slider = document.getElementById("slider");
+    slider.addEventListener("transitionend", handleTransitionEnd);
+
+    return () => {
+      slider.removeEventListener("transitionend", handleTransitionEnd);
+    };
+  }, [currentIndex, slides.length]);
+
+  useEffect(() => {
+    const interval = setInterval(goToNext, 4000);
+    return () => clearInterval(interval);
   }, [currentIndex]);
 
   return (
     <div className="relative w-full h-[100vh] mx-auto overflow-hidden">
-      {/* Carousel Content */}
+      {/* Konten Carousel */}
       <div
-        className="w-full h-full flex transform transition-transform duration-700 ease-in-out"
+        id="slider"
+        className={`w-full h-full flex transition-transform duration-700 ease-in-out ${
+          isTransitioning ? "" : "transition-none"
+        }`}
         style={{ transform: `translateX(-${currentIndex * 100}%)` }}
       >
-        {slides.map((slide, index) => (
+        {extendedSlides.map((slide, index) => (
           <div key={index} className="w-full h-full flex-shrink-0">
             <img
               src={slide}
@@ -46,7 +80,7 @@ const Carousel = ({ slides }) => {
         ))}
       </div>
 
-      {/* Navigation Buttons */}
+      {/* Tombol Navigasi */}
       <button
         onClick={goToPrevious}
         className="absolute top-1/2 left-4 transform -translate-y-1/2 bg-white p-2 rounded-full shadow-md"
@@ -62,6 +96,7 @@ const Carousel = ({ slides }) => {
     </div>
   );
 };
+
 
 const Homepage = () => {
   const slides = [
