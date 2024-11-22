@@ -14,7 +14,7 @@ const SubmitProductPage = () => {
   const [userData, setUserData] = useState(null);
   const { kategoriData, subkategoriData } = useKategori();
   const [fileName, setFileName] = useState("");
-  const jumlahGambar = 30; // Jumlah gambar produk
+  const jumlahGambar = 3; // Jumlah gambar produk
   const [message, setMessage] = useState("");
   const [error, setError] = useState("");
   const [loading, setLoading] = useState(true);
@@ -91,6 +91,7 @@ const SubmitProductPage = () => {
       });
       setMessage("Product submitted successfully!");
       setError("");
+      window.location.reload(); // Reload halaman
     } catch (err) {
       if (err.response) {
         console.error("Validation Errors:", err.response.data.errors);
