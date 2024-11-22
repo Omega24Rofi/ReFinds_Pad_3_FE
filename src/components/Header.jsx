@@ -92,7 +92,7 @@ const Header = () => {
               <div className="relative">
 
                 <button onClick={toogleDropDown}  type="button">
-                  <img src={`${apiBaseUrl}/${userDataX.url_foto_profil}`} alt="Foto Profil" className=" h-[90%] "/>
+                  <img src={`${apiBaseUrl}/${userDataX.url_foto_profil}`} alt="Foto Profil" className=" h-[48px] rounded-full "/>
                 </button>
 
                 {IsDropDownOpen && (
