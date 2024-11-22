@@ -64,13 +64,13 @@ const Header = () => {
         </div>
         <div className="w-[50%]  flex items-center">
         <form onSubmit={handleSearch} className="w-full">
-            <label htmlFor="search" className="flex bg-white rounded-xl px-5">
+            <label htmlFor="search" className="flex bg-white rounded-xl px-5 border-none">
               <input
                 type="text"
                 name="search"
                 id="search"
                 placeholder="Cari produk berkualitas disini"
-                className="w-full p-2 rounded-xl"
+                className="w-full p-2 rounded-xl border-none"
               />
               <img src="/icons/search.svg" alt="" className="h-8 my-auto" />
             </label>

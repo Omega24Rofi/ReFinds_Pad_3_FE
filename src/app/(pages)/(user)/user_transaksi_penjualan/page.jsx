@@ -182,7 +182,7 @@ const SellerView = () => {
 
           {/* tab users produk */}
           <TabPanel>
-            <div className="flex flex-row flex-wrap -mt-10 m-auto py-6 rounded-2xl px-2 justify-evenly">
+            <div className="flex flex-row flex-wrap -mt-10 m-auto py-6 rounded-2xl px-2">
               {userProduks.map((userProduk) => (
                 <Link
                   href={`/detail_produk/${userProduk.id_produk}`}
@@ -242,7 +242,7 @@ const SellerView = () => {
                     {/* Render status pesanan atau tombol batalkan pesanan */}
                     {statusPesanan ? (
                       <p>
-                        <span className="font-semibold"></span> {statusPesanan}
+                        <span className="font-semibold pr-4"></span> {statusPesanan}
                       </p>
                     ) : (
                       <button

@@ -55,7 +55,6 @@ const SearchPage = () => {
 
   return (
     <div className="min-h-screen">
-      <h1>Search Products</h1>
 
       {/* Displaying search results */}
       <div className="w-[80%] bg-lightbg flex flex-row flex-wrap mt-10 m-auto py-6 rounded-2xl px-2 justify-evenly">

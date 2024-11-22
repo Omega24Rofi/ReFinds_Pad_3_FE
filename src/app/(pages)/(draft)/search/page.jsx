@@ -41,21 +41,6 @@ const SearchPage = () => {
 
   return (
     <div className="min-h-screen">
-      <h1>Search Products</h1>
-      
-      {/* Form search input */}
-      <form onSubmit={handleSearch}>
-        <label htmlFor="search">Search:</label>
-        <input
-          type="text"
-          id="search"
-          value={searchInput}
-          onChange={(e) => setSearchInput(e.target.value)}
-          placeholder="Enter keywords..."
-        />
-        <button type="submit">Search</button>
-      </form>
-      
       {/* Displaying search results */}
         <div className="w-[80%] bg-lightbg flex flex-row flex-wrap mt-10 m-auto py-6 rounded-2xl px-2 justify-evenly">
         {produkData.map((produk) => (
