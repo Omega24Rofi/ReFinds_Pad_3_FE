@@ -97,14 +97,14 @@ const UserSetting = () => {
 
   return (
     <div className="container mx-auto p-6">
-      <div className="bg-white shadow-md rounded p-6">
-        <h1 className="text-2xl font-bold mb-4">Setting Akun</h1>
+      <h1 className="text-2xl font-bold mb-4 text-center">Setting Akun</h1>
+      <div className="bg-lightbg shadow-md rounded p-6">
         <form onSubmit={handleSubmit} className="space-y-4">
           <div className="flex items-center space-x-4">
             <img
               src={profilePicturePreview || "/default-profile.png"}
               alt="Preview Foto Profil"
-              className="w-20 h-20 rounded-full object-cover"
+              className="w-28 h-28 rounded-full object-cover"
             />
             <label className="cursor-pointer">
               <input
@@ -117,6 +117,7 @@ const UserSetting = () => {
               <span className="text-blue-500 hover:underline">Edit Foto</span>
             </label>
           </div>
+          <div className="bg-lightbg rounded-xl">
           <div>
             <label className="block text-sm font-medium">Nama Akun</label>
             <input
@@ -163,6 +164,7 @@ const UserSetting = () => {
           >
             Simpan
           </button>
+          </div>
         </form>
       </div>
     </div>

@@ -12,6 +12,7 @@ export const Category = ({ params }) => {
   const apiBaseUrl = process.env.NEXT_PUBLIC_API_BASE_URL;
   const router = useRouter(); // Inisialisasi router
   const { kategoriData, subkategoriData } = useKategori();
+  const options = { day: '2-digit', month: 'long', year: 'numeric' };
 
   // user produk
   const [kategorisProduks, setKategorisProduks] = useState([]); // Array default kosong
@@ -44,8 +45,8 @@ export const Category = ({ params }) => {
   }, [token, id]); // Tambahkan dependensi `id` untuk merespon perubahan URL kategori
 
   return (
-    <div className="min-h-screen h-screen">
-      <div className="h-[30%] w-full bg-[#68C7E7] mt-16 -z-[99] relative text-center flex flex-col align-middle justify-center">
+    <div className="min-h-screen ">
+      <div className="h-[14rem] w-full bg-[#68C7E7] mt-16 -z-[99] relative text-center flex flex-col align-middle justify-center">
         <img
           src="/images/categories/categoryof.png"
           alt=""
@@ -60,7 +61,7 @@ export const Category = ({ params }) => {
           </h1>
         )}
       </div>
-      <div className="w-[80%] bg-lightbg flex-wrap mt-10 m-auto py-6 rounded-2xl px-2 justify-evenly">
+      <div className="w-[80%] bg-lightbg flex-wrap -mt-12 m-auto py-6 rounded-2xl px-2 justify-evenly">
         {/* <p className="text-xl font-bold text-black px-2"></p> */}
         {isLoading ? (
           <p>Loading...</p> // Tampilkan loading saat data masih diambil
@@ -71,19 +72,22 @@ export const Category = ({ params }) => {
                 <Link
                   href={`/detail_produk/${kategorisProduk.id_produk}`} // URL dinamis dengan id_produk
                   key={kategorisProduk.id_produk}
-                  className="card min-h-fit bg-white box-content w-[11.4rem] m-2 rounded-lg"
+                  className="card min-h-fit h-64 bg-white box-content w-[11.4rem] m-2 rounded-lg overflow-hidden"
                 >
-                  <img
-                    src={
-                      kategorisProduk.list_url_gambar[0] || "/placeholder.jpg"
-                    } // Gambar default jika tidak ada
-                    alt={kategorisProduk.nama_produk || "Product Image"}
-                    className="h-36 w-full"
-                  />
-                  <p className="px-2">{kategorisProduk.nama_produk}</p>
-                  <p className="text-blue-300 px-2">
+                  <div className="h-44 w-full overflow-hidden flex align-center justify-center">
+                    <img
+                      src={
+                        kategorisProduk.list_url_gambar[0] || "/placeholder.jpg"
+                      } // Gambar default jika tidak ada
+                      alt={kategorisProduk.nama_produk || "Product Image"}
+                      className="h-fit"
+                    />
+                  </div>
+                  <p className="pb-12 px-2 h-8 mt-2 text-[18px] ">{kategorisProduk.nama_produk}</p>
+                  <p className="text-blue_btn px-2 font-bold pb-2">
                     Rp. {kategorisProduk.harga}
                   </p>
+                  <p className="text-right">{kategorisProduk.tanggal_post}</p>
                 </Link>
               ))
             ) : (
