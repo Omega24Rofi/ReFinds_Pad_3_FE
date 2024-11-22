@@ -12,7 +12,7 @@ export const Category = ({ params }) => {
   const apiBaseUrl = process.env.NEXT_PUBLIC_API_BASE_URL;
   const router = useRouter(); // Inisialisasi router
   const { kategoriData, subkategoriData } = useKategori();
-  const options = { day: '2-digit', month: 'long', year: 'numeric' };
+  const options = { day: "2-digit", month: "long", year: "numeric" };
 
   // user produk
   const [kategorisProduks, setKategorisProduks] = useState([]); // Array default kosong
@@ -45,7 +45,7 @@ export const Category = ({ params }) => {
   }, [token, id]); // Tambahkan dependensi `id` untuk merespon perubahan URL kategori
 
   return (
-    <div className="min-h-screen ">
+    <div className="min-h-screen mb-12 ">
       <div className="h-[14rem] w-full bg-[#68C7E7] mt-16 -z-[99] relative text-center flex flex-col align-middle justify-center">
         <img
           src="/images/categories/categoryof.png"
@@ -72,7 +72,7 @@ export const Category = ({ params }) => {
                 <Link
                   href={`/detail_produk/${kategorisProduk.id_produk}`} // URL dinamis dengan id_produk
                   key={kategorisProduk.id_produk}
-                  className="card min-h-fit h-64 bg-white box-content w-[11.4rem] m-2 rounded-lg overflow-hidden"
+                  className="card min-h-fit h-64 bg-white box-content w-[11.4rem] m-2 rounded-lg overflow-hidden shadow-md"
                 >
                   <div className="h-44 w-full overflow-hidden flex align-center justify-center">
                     <img
@@ -83,7 +83,9 @@ export const Category = ({ params }) => {
                       className="h-fit"
                     />
                   </div>
-                  <p className="pb-12 px-2 h-8 mt-2 text-[18px] ">{kategorisProduk.nama_produk}</p>
+                  <p className="pb-12 px-2 h-8 mt-2 text-[18px] ">
+                    {kategorisProduk.nama_produk}
+                  </p>
                   <p className="text-blue_btn px-2 font-bold pb-2">
                     Rp. {kategorisProduk.harga}
                   </p>

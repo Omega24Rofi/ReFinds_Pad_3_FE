@@ -5,10 +5,9 @@ import Link from "next/link";
 import useAuth from "@/hooks/useAuth";
 import Image from "next/image";
 import DropdownSetting from "./DropdownSetting";
-import 'flowbite/dist/flowbite.min.js';
-import { useRouter } from 'next/navigation';
+import "flowbite/dist/flowbite.min.js";
+import { useRouter } from "next/navigation";
 import { useState } from "react";
-
 
 const Header = () => {
   const { userDataX } = useAuth();
@@ -16,21 +15,18 @@ const Header = () => {
 
   const apiBaseUrl = process.env.NEXT_PUBLIC_API_BASE_URL;
 
-
-
   const [IsDropDownOpen, SetIsDropDownOpen] = useState(false);
 
   const toogleDropDown = () => {
-    SetIsDropDownOpen(!IsDropDownOpen)
-  }
+    SetIsDropDownOpen(!IsDropDownOpen);
+  };
 
   const logout = () => {
     // clear the token
-    localStorage.removeItem('token');
+    localStorage.removeItem("token");
     // redirect to login page
-    window.location.href = '/login';
+    window.location.href = "/login";
   };
-
 
   const handleSearch = (event) => {
     event.preventDefault();
@@ -59,12 +55,13 @@ const Header = () => {
               className="w-auto h-6"
             />
           </Link>
-          
-          
         </div>
         <div className="w-[50%]  flex items-center">
-        <form onSubmit={handleSearch} className="w-full">
-            <label htmlFor="search" className="flex bg-white rounded-xl px-5 border-none">
+          <form onSubmit={handleSearch} className="w-full">
+            <label
+              htmlFor="search"
+              className="flex bg-white rounded-xl px-5 border-none"
+            >
               <input
                 type="text"
                 name="search"
@@ -82,34 +79,41 @@ const Header = () => {
           {userDataX ? (
             <div className="flex align-middle gap-8">
               <div className="my-auto">
-              <Link href={"/post"} className="flex gap-2 bg-blue_btn px-6 py-1 rounded-lg">
-                <p className="text-black font-bold text-2xl">+</p>
-                <p className="text-white font-bold text-xl">Jual</p>
-              </Link>
+                <Link
+                  href={"/post"}
+                  className="flex gap-2 bg-blue_btn px-6 py-1 rounded-lg"
+                >
+                  <p className="text-black font-bold text-2xl">+</p>
+                  <p className="text-white font-bold text-xl">Jual</p>
+                </Link>
               </div>
               {/* FOTO PROFIL DLL DILETAKKAN DISINI */}
-              
-              <div className="relative">
 
-                <button onClick={toogleDropDown}  type="button">
-                  <img src={`${apiBaseUrl}/${userDataX.url_foto_profil}`} alt="Foto Profil" className=" h-[48px] rounded-full "/>
+              <div className="relative">
+                <button onClick={toogleDropDown} type="button">
+                  <img
+                    src={`${apiBaseUrl}/${userDataX.url_foto_profil}`}
+                    alt="Foto Profil"
+                    className=" h-[48px] rounded-full "
+                  />
                 </button>
 
                 {IsDropDownOpen && (
                   <div className="z-[99] absolute top-full right-[0.01rem] bg-white divide-y divide-gray-100 rounded-lg shadow w-44">
                     <ul className="py-2 text-sm text-gray-700 bg-lightbg rounded-lg">
-                        <li className="w-full px-3 py-2 bg-lightbg border-b-white border-b-2"><Link href={"/user_transaksi_penjualan"} >
-                        Profile
-                        </Link></li>
-                        <li className="w-full px-3 py-2 bg-lightbg border-b-white border-b-2"><Link href={"/user_setting"}>Setting</Link></li>
-                        <li className="w-full px-3 py-2 bg-lightbg "><button onClick={logout} >Sign Out</button></li>
-                      </ul>
+                      <li className="w-full px-3 py-2 bg-lightbg border-b-white border-b-2">
+                        <Link href={"/user_transaksi_penjualan"}>Profile</Link>
+                      </li>
+                      <li className="w-full px-3 py-2 bg-lightbg border-b-white border-b-2">
+                        <Link href={"/user_setting"}>Setting</Link>
+                      </li>
+                      <li className="w-full px-3 py-2 bg-lightbg ">
+                        <button onClick={logout}>Sign Out</button>
+                      </li>
+                    </ul>
                   </div>
                 )}
               </div>
-
-              
-
             </div>
           ) : (
             // Jika user tidak ada, tampilkan tombol login
@@ -131,9 +135,7 @@ const Header = () => {
           )}
         </div>
       </div>
-      <script src="../path/to/flowbite/dist/flowbite.min.js"></script>
     </header>
-    
   );
 };
 

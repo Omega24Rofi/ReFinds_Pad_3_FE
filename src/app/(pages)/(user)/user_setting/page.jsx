@@ -34,7 +34,9 @@ const UserSetting = () => {
           url_foto_profil: response.data[0].url_foto_profil || "",
         });
 
-        setProfilePicturePreview(`${apiBaseUrl}/${response.data[0].url_foto_profil}`);
+        setProfilePicturePreview(
+          `${apiBaseUrl}/${response.data[0].url_foto_profil}`
+        );
       } catch (error) {
         console.error("Error fetching user data:", error);
       }
@@ -57,7 +59,9 @@ const UserSetting = () => {
       try {
         const processedImage = await processImage(URL.createObjectURL(file));
         setProfilePicture(processedImage.processedImage);
-        setProfilePicturePreview(URL.createObjectURL(processedImage.processedImage));
+        setProfilePicturePreview(
+          URL.createObjectURL(processedImage.processedImage)
+        );
       } catch (error) {
         console.error("Error processing image:", error);
         alert("Gagal memproses gambar. Harap coba gambar lain.");
@@ -96,7 +100,7 @@ const UserSetting = () => {
   };
 
   return (
-    <div className="container mx-auto p-6">
+    <div className="container mx-auto p-6 min-h-screen">
       <h1 className="text-2xl font-bold mb-4 text-center">Setting Akun</h1>
       <div className="bg-lightbg shadow-md rounded p-6">
         <form onSubmit={handleSubmit} className="space-y-4">
@@ -118,52 +122,52 @@ const UserSetting = () => {
             </label>
           </div>
           <div className="bg-lightbg rounded-xl">
-          <div>
-            <label className="block text-sm font-medium">Nama Akun</label>
-            <input
-              type="text"
-              name="nama_akun"
-              value={user.nama_akun}
-              onChange={handleChange}
-              className="block w-full border-gray-300 rounded-md shadow-sm"
-            />
-          </div>
-          <div>
-            <label className="block text-sm font-medium">Nama Asli</label>
-            <input
-              type="text"
-              name="nama_asli_user"
-              value={user.nama_asli_user}
-              onChange={handleChange}
-              className="block w-full border-gray-300 rounded-md shadow-sm"
-            />
-          </div>
-          <div>
-            <label className="block text-sm font-medium">Email</label>
-            <input
-              type="email"
-              name="email"
-              value={user.email}
-              onChange={handleChange}
-              className="block w-full border-gray-300 rounded-md shadow-sm"
-            />
-          </div>
-          <div>
-            <label className="block text-sm font-medium">No Telepon</label>
-            <input
-              type="text"
-              name="no_telepon"
-              value={user.no_telepon}
-              onChange={handleChange}
-              className="block w-full border-gray-300 rounded-md shadow-sm"
-            />
-          </div>
-          <button
-            type="submit"
-            className="bg-blue-500 text-white py-2 px-4 rounded shadow hover:bg-blue-600"
-          >
-            Simpan
-          </button>
+            <div>
+              <label className="block text-sm font-medium">Nama Akun</label>
+              <input
+                type="text"
+                name="nama_akun"
+                value={user.nama_akun}
+                onChange={handleChange}
+                className="block w-full border-gray-300 rounded-md shadow-sm"
+              />
+            </div>
+            <div>
+              <label className="block text-sm font-medium">Nama Asli</label>
+              <input
+                type="text"
+                name="nama_asli_user"
+                value={user.nama_asli_user}
+                onChange={handleChange}
+                className="block w-full border-gray-300 rounded-md shadow-sm"
+              />
+            </div>
+            <div>
+              <label className="block text-sm font-medium">Email</label>
+              <input
+                type="email"
+                name="email"
+                value={user.email}
+                onChange={handleChange}
+                className="block w-full border-gray-300 rounded-md shadow-sm"
+              />
+            </div>
+            <div>
+              <label className="block text-sm font-medium">No Telepon</label>
+              <input
+                type="text"
+                name="no_telepon"
+                value={user.no_telepon}
+                onChange={handleChange}
+                className="block w-full border-gray-300 rounded-md shadow-sm"
+              />
+            </div>
+            <button
+              type="submit"
+              className="bg-blue-500 text-white py-2 px-4 rounded shadow hover:bg-blue-600"
+            >
+              Simpan
+            </button>
           </div>
         </form>
       </div>

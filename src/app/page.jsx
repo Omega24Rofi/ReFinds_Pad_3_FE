@@ -4,7 +4,7 @@ import Link from "next/link";
 import Head from "next/head";
 import api from "@/utils/axios";
 import useKategori from "@/hooks/useKategori";
-import { useRouter } from 'next/navigation';
+import { useRouter } from "next/navigation";
 
 const logout = () => {
   // clear the token
@@ -161,8 +161,6 @@ const Homepage = () => {
             <p className="px-2 text-center mt-4">Alat Rumah Tangga</p>
           </Link>
 
-
-          
           <Link
             href={"/category/1"}
             className="bg-white rounded-2xl shadow-lg p-2 flex flex-col items-center"
@@ -174,8 +172,6 @@ const Homepage = () => {
             <p className="px-2 text-center">Elektronik</p>
           </Link>
 
-
-
           <Link
             href={"/category/2"}
             className="bg-white rounded-2xl shadow-lg p-2 flex flex-col items-center"
@@ -186,8 +182,6 @@ const Homepage = () => {
             />
             <p className="px-2 text-center">Furniture</p>
           </Link>
-
-
 
           <Link
             href={"/category/3"}
@@ -206,19 +200,26 @@ const Homepage = () => {
       <div className="w-[80%] bg-lightbg flex-wrap mt-10 m-auto py-6 rounded-2xl px-2 justify-evenly">
         <p className="text-xl font-bold text-black px-2">Top Product</p>
         <div className="flex flex-wrap">
-          {topProduks.map((TopProduk) => (
+          {topProduks.slice(0, 6).map((TopProduk) => (
             <Link
-            href={`/detail_produk/${TopProduk.id_produk}`} // URL dinamis dengan id_produk
+              href={`/detail_produk/${TopProduk.id_produk}`} // URL dinamis dengan id_produk
               key={TopProduk.id_produk}
-              className="card min-h-fit bg-white box-content w-[11.4rem] m-2 rounded-lg"
+              className="card min-h-fit h-64 bg-white box-content w-[11.4rem] m-2 rounded-lg overflow-hidden shadow-md"
             >
-              <img
-                src={TopProduk.list_url_gambar[0]}
-                alt=""
-                className="h-36 w-full"
-              />
-              <p className="px-2">{TopProduk.nama_produk}</p>
-              <p className="text-blue-300 px-2">Rp. {TopProduk.harga}</p>
+              <div className="h-44 w-full overflow-hidden flex align-center justify-center">
+                <img
+                  src={TopProduk.list_url_gambar[0]}
+                  alt=""
+                  className="h-36 w-full"
+                />
+              </div>
+              <p className="pb-12 px-2 h-8 mt-2 text-[18px] ">
+                {TopProduk.nama_produk}
+              </p>
+              <p className="text-blue_btn px-2 font-bold pb-2">
+                Rp. {TopProduk.harga}
+              </p>
+              <p className="text-right">{TopProduk.tanggal_post}</p>
             </Link>
           ))}
         </div>
@@ -228,19 +229,26 @@ const Homepage = () => {
       <div className="w-[80%] bg-lightbg flex-wrap mt-10 m-auto py-6 rounded-2xl px-2 justify-evenly">
         <p className="text-xl font-bold text-black px-2">Produk Terbaru</p>
         <div className="flex flex-wrap">
-          {produks.map((produk) => (
+          {produks.slice(0, 18).map((produk) => (
             <Link
               href={`/detail_produk/${produk.id_produk}`} // URL dinamis dengan id_produk
               key={produk.id_produk}
-              className="card min-h-fit bg-white box-content w-[11.4rem] m-2 rounded-lg"
+              className="card min-h-fit h-64 bg-white box-content w-[11.4rem] m-2 rounded-lg overflow-hidden shadow-md"
             >
-              <img
-                src={produk.list_url_gambar[0]}
-                alt={`Gambar ${produk.nama_produk}`}
-                className="h-36 w-full"
-              />
-              <p className="px-2">{produk.nama_produk}</p>
-              <p className="text-blue-300 px-2">Rp. {produk.harga}</p>
+              <div className="h-44 w-full overflow-hidden flex align-center justify-center">
+                <img
+                  src={produk.list_url_gambar[0]}
+                  alt={`Gambar ${produk.nama_produk}`}
+                  className="h-36 w-full"
+                />
+              </div>
+              <p className="pb-12 px-2 h-8 mt-2 text-[18px] ">
+                {produk.nama_produk}
+              </p>
+              <p className="text-blue_btn px-2 font-bold pb-2">
+                Rp. {produk.harga}
+              </p>
+              <p className="text-right">{produk.tanggal_post}</p>
             </Link>
           ))}
         </div>
