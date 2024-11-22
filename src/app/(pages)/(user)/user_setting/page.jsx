@@ -10,15 +10,12 @@ const UserSetting = () => {
     email: "",
     no_telepon: "",
     url_foto_profil: "", // Menyimpan URL foto profil
-
   });
-  const token = localStorage.getItem("token");
-
-  const apiBaseUrl = process.env.NEXT_PUBLIC_API_BASE_URL;
-
 
   const [profilePicture, setProfilePicture] = useState(null);
   const [profilePicturePreview, setProfilePicturePreview] = useState(null);
+  const token = localStorage.getItem("token");
+  const apiBaseUrl = process.env.NEXT_PUBLIC_API_BASE_URL;
 
   useEffect(() => {
     const fetchUserData = async () => {
@@ -29,21 +26,15 @@ const UserSetting = () => {
           },
         });
 
-        console.log("RESPINSE: ", response.data);
-
-        // Mengisi otomatis form dengan data dari BE
         setUser({
           nama_akun: response.data[0].nama_akun || "",
           nama_asli_user: response.data[0].nama_asli_user || "",
           email: response.data[0].email || "",
           no_telepon: response.data[0].no_telepon || "",
-          url_foto_profil: response.data[0].url_foto_profil || "", // Menyimpan URL foto profil lama
-
+          url_foto_profil: response.data[0].url_foto_profil || "",
         });
 
-        // Menampilkan foto profil lama di preview jika ada
-        setProfilePicturePreview(`${apiBaseUrl}/${response.data[0].url_foto_profil}`); // Menambahkan apiBaseUrl di depan URL foto profil
-        
+        setProfilePicturePreview(`${apiBaseUrl}/${response.data[0].url_foto_profil}`);
       } catch (error) {
         console.error("Error fetching user data:", error);
       }
@@ -61,18 +52,14 @@ const UserSetting = () => {
   };
 
   const handleProfilePictureChange = async (e) => {
-    const file = e.target.files[0]; // Ambil file pertama
+    const file = e.target.files[0];
     if (file && file.type.startsWith("image/")) {
       try {
-        // Proses gambar menggunakan fungsi processImage
         const processedImage = await processImage(URL.createObjectURL(file));
-
-        setProfilePicture(processedImage.processedImage); // Simpan gambar hasil pemrosesan
-        setProfilePicturePreview(
-          URL.createObjectURL(processedImage.processedImage)
-        ); // Generate preview dari gambar yang sudah diproses
+        setProfilePicture(processedImage.processedImage);
+        setProfilePicturePreview(URL.createObjectURL(processedImage.processedImage));
       } catch (error) {
-        console.error("Terjadi kesalahan saat memproses gambar:", error);
+        console.error("Error processing image:", error);
         alert("Gagal memproses gambar. Harap coba gambar lain.");
       }
     } else {
@@ -91,7 +78,7 @@ const UserSetting = () => {
       formData.append("no_telepon", user.no_telepon);
 
       if (profilePicture) {
-        formData.append("foto_profil", profilePicture); // Tambahkan gambar
+        formData.append("foto_profil", profilePicture);
       }
 
       const response = await api.post("/api/update_user", formData, {
@@ -101,81 +88,83 @@ const UserSetting = () => {
         },
       });
 
-      console.log("User updated:", response.data); // Log response dari BE
-
-      window.location.reload(); // Ini akan melakukan reload halaman
-
+      console.log("User updated:", response.data);
+      window.location.reload();
     } catch (error) {
       console.error("Error updating user data:", error);
     }
   };
 
   return (
-    <div>
-      <h1>Edit User Settings</h1>
-      <form onSubmit={handleSubmit}>
-        <div>
-          <label>Nama Akun:</label>
-          <input
-            type="text"
-            name="nama_akun"
-            value={user.nama_akun}
-            onChange={handleChange}
-          />
-        </div>
-        <div>
-          <label>Nama Asli:</label>
-          <input
-            type="text"
-            name="nama_asli_user"
-            value={user.nama_asli_user}
-            onChange={handleChange}
-          />
-        </div>
-        <div>
-          <label>Email:</label>
-          <input
-            type="email"
-            name="email"
-            value={user.email}
-            onChange={handleChange}
-          />
-        </div>
-        <div>
-          <label>No Telepon:</label>
-          <input
-            type="text"
-            name="no_telepon"
-            value={user.no_telepon}
-            onChange={handleChange}
-          />
-        </div>
-
-        <div className="mb-3">
-          <label htmlFor="profilePicture" className="form-label">
-            Foto Profil:
-          </label>
-          <input
-            type="file"
-            className="form-control"
-            id="profilePicture"
-            name="profilePicture"
-            accept="image/*"
-            onChange={handleProfilePictureChange}
-          />
-          {profilePicturePreview && (
+    <div className="container mx-auto p-6">
+      <div className="bg-white shadow-md rounded p-6">
+        <h1 className="text-2xl font-bold mb-4">Setting Akun</h1>
+        <form onSubmit={handleSubmit} className="space-y-4">
+          <div className="flex items-center space-x-4">
             <img
-              src={profilePicturePreview}
+              src={profilePicturePreview || "/default-profile.png"}
               alt="Preview Foto Profil"
-              width={200}
-              height={200}
-              style={{ marginTop: "10px", borderRadius: "50%" }}
+              className="w-20 h-20 rounded-full object-cover"
             />
-          )}
-        </div>
-
-        <button type="submit">Update</button>
-      </form>
+            <label className="cursor-pointer">
+              <input
+                type="file"
+                className="hidden"
+                name="profilePicture"
+                accept="image/*"
+                onChange={handleProfilePictureChange}
+              />
+              <span className="text-blue-500 hover:underline">Edit Foto</span>
+            </label>
+          </div>
+          <div>
+            <label className="block text-sm font-medium">Nama Akun</label>
+            <input
+              type="text"
+              name="nama_akun"
+              value={user.nama_akun}
+              onChange={handleChange}
+              className="block w-full border-gray-300 rounded-md shadow-sm"
+            />
+          </div>
+          <div>
+            <label className="block text-sm font-medium">Nama Asli</label>
+            <input
+              type="text"
+              name="nama_asli_user"
+              value={user.nama_asli_user}
+              onChange={handleChange}
+              className="block w-full border-gray-300 rounded-md shadow-sm"
+            />
+          </div>
+          <div>
+            <label className="block text-sm font-medium">Email</label>
+            <input
+              type="email"
+              name="email"
+              value={user.email}
+              onChange={handleChange}
+              className="block w-full border-gray-300 rounded-md shadow-sm"
+            />
+          </div>
+          <div>
+            <label className="block text-sm font-medium">No Telepon</label>
+            <input
+              type="text"
+              name="no_telepon"
+              value={user.no_telepon}
+              onChange={handleChange}
+              className="block w-full border-gray-300 rounded-md shadow-sm"
+            />
+          </div>
+          <button
+            type="submit"
+            className="bg-blue-500 text-white py-2 px-4 rounded shadow hover:bg-blue-600"
+          >
+            Simpan
+          </button>
+        </form>
+      </div>
     </div>
   );
 };
