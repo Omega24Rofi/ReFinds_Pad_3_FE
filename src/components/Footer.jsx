@@ -1,53 +1,53 @@
-import React from 'react'
+import React from 'react';
 
 const Footer = () => {
   return (
-    <div className='h-[25%] box-border p-8 text-blue_btn bg-lightbluemain  w-full flex flex-row justify-around align-middle'>
-        <div className='w-[40%]'>
-            <p className='font-bold text-lg'>Customer Care</p>
-            <div className='contact flex flex-row w-[75%] justify-between'>
-                <div>
-                    <div className='flex justify-evenly'>
-                        <img src="/icons/round-phone.svg" alt="phone logo" />
-                        <p>Contact</p>
-                    </div>
-                    <p>086277961340</p>
-                </div>
-                <div>
-                    <div className='email'>
-                    <div className="flex justify-evenly">
-                        <img src="/icons/email.svg" alt="email phone" />
-                        <p>Email</p>
-                    </div>
-                    <p>RefindsBuy@mail.com</p>
-                </div>
-                
+    <div className="box-border p-8 text-blue_btn bg-lightbluemain w-full flex flex-col md:flex-row justify-around items-start md:items-center">
+      {/* Customer Care Section */}
+      <div className="w-full md:w-[40%] mb-6 md:mb-0">
+        <p className="font-bold text-lg mb-4">Customer Care</p>
+        <div className="contact flex flex-col md:flex-row w-full md:w-[75%] justify-between gap-4">
+          <div>
+            <div className="flex items-center gap-2">
+              <img src="/icons/round-phone.svg" alt="phone logo" />
+              <p>Contact</p>
             </div>
+            <p>086277961340</p>
+          </div>
+          <div>
+            <div className="flex items-center gap-2">
+              <img src="/icons/email.svg" alt="email logo" />
+              <p>Email</p>
             </div>
+            <p>RefindsBuy@mail.com</p>
+          </div>
         </div>
-        <div className='w-[40%]'>
-            <p>Our Social Media</p>
-            <ul className='flex flex-row w-full  justify-between'>
-                <li className='flex flex-row'>
-                    <img src="/icons/instagram.svg" alt="ig-logo" className='mr-2'/>
-                    <a>Refinds</a>
-                </li>
-                <li className='flex flex-row'>
-                    <img src="/icons/youtube_icon.svg" alt="yt-logo" className='mr-2'/>
-                    <a>Refinds</a>
-                </li>
-                <li className='flex flex-row'>
-                    <img src="/icons/ic_x.svg" alt="x-logo" className='mr-2' />
-                    <a>Refinds</a>
-                </li>
-                <li className='flex flex-row'>
-                    <img src="/icons/facebook.svg" alt="facebook-logo" />
-                    <a>Refinds</a>
-                </li>
-            </ul>
-        </div>
+      </div>
+
+      {/* Social Media Section */}
+      <div className="w-full md:w-[40%]">
+        <p className="font-bold text-lg mb-4">Our Social Media</p>
+        <ul className="flex flex-wrap md:flex-row gap-4 md:gap-8">
+          <li className="flex items-center gap-2">
+            <img src="/icons/instagram.svg" alt="ig-logo" />
+            <a href="#">Refinds</a>
+          </li>
+          <li className="flex items-center gap-2">
+            <img src="/icons/youtube_icon.svg" alt="yt-logo" />
+            <a href="#">Refinds</a>
+          </li>
+          <li className="flex items-center gap-2">
+            <img src="/icons/ic_x.svg" alt="x-logo" />
+            <a href="#">Refinds</a>
+          </li>
+          <li className="flex items-center gap-2">
+            <img src="/icons/facebook.svg" alt="facebook-logo" />
+            <a href="#">Refinds</a>
+          </li>
+        </ul>
+      </div>
     </div>
-  )
-}
+  );
+};
 
 export default Footer;

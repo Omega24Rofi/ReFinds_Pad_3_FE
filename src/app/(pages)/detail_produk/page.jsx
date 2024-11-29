@@ -20,7 +20,7 @@ const ContactSeller = () => {
                 
                 <div className='flex flex-row align-middle mt-10 text-center h-fit w-12'>
                     <Link href={"/seller_view"}>
-                        <img src="/images/testimage/account_circle.png" alt="" />
+                        <img src="/images/testimage/account_circle.png" alt="" className='rounded-full'/>
                         <p>Seller</p>
                     </Link>
                 </div>

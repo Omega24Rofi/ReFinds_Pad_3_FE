@@ -23,8 +23,10 @@
     "react-image-crop": "^11.0.7",
     "react-image-file-resizer": "^0.4.8",
     "react-popup": "^0.11.2",
+    "react-slick": "^0.30.2",
     "react-tabs": "^6.0.2",
-    "reactjs-popup": "^2.0.6"
+    "reactjs-popup": "^2.0.6",
+    "slick-carousel": "^1.8.1"
   },
   "devDependencies": {
     "eslint": "^8",

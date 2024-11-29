@@ -1,70 +1,53 @@
 "use client";
 import { useState, useEffect } from "react";
-import axios from "axios";
 import Link from "next/link";
 import api from "@/utils/axios";
-import { useSearchParams } from "next/navigation";
 
+const ITEMS_PER_PAGE = 30; // Number of items per page
 
-
-
-const SearchPage = () => {
-  const [searchInput, setSearchInput] = useState(""); // untuk menyimpan input form
-  const [produkData, setProdukData] = useState([]); // untuk menyimpan data produk dari BE
-  const searchParams = useSearchParams(); // Hook for accessing query parameters
-
-  // Ambil keyword dari query parameter URL
-  const keywords = searchParams.get("keywords");
+const PaginatedPage = () => {
+  const [produkData, setProdukData] = useState([]); // Product data from backend
+  const [currentPage, setCurrentPage] = useState(1); // Current page state
 
   useEffect(() => {
-    if (keywords) {
-      // Update state dengan keyword yang diterima dari URL dan lakukan pencarian
-      setSearchInput(keywords);
-      searchProduk(keywords.trim().split(" ")); // Panggil searchProduk dengan keyword
+    // Fetch product data when the component mounts
+    fetchProduk();
+  }, []);
+
+  const fetchProduk = async () => {
+    try {
+      const response = await api.get("/api/produk"); // Update API endpoint as needed
+      setProdukData(response.data);
+    } catch (error) {
+      console.error("Error fetching product data:", error);
     }
-  }, [keywords]);
-
-  // Function untuk menangani input keyword search
-  const handleSearch = async (event) => {
-    event.preventDefault();
-
-    // Split input berdasarkan spasi
-    const searchKeywords = searchInput.trim().split(" ");
-    console.log("KEYWORD", searchKeywords);
-
-    // Memanggil fungsi search dengan parameter array keyword yang sudah diolah
-    await searchProduk(searchKeywords);
   };
 
-  // Function untuk melakukan pencarian
-  const searchProduk = async (keywords) => {
-    try {
-      const response = await api.post("/api/produk/search_produk", {
-        keywords: keywords, // mengirim array keyword ke BE
-        kategori: [],
-        subkategori: [],
-      });
+  // Calculate paginated data
+  const startIndex = (currentPage - 1) * ITEMS_PER_PAGE;
+  const paginatedData = produkData.slice(startIndex, startIndex + ITEMS_PER_PAGE);
+  const totalPages = Math.ceil(produkData.length / ITEMS_PER_PAGE);
 
-      // Set produkData dari BE ke const
-      setProdukData(response.data);
-      console.log("HASIL SEARCH", response.data);
-    } catch (error) {
-      console.error("Error fetching search results:", error);
-    }
+  // Handle page navigation
+  const goToNextPage = () => {
+    if (currentPage < totalPages) setCurrentPage(currentPage + 1);
+  };
+
+  const goToPreviousPage = () => {
+    if (currentPage > 1) setCurrentPage(currentPage - 1);
   };
 
   return (
     <div className="min-h-screen">
-
-      {/* Displaying search results */}
+      {/* Displaying paginated results */}
       <div className="w-[80%] bg-lightbg flex flex-row flex-wrap mt-10 m-auto py-6 rounded-2xl px-2 justify-evenly">
-        {produkData.length === 0 ? (
+        {paginatedData.length === 0 ? (
           <div className="flex justify-center items-center w-full text-center text-xl font-bold">
-            Produk yang Anda cari tidak ditemukan
+            No products found.
           </div>
         ) : (
-          produkData.map((produk) => (
-            <Link href={"/contact_seller"} key={produk.id_produk} className="card min-h-fit bg-white box-content w-40 m-2 rounded-lg">
+          paginatedData.map((produk) => (
+            <Link href={`/detail_produk/${produk.id_produk}`} key={produk.id_produk} className="card min-h-fit bg-white box-content w-40 m-2 rounded-lg">
               <img src={produk.list_url_gambar[0]} alt="" className="h-36 w-full" />
               <p className="px-2">{produk.nama_produk}</p>
               <p className="text-blue-300 px-2">Rp. {produk.harga}</p>
@@ -72,8 +55,31 @@ const SearchPage = () => {
           ))
         )}
       </div>
+
+      {/* Pagination Controls */}
+      {totalPages > 1 && (
+        <div className="flex justify-center mt-6">
+          <button
+            onClick={goToPreviousPage}
+            disabled={currentPage === 1}
+            className="px-4 py-2 mx-2 bg-gray-300 text-black rounded disabled:opacity-50"
+          >
+            Previous
+          </button>
+          <span className="px-4 py-2">
+            Page {currentPage} of {totalPages}
+          </span>
+          <button
+            onClick={goToNextPage}
+            disabled={currentPage === totalPages}
+            className="px-4 py-2 mx-2 bg-gray-300 text-black rounded disabled:opacity-50"
+          >
+            Next
+          </button>
+        </div>
+      )}
     </div>
   );
 };
 
-export default SearchPage;
+export default PaginatedPage;

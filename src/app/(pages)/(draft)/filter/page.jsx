@@ -9,6 +9,8 @@ const FilterProduk = () => {
   const [selectedSubkategori, setSelectedSubkategori] = useState([]);
   const [antiKategori, setAntiKategori] = useState(false);
   const [filteredProducts, setFilteredProducts] = useState([]);
+  const [maxHarga, setMaxHarga] = useState('');
+  const [minHarga, setMinHarga] = useState('');
 
 // Toggle pemilihan Kategori dan Subkategori
 const handleKategoriChange = (id) => {
@@ -66,6 +68,8 @@ const handleSubkategoriChange = (id_subkategori) => {
               array_subkategori: selectedSubkategori.map((sub) => sub.id_subkategori),
               array_kategori: selectedKategori,
               anti_kategori: antiKategori,
+              max_harga: maxHarga ? parseFloat(maxHarga) : null,
+              min_harga: minHarga ? parseFloat(minHarga) : null,
           });
           setFilteredProducts(response.data.data);
       } catch (error) {
@@ -107,7 +111,28 @@ const handleSubkategoriChange = (id_subkategori) => {
                     </div>
                 ))}
             </div>
-            <button onClick={fetchFilteredProducts}>Filter</button>
+
+            <div>
+                <label>
+                Min Harga:
+                <input
+                    type="number"
+                    value={minHarga}
+                    onChange={(e) => setMinHarga(e.target.value)}
+                    placeholder="Minimum Price"
+                />
+                </label>
+                <label>
+                Max Harga:
+                <input
+                    type="number"
+                    value={maxHarga}
+                    onChange={(e) => setMaxHarga(e.target.value)}
+                    placeholder="Maximum Price"
+                />
+                </label>
+            </div>
+            <button onClick={fetchFilteredProducts}>Terapkan</button>
 
             <h2>Filtered Produk</h2>
             <ul>
