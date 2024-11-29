@@ -24,10 +24,11 @@ const SearchPage = () => {
   // Function untuk melakukan pencarian
   const searchProduk = async (keywords) => {
     try {
-      const response = await api.post("/api/produk/search_produk", {
+      const response = await api.post("/api/produk/search_filter", {
         keywords: keywords, // mengirim array keyword ke BE
         kategori: [],
         subkategori: [],
+        
         
       });
       
