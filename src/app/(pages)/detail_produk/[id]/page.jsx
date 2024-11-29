@@ -5,6 +5,7 @@ import Head from "next/head";
 import useAuth from "@/hooks/useAuth";
 import api from "@/utils/axios";
 import { formatPhoneNumber } from "@/utils/formatPhoneNumber"; // Import phone number formatter
+import { formatHarga } from "@/utils/priceFormatter";
 
 
 const ContactSeller = ({ params }) => {
@@ -105,7 +106,7 @@ const ContactSeller = ({ params }) => {
           <div className="h-full w-[50%] p-5 flex justify-center flex-col">
             <p className="font-bold text-2xl">{detailProduk.nama_produk}</p>
             <p className="text-2xl text-[#0087E0] mt-2">
-              Rp. {detailProduk.harga}
+              {formatHarga(detailProduk.harga)}
             </p>
             <div className="mt-10">
               <p className="font-bold">Deskripsi produk</p>

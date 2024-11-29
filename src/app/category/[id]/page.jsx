@@ -4,6 +4,8 @@ import React, { useState, useEffect } from "react";
 import { useRouter } from "next/navigation";
 import api from "@/utils/axios";
 import useKategori from "@/hooks/useKategori";
+import { formatTanggal } from "@/utils/dateFormatter";
+import { formatHarga } from "@/utils/priceFormatter";
 
 export const Category = ({ params }) => {
   const title = "Category";
@@ -87,9 +89,11 @@ export const Category = ({ params }) => {
                     {kategorisProduk.nama_produk}
                   </p>
                   <p className="text-blue_btn px-2 font-bold pb-2">
-                    Rp. {kategorisProduk.harga}
+                    {formatHarga(kategorisProduk.harga)}
                   </p>
-                  <p className="text-right">{kategorisProduk.tanggal_post}</p>
+                  <p className="text-right px-2">
+                    {formatTanggal(kategorisProduk.tanggal_post)}
+                  </p>
                 </Link>
               ))
             ) : (
