@@ -4,6 +4,8 @@ import "react-tabs/style/react-tabs.css";
 import React, { useState, useEffect } from "react";
 import Link from "next/link";
 import api from "@/utils/axios";
+import { formatTanggal } from "@/utils/dateFormatter";
+import { formatHarga } from "@/utils/priceFormatter";
 
 const SellerView = () => {
   const token = localStorage.getItem("token");
@@ -195,7 +197,9 @@ const SellerView = () => {
                     className="h-36 w-full"
                   />
                   <p className="px-2">{userProduk.nama_produk}</p>
-                  <p className="text-blue-300 px-2">Rp. {userProduk.harga}</p>
+                  <p className="text-blue-300 px-2">
+                    {formatHarga(userProduk.harga)}
+                  </p>
                 </Link>
               ))}
             </div>
@@ -230,11 +234,11 @@ const SellerView = () => {
                     </p>
                     <p>
                       <span className="font-semibold">Harga Produk :</span>
-                      {transJual.produk.harga}
+                      {formatHarga(transJual.produk.harga)}
                     </p>
                     <p>
                       <span className="font-semibold">Tanggal Post :</span>
-                      {transJual.produk.tanggal_post}
+                      {formatTanggal(transJual.produk.tanggal_post)}
                     </p>
                   </div>
 
@@ -242,7 +246,8 @@ const SellerView = () => {
                     {/* Render status pesanan atau tombol batalkan pesanan */}
                     {statusPesanan ? (
                       <p>
-                        <span className="font-semibold pr-4"></span> {statusPesanan}
+                        <span className="font-semibold pr-4"></span>{" "}
+                        {statusPesanan}
                       </p>
                     ) : (
                       <button
@@ -289,11 +294,11 @@ const SellerView = () => {
                     </p>
                     <p>
                       <span className="font-semibold">Harga Produk :</span>
-                      {transBeli.produk.harga}
+                      {formatHarga(transBeli.produk.harga)}
                     </p>
                     <p>
                       <span className="font-semibold">Tanggal Post :</span>
-                      {transBeli.produk.tanggal_post}
+                      {formatTanggal(transBeli.produk.tanggal_post)}
                     </p>
 
                     <p>

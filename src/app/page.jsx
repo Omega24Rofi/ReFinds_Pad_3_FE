@@ -5,6 +5,8 @@ import Head from "next/head";
 import api from "@/utils/axios";
 import useKategori from "@/hooks/useKategori";
 import { useRouter } from "next/navigation";
+import { formatTanggal } from "@/utils/dateFormatter";
+import { formatHarga } from "@/utils/priceFormatter";
 
 const logout = () => {
   // clear the token
@@ -217,9 +219,11 @@ const Homepage = () => {
                 {TopProduk.nama_produk}
               </p>
               <p className="text-blue_btn px-2 font-bold pb-2">
-                Rp. {TopProduk.harga}
+                {formatHarga(TopProduk.harga)}
               </p>
-              <p className="text-right">{TopProduk.tanggal_post}</p>
+              <p className="text-right px-2">
+                {formatTanggal(TopProduk.tanggal_post)}
+              </p>
             </Link>
           ))}
         </div>
@@ -246,9 +250,11 @@ const Homepage = () => {
                 {produk.nama_produk}
               </p>
               <p className="text-blue_btn px-2 font-bold pb-2">
-                Rp. {produk.harga}
+                {formatHarga(produk.harga)}
               </p>
-              <p className="text-right">{produk.tanggal_post}</p>
+              <p className="text-right px-2">
+                {formatTanggal(produk.tanggal_post)}
+              </p>
             </Link>
           ))}
         </div>
