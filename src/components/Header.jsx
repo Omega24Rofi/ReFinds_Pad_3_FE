@@ -166,12 +166,12 @@ const handleSubkategoriChange = (id_subkategori) => {
       />
       <img src="/icons/search.svg" alt="" className="h-8 my-auto" />
       <button
-        className="flex items-center text-center justify-center ml-2 h-12 relative"
+        className="flex align-middle justify-center ml-2 h-12 relative"
         onClick={toggleDropDown2}
         type="button"
       >
         <img src="/icons/sm/line.svg" alt="" className="block h-12" />
-        <p className="block px-2">Filter</p>
+        <p>Filter</p>
         <img src="/icons/sm/arrow_down.png" alt="" className="block" />
       </button>
 
@@ -191,7 +191,7 @@ const handleSubkategoriChange = (id_subkategori) => {
         >
           <h3 style={{ textAlign: 'center', marginBottom: '10px' }}>Filter</h3>
           <div style={{ borderBottom: '1px solid #ccc', marginBottom: '10px' }}></div>
-          {/* {kategoriData.map((kategori) => (
+          {kategoriData.map((kategori) => (
             <div key={kategori.id_kategori} style={{ marginBottom: '15px' }}>
               <label style={{ fontWeight: 'bold' }}>
                 <input
@@ -224,8 +224,8 @@ const handleSubkategoriChange = (id_subkategori) => {
                   ))}
               </div>
             </div>
-          ))} */}
-          <div style={{ marginTop: '10px' }} className="flex gap-2">
+          ))}
+          <div style={{ marginTop: '10px' }} className="flex">
             <div style={{ marginBottom: '10px' }}>
               <label style={{ display: 'block', marginBottom: '5px' }}>
                 Min Harga:

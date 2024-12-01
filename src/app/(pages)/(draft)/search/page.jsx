@@ -28,6 +28,8 @@ const SearchPage = () => {
         keywords: keywords, // mengirim array keyword ke BE
         kategori: [],
         subkategori: [],
+        
+        
       });
       
       // Set produkData dari be ke const
