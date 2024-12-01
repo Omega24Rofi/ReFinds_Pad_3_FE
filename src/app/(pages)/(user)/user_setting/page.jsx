@@ -268,14 +268,17 @@ const UserSetting = () => {
               />
             </div>
             <div>
-              <label className="block text-sm font-medium">Alamat Lama</label>
+              <label className="block text-sm font-medium">
+                Alamat Tersimpan
+              </label>
               <button
                 type="button"
                 onClick={() => setIsModalOpen(true)}
-                className="text-blue-500 hover:underline"
+                className="mt-4 bg-slate-100 border border-gray-300 text-black py-2 px-4 rounded"
               >
-                Lihat Alamat
+                Lihat alamat tersimpan
               </button>
+
               <Modal
                 isOpen={isModalOpen}
                 onClose={() => setIsModalOpen(false)}
