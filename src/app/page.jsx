@@ -4,7 +4,7 @@ import Link from "next/link";
 import Head from "next/head";
 import api from "@/utils/axios";
 import useKategori from "@/hooks/useKategori";
-import { useRouter } from "next/navigation";
+// import { useRouter } from "next/navigation";
 import { formatTanggal } from "@/utils/dateFormatter";
 import { formatHarga } from "@/utils/priceFormatter";
 

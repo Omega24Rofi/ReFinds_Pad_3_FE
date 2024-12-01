@@ -1,140 +1,138 @@
 "use client"; // Menandakan bahwa ini adalah client component
 
 import { useEffect, useState } from "react";
-import axios from "axios";
-import Image from "next/image";
 import api from "@/utils/axios";
-import withLevel from "@/components/withLevel";
-import withAuth from "@/components/withAuth";
-import Popup from 'reactjs-popup';
-import 'reactjs-popup/dist/index.css';
-import DetailPopUp from "@/components/detailPopUp";
+import useKategori from "@/hooks/useKategori";
 
-// import '../../global.css';
+const ProdukList = () => {
+  const { kategoriData } = useKategori();
+  console.log("KATEGORI_DATA:", kategoriData);
 
-
-const ACCProduk = () => {
-  // const { userData, loading } = useAuth(); // Mengambil loading dari useAuth
-  const [produkData, setProduks] = useState([]); // State untuk menyimpan data produk
-  const [loadingProduk, setLoadingProduk] = useState(true); // State untuk loading produk
-
+  ///////////////////// USE EFFECT UNTUK FETCHING USER DATA
+  const [userData, setUserData] = useState(null);
+  const [loading, setLoading] = useState(true); // State untuk loading
   useEffect(() => {
-    const fetchUnACCProduks = async () => {
+    const token = localStorage.getItem("token");
+
+    api
+      .get("/api/user_data", {
+        headers: {
+          // token dikirim ke BE untuk mendapatkan user data terkait
+          Authorization: `Bearer ${token}`,
+        },
+      })
+      .then((response) => {
+        setUserData(response.data);
+        setLoading(false);
+      })
+      .catch((error) => {
+        console.error("Error fetching user data:", error);
+        setLoading(false); // Meskipun ada error, tetap hentikan state loading
+      });
+  }, []); // useEffect ini hanya akan dijalankan sekali saat komponen pertama kali di-mount.
+
+  ///////////////////// USE EFFECT UNTUK FETCHING PRODUK
+  const [produks, setProduks] = useState([]); // State untuk menyimpan data produk
+  const [selectedKategori, setSelectedKategori] = useState("");
+  useEffect(() => {
+    const fetchProduks = async () => {
       try {
-        const response = await api.get(
-          "/api/produk/unacc"
-        );
+        let url = "/api/produk";
+        if (selectedKategori) {
+          url = `/api/produk/kategori/${selectedKategori}`;
+        }
+        const response = await api.get(url);
         setProduks(response.data); // Simpan data produk ke state
-        // console.log("ResponseData: ", response.data);
+        console.log("ResponseData: ", response.data);
       } catch (error) {
         console.error("Error fetching products:", error);
       } finally {
-        setLoadingProduk(false); // Set loading menjadi false setelah data produk selesai diambil
+        setLoading(false); // Selesai loading
       }
     };
 
-    fetchUnACCProduks(); // Panggil fungsi untuk mengambil data produk
-  }, []); // Kosong berarti hanya dijalankan sekali setelah komponen dimount
+    fetchProduks(); // Panggil fungsi untuk mengambil data produk
+  }, [selectedKategori]);
 
-  const updateStatus = async (id_produk, status_post) => {
-    try {
-      const response = await api.post(
-        `/api/produk/update-status/${id_produk}`,
-        {
-          status_post,
-        }
-      );
-      console.log("Update success:", response.data);
-      // Optionally refresh the product data or update UI
-    } catch (error) {
-      console.error("Error updating status:", error);
-    }
+  const handleChange = (event) => {
+    setSelectedKategori(event.target.value);
+    console.log("Kategori yang dipilih:", event.target.value);
   };
 
-  // Fungsi REJECT produk
-  const rejectProduct = (id_produk) => {
-    updateStatus(id_produk, "rejected");
-  };
+  // Menampilkan loading atau data produk
+  if (loading) {
+    return <div>Loading...</div>;
+  }
 
-  // Fungsi ACCEPT produk
-  const acceptProduct = (id_produk) => {
-    updateStatus(id_produk, "available");
-  };
-
-  // Tampilkan loading saat produk atau data user sedang diambil
-  // if (loading || loadingProduk) {
-  //   return <div>Loading...</div>;
-  // }
-
-                                   
   return (
     <div className="min-h-screen">
       <h1 className="text-center mt-5 text-2xl font-bold">Persetujuan Posting Produk</h1>
 
-{/* Menampilkan semua data produk yang perlu acc dan data pengguna */}
+      {/* Menampilkan dropdown kategori */}
+      <div className="w-[90%] mx-auto mt-5">
+        <label htmlFor="kategori" className="block mb-2">Pilih Kategori:</label>
+        <select
+          id="kategori"
+          name="kategori"
+          onChange={handleChange}
+          className="w-full p-2 rounded-xl border"
+        >
+          <option value="">Pilih Kategori</option>
+          {kategoriData.map((kategori) => (
+            <option key={kategori.id_kategori} value={kategori.id_kategori}>
+              {kategori.nama_kategori}
+            </option>
+          ))}
+        </select>
+      </div>
+
+      {/* Menampilkan semua data produk yang perlu acc dan data pengguna */}
       <div className="w-[90%] bg-lightbg mx-auto mt-5 rounded-3xl p-4">
         <p className="mt-2 text-2xl font-bold">Produk Masuk</p>
         <ul>
-        {/* Dummy data untuk visualisasi */}
-          <li className="flex flex-row">
-            <div className="mr-2 my-auto">
-              <img
-                src="/images/testimage/account_circle.png"
-                alt="Foto Profil"
-                style={{ width: "50px", height: "50px", borderRadius: "50%" }}
-                className="mx-auto"
+          {/* Menampilkan produk yang telah difilter berdasarkan kategori */}
+          {produks.map((produk) => (
+            <li key={produk.id_produk} className="flex flex-row mb-5">
+              <div className="mr-2 my-auto">
+                <img
+                  src="/images/testimage/account_circle.png"
+                  alt="Foto Profil"
+                  style={{ width: "50px", height: "50px", borderRadius: "50%" }}
+                  className="mx-auto"
                 />
                 <h2>contoh_user</h2>
-            </div>
-            <div className="flex flex-row bg-white justify-center align-middle rounded-xl"> 
-              <img
-                src="https://via.placeholder.com/150"
-                alt="gambar_produk"
-                style={{ width: "150px", height: "150px", objectFit: "cover" }}
-              />
-              <div className="product-info ml-2 p-4 pr-5 w-[70%]">
-                <p>Nama Produk: Produk Contoh</p>
-                <p>Harga: Rp 100,000</p>
-                <p>Deskripsi produk : Lorem ipsum dolor sit, amet consectetur adipisicing elit. Atque in repellendus unde quibusdam doloremque neque delectus animi, eligendi</p>
               </div>
-
-              {/* tombol accept */}
-              <div className="flex mr-2 items-center justify-center gap-2 my-auto">
-              
-              <DetailPopUp
-                    trigger={
-                      <button>
-                        <img src="/icons/info.svg" alt="info"/>
-                      </button>
-                    }
-                    productName="Produk Contoh"
-                    price="Rp 100,000"
-                    description="Lorem ipsum dolor sit, amet consectetur adipisicing elit. Atque in repellendus unde quibusdam doloremque neque delectus animi, eligendi"
-                    imageUrl="/images/testimage/image2.png"
-                  />
-
-<button id="btn_accept" className="button bg-blue_btn text-white text-lg font-bold w-28 py-2  rounded-xl">
-                Terima
-              </button>
-
-              {/* tombol reject */}
-              <button id="btn_reject" className="button bg-blue_btn text-white text-lg font-bold w-28 py-2 rounded-xl">Tolak</button>
-             
+              <div className="flex flex-row bg-white justify-center align-middle rounded-xl">
+                <img
+                  src={produk.list_url_gambar[0]}
+                  alt="gambar_produk"
+                  style={{ width: "150px", height: "150px", objectFit: "cover" }}
+                />
+                <div className="product-info ml-2 p-4 pr-5 w-[70%]">
+                  <p>Nama Produk: {produk.nama_produk}</p>
+                  <p>Harga: Rp {produk.harga}</p>
+                  <p>Deskripsi produk: {produk.deskripsi}</p>
                 </div>
-              
 
+                {/* Tombol untuk menerima atau menolak produk */}
+                <div className="flex mr-2 items-center justify-center gap-2 my-auto">
+                  <button>
+                    <img src="/icons/info.svg" alt="info" />
+                  </button>
+                  <button className="button bg-blue_btn text-white text-lg font-bold w-28 py-2 rounded-xl">
+                    Terima
+                  </button>
+                  <button className="button bg-blue_btn text-white text-lg font-bold w-28 py-2 rounded-xl">
+                    Tolak
+                  </button>
+                </div>
               </div>
-    
-            
-
-            <br />
-            <br />
-          </li>
+            </li>
+          ))}
         </ul>
       </div>
-
     </div>
   );
 };
 
-export default withAuth(withLevel(ACCProduk, ["admin", "superadmin"], true));
+export default ProdukList;

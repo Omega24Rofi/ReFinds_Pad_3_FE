@@ -37,11 +37,12 @@ const Header = () => {
   };
 
   useEffect(() => {
-    document.addEventListener("mousedown", handleClickOutside);
+    document.addEventListener("mousedown", handleClickOutside || handleClickOutside2);
     return () => {
-      document.removeEventListener("mousedown", handleClickOutside);
+      document.removeEventListener("mousedown", handleClickOutside || handleClickOutside2);
     };
   }, []);
+
 
   const logout = () => {
     localStorage.removeItem("token");
@@ -151,83 +152,140 @@ const handleSubkategoriChange = (id_subkategori) => {
           </Link>
         </div>
         <div className="w-[50%] flex items-center">
-          <form onSubmit={handleSearch} className="w-full">
-            <label
-              htmlFor="search"
-              className="flex bg-white rounded-xl px-5 border-none relative"
-            >
-              <input
-                type="text"
-                name="search"
-                id="search"
-                placeholder="Cari produk berkualitas disini"
-                className="w-full p-2 rounded-xl border-none"
-              />
-              <img src="/icons/search.svg" alt="" className="h-8 my-auto" />
-            <button className="flex align-middle justify-center ml-2 h-12" onClick={toggleDropDown2}>
-              <img src="/icons/sm/line.svg" alt="" className="block h-12 " />
-              <p>Filter</p>
-              <img src="/icons/sm/arrow_down.png" alt="" className="block" />
-            </button>
-            {IsDropDownOpen2 && (
-              <div>
-                {kategoriData.map((kategori) => (
-                    <div key={kategori.id_kategori}>
-                        <label>
-                            <input
-                                type="checkbox"
-                                onChange={() => handleKategoriChange(kategori.id_kategori)}
-                                checked={selectedKategori.includes(kategori.id_kategori)}
-                            />
-                            {kategori.nama_kategori}
-                        </label>
-                        <div style={{ marginLeft: '20px' }}>
-                            {subkategoriData
-                                .filter((sub) => sub.id_kategori === kategori.id_kategori)
-                                .map((sub) => (
-                                    <label key={sub.id_subkategori}>
-                                        <input
-                                            type="checkbox"
-                                            onChange={() => handleSubkategoriChange(sub.id_subkategori)}
-                                            checked={selectedSubkategori.some(
-                                                (selected) => selected.id_subkategori === sub.id_subkategori
-                                            )}
-                                        />
-                                        {sub.nama_subkategori}
-                                    </label>
-                                ))}
-                        </div>
-                    </div>
+  <form onSubmit={handleSearch} className="w-full">
+    <label
+      htmlFor="search"
+      className="flex bg-white rounded-xl px-5 border-none relative"
+    >
+      <input
+        type="text"
+        name="search"
+        id="search"
+        placeholder="Cari produk berkualitas disini"
+        className="w-full p-2 rounded-xl border-none"
+      />
+      <img src="/icons/search.svg" alt="" className="h-8 my-auto" />
+      <button
+        className="flex items-center text-center justify-center ml-2 h-12 relative"
+        onClick={toggleDropDown2}
+        type="button"
+      >
+        <img src="/icons/sm/line.svg" alt="" className="block h-12" />
+        <p className="block px-2">Filter</p>
+        <img src="/icons/sm/arrow_down.png" alt="" className="block" />
+      </button>
 
-                ))}
-                            <div>
-                <label>
+      {/* Dropdown Filter */}
+      {IsDropDownOpen2 && (
+        <div
+          style={{
+            position: 'absolute',
+            top: '110%',
+            right: '0',
+            zIndex: 1000,
+            padding: '20px',
+            backgroundColor: '#E8F6FA',
+            borderRadius: '10px',
+            boxShadow: '0 4px 6px rgba(0, 0, 0, 0.1)',
+          }}
+        >
+          <h3 style={{ textAlign: 'center', marginBottom: '10px' }}>Filter</h3>
+          <div style={{ borderBottom: '1px solid #ccc', marginBottom: '10px' }}></div>
+          {/* {kategoriData.map((kategori) => (
+            <div key={kategori.id_kategori} style={{ marginBottom: '15px' }}>
+              <label style={{ fontWeight: 'bold' }}>
+                <input
+                  type="checkbox"
+                  onChange={() => handleKategoriChange(kategori.id_kategori)}
+                  checked={selectedKategori.includes(kategori.id_kategori)}
+                  style={{ marginRight: '5px' }}
+                />
+                {kategori.nama_kategori}
+              </label>
+              <div style={{ marginLeft: '20px', marginTop: '5px' }} className="flex">
+                {subkategoriData
+                  .filter((sub) => sub.id_kategori === kategori.id_kategori)
+                  .map((sub) => (
+                    <label
+                      key={sub.id_subkategori}
+                      style={{ display: 'block', marginBottom: '5px' }}
+                    
+                    >
+                      <input
+                        type="checkbox"
+                        onChange={() => handleSubkategoriChange(sub.id_subkategori)}
+                        checked={selectedSubkategori.some(
+                          (selected) => selected.id_subkategori === sub.id_subkategori
+                        )}
+                        style={{ marginRight: '2px', marginLeft : '5px'}}
+                      />
+                      {sub.nama_subkategori}
+                    </label>
+                  ))}
+              </div>
+            </div>
+          ))} */}
+          <div style={{ marginTop: '10px' }} className="flex gap-2">
+            <div style={{ marginBottom: '10px' }}>
+              <label style={{ display: 'block', marginBottom: '5px' }}>
                 Min Harga:
                 <input
-                    type="number"
-                    value={minHarga}
-                    onChange={(e) => setMinHarga(e.target.value)}
-                    placeholder="Minimum Price"
+                  type="number"
+                  value={minHarga}
+                  onChange={(e) => setMinHarga(e.target.value)}
+                  placeholder="Rp. Minimal"
+                  style={{
+                    display: 'block',
+                    width: '100%',
+                    padding: '5px',
+                    marginTop: '5px',
+                    border: '1px solid #ccc',
+                    borderRadius: '5px',
+                  }}
                 />
-                </label>
-                <label>
+              </label>
+            </div>
+            <div>
+              <label style={{ display: 'block', marginBottom: '5px' }}>
                 Max Harga:
                 <input
-                    type="number"
-                    value={maxHarga}
-                    onChange={(e) => setMaxHarga(e.target.value)}
-                    placeholder="Maximum Price"
+                  type="number"
+                  value={maxHarga}
+                  onChange={(e) => setMaxHarga(e.target.value)}
+                  placeholder="Rp. Maximal"
+                  style={{
+                    display: 'block',
+                    width: '100%',
+                    padding: '5px',
+                    marginTop: '5px',
+                    border: '1px solid #ccc',
+                    borderRadius: '5px',
+                  }}
                 />
-                </label>
+              </label>
             </div>
-            <button onClick={fetchFilteredProducts}>Terapkan</button>
-              </div>
-              
-              )
-            }
-            </label>
-          </form>
+          </div>
+          <div className="w-full flex justify-center">
+            <button
+              onClick={fetchFilteredProducts}
+              style={{
+                marginTop: '15px',
+                padding: '10px',
+                color: 'white',
+                border: 'none',
+                cursor: 'pointer',
+              }}
+              className="bg-blue_btn rounded-lg w-28 mx-auto"
+            >
+              Terapkan
+            </button>
+          </div>
         </div>
+      )}
+    </label>
+  </form>
+</div>
+
         <div className="w-1/4 h-full text-white flex items-center space-x-2 px-2 justify-evenly">
           {userDataX ? (
             <div className="flex align-middle gap-8">
@@ -255,6 +313,7 @@ const handleSubkategoriChange = (id_subkategori) => {
                         <Link href={"/user_transaksi_penjualan"}>Profile</Link>
                       </li>
                       <li className="w-full px-3 py-2 bg-lightbg border-b-white border-b-2">
+
                         <Link href={"/user_setting"}>Setting</Link>
                       </li>
                       <li className="w-full px-3 py-2 bg-lightbg ">

@@ -51,6 +51,7 @@ const PaginatedPage = () => {
               <img src={produk.list_url_gambar[0]} alt="" className="h-36 w-full" />
               <p className="px-2">{produk.nama_produk}</p>
               <p className="text-blue-300 px-2">Rp. {produk.harga}</p>
+
             </Link>
           ))
         )}
@@ -62,9 +63,9 @@ const PaginatedPage = () => {
           <button
             onClick={goToPreviousPage}
             disabled={currentPage === 1}
-            className="px-4 py-2 mx-2 bg-gray-300 text-black rounded disabled:opacity-50"
+            className="px-2 py-1 mx-2 bg-lightbg text-black rounded-full disabled:opacity-50"
           >
-            Previous
+            <img src="icons/sm/arrow-left.svg" alt="" />
           </button>
           <span className="px-4 py-2">
             Page {currentPage} of {totalPages}
@@ -72,9 +73,9 @@ const PaginatedPage = () => {
           <button
             onClick={goToNextPage}
             disabled={currentPage === totalPages}
-            className="px-4 py-2 mx-2 bg-gray-300 text-black rounded disabled:opacity-50"
+            className="px-2 py-1 mx-2 bg-lightbg text-black rounded-full disabled:opacity-50"
           >
-            Next
+            <img src="icons/sm/arrow-right.svg" alt="" />
           </button>
         </div>
       )}
