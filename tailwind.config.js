@@ -12,6 +12,7 @@ module.exports = {
         background: "var(--background)",
         foreground: "var(--foreground)",
         lightbg:"#EBF6F6",
+        lightbg_hover:"#BECBD1",
         mainblue:"#0D96C4",
         lightbluemain:"#AFDAEB",
         blue_btn:"#0D96C4",

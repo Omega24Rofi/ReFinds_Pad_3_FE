@@ -174,8 +174,8 @@ const UserSetting = () => {
     if (!isOpen) return null;
 
     return (
-      <div className="fixed inset-0 flex items-center justify-center bg-gray-500 bg-opacity-75 z-50">
-        <div className="bg-white p-6 rounded shadow-lg max-w-lg w-full">
+      <div className="fixed inset-0 flex items-center justify-center bg-gray-500 bg-opacity-75 z-50 ">
+        <div className="bg-white p-6 rounded-2xl shadow-lg max-w-lg w-full">
           <h3 className="text-xl font-semibold mb-4">Existing Alamat</h3>
           <div className="space-y-2">
             {addresses && addresses.length > 0 ? (
@@ -195,7 +195,7 @@ const UserSetting = () => {
           </div>
           <button
             onClick={onClose}
-            className="mt-4 bg-blue-500 text-white py-2 px-4 rounded hover:bg-blue-600"
+            className="mt-4 bg-blue_btn text-white py-2 px-4 rounded hover:bg-blue_btn_hover"
           >
             Close
           </button>
@@ -226,7 +226,7 @@ const UserSetting = () => {
               <span className="text-blue-500 hover:underline">Edit Foto</span>
             </label>
           </div>
-          <div className="bg-lightbg rounded-xl">
+          <div className="bg-lightbg rounded-xl w-full">
             <div>
               <label className="block text-sm font-medium">Nama Akun</label>
               <input
@@ -234,7 +234,7 @@ const UserSetting = () => {
                 name="nama_akun"
                 value={user.nama_akun}
                 onChange={handleChange}
-                className="block w-full border-gray-300 rounded-md shadow-sm"
+                className="block w-full border-gray-300 rounded-2xl shadow-sm"
               />
             </div>
             <div>
@@ -244,7 +244,7 @@ const UserSetting = () => {
                 name="nama_asli_user"
                 value={user.nama_asli_user}
                 onChange={handleChange}
-                className="block w-full border-gray-300 rounded-md shadow-sm"
+                className="block w-full border-gray-300 rounded-2xl shadow-sm"
               />
             </div>
             <div>
@@ -254,7 +254,7 @@ const UserSetting = () => {
                 name="email"
                 value={user.email}
                 onChange={handleChange}
-                className="block w-full border-gray-300 rounded-md shadow-sm"
+                className="block w-full border-gray-300 rounded-2xl shadow-sm"
               />
             </div>
             <div>
@@ -264,17 +264,17 @@ const UserSetting = () => {
                 name="no_telepon"
                 value={user.no_telepon}
                 onChange={handleChange}
-                className="block w-full border-gray-300 rounded-md shadow-sm"
+                className="block w-full border-gray-300 rounded-2xl shadow-sm "
               />
             </div>
             <div>
-              <label className="block text-sm font-medium">
+              <label className="block text-sm font-medium mt-2">
                 Alamat Tersimpan
               </label>
               <button
                 type="button"
                 onClick={() => setIsModalOpen(true)}
-                className="mt-4 bg-slate-100 border border-gray-300 text-black py-2 px-4 rounded"
+                className="mt-1 bg-blue_btn border border-gray-300 text-white py-2 px-4 hover:bg-blue_btn_hover rounded-2xl"
               >
                 Lihat alamat tersimpan
               </button>
@@ -286,7 +286,7 @@ const UserSetting = () => {
               />
             </div>
             <div>
-              <label className="block text-sm font-medium">Tambah Alamat</label>
+              <label className="mt-2 block text-sm font-medium">Tambah Alamat</label>
               <input
                 type="text"
                 name="nama_lokasi"
@@ -295,7 +295,7 @@ const UserSetting = () => {
                   setNewAddress({ ...newAddress, nama_lokasi: e.target.value })
                 }
                 placeholder="Nama Lokasi"
-                className="block w-full border-gray-300 rounded-md shadow-sm"
+                className="block w-full border-gray-300 rounded-2xl shadow-sm"
               />
               <input
                 type="text"
@@ -305,7 +305,7 @@ const UserSetting = () => {
                   setNewAddress({ ...newAddress, kecamatan: e.target.value })
                 }
                 placeholder="Kecamatan"
-                className="block w-full border-gray-300 rounded-md shadow-sm"
+                className="mt-1 block w-full border-gray-300 rounded-2xl shadow-sm"
               />
               <input
                 type="text"
@@ -318,7 +318,7 @@ const UserSetting = () => {
                   })
                 }
                 placeholder="Kota/Kabupaten"
-                className="block w-full border-gray-300 rounded-md shadow-sm"
+                className="block mt-1  w-full border-gray-300 rounded-2xl shadow-sm"
               />
               <input
                 type="text"
@@ -328,7 +328,7 @@ const UserSetting = () => {
                   setNewAddress({ ...newAddress, provinsi: e.target.value })
                 }
                 placeholder="Provinsi"
-                className="block w-full border-gray-300 rounded-md shadow-sm"
+                className="block w-full mt-1  border-gray-300 rounded-2xl shadow-sm"
               />
               <input
                 type="text"
@@ -338,7 +338,7 @@ const UserSetting = () => {
                   setNewAddress({ ...newAddress, kode_pos: e.target.value })
                 }
                 placeholder="Kode Pos"
-                className="block w-full border-gray-300 rounded-md shadow-sm"
+                className="block w-full mt-1 border-gray-300 rounded-2xl shadow-sm"
               />
               <input
                 type="text"
@@ -348,12 +348,12 @@ const UserSetting = () => {
                   setNewAddress({ ...newAddress, deskripsi: e.target.value })
                 }
                 placeholder="Catatan/Deskripsi"
-                className="block w-full border-gray-300 rounded-md shadow-sm"
+                className="block w-full mt-1  border-gray-300 rounded-2xl shadow-sm"
               />
             </div>
             <button
               type="submit"
-              className="mt-4 bg-blue-500 text-white py-2 px-4 rounded"
+              className="mt-4 bg-blue_btn text-white py-2 px-4 rounded-2xl hover:bg-blue_btn_hover"
             >
               Simpan Perubahan
             </button>

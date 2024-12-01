@@ -172,179 +172,176 @@ const SellerView = () => {
     return null;
   };
 
-  return (
-    <div className="min-h-screen">
-      <div className="w-[85%] mx-auto bg bg-lightbg p-4 my-5 rounded-3xl">
-        <Tabs>
-          <TabList className={"flex justify-center mb-5"}>
-            <Tab>Produk</Tab>
-            <Tab>Status Penjualan</Tab>
-            <Tab>Pembelian</Tab>
-          </TabList>
+ return(
+  <div className="min-h-screen">
+  <div className="w-[85%] mx-auto bg bg-lightbg p-4 my-5 rounded-3xl">
+    <Tabs>
+      <TabList className={"flex justify-center mb-5"}>
+        <Tab>Produk</Tab>
+        <Tab>Status Penjualan</Tab>
+        <Tab>Pembelian</Tab>
+      </TabList>
 
-          {/* tab users produk */}
-          <TabPanel>
-            <div className="flex flex-row flex-wrap -mt-10 m-auto py-6 rounded-2xl px-2">
-              {userProduks.map((userProduk) => (
-                <Link
-                  href={`/detail_produk/${userProduk.id_produk}`}
-                  key={userProduk.id_produk}
-                  className="card min-h-fit bg-white box-content w-40 m-2 rounded-lg"
-                >
-                  <img
-                    src={userProduk.list_url_gambar[0]}
-                    alt=""
-                    className="h-36 w-full"
-                  />
-                  <p className="px-2">{userProduk.nama_produk}</p>
-                  <p className="text-blue-300 px-2">
-                    {formatHarga(userProduk.harga)}
+      {/* tab users produk */} 
+      <TabPanel>
+        <div className="flex flex-row flex-wrap -mt-10 m-auto py-6 rounded-2xl px-2">
+          {userProduks.map((userProduk) => (
+            <Link
+              href={`/detail_produk/${userProduk.id_produk}`}
+              key={userProduk.id_produk}
+              className="card min-h-fit bg-white box-content w-40 m-2 rounded-lg"
+            >
+              <img
+                src={userProduk.list_url_gambar[0]}
+                alt=""
+                className="h-36 w-full"
+              />
+              <p className="px-2">{userProduk.nama_produk}</p>
+              <p className="text-blue-300 px-2">
+                {formatHarga(userProduk.harga)}
+              </p>
+            </Link>
+          ))}
+        </div>
+      </TabPanel>
+
+      {/* tab transaksi penjualan */}
+      <TabPanel>
+        {transaksiJual.map((transJual) => {
+          const statusPesanan = getStatusPesanan(transJual);
+
+          return (
+            <div
+              key={transJual.id_transaksi}
+              className="flex items-center bg-white rounded-lg shadow-md mt-2"
+            >
+              {/* Image Section */}
+              <div className="">
+                <img
+                  src={transJual.produk.list_url_gambar[0]}
+                  alt="Product Image"
+                  width={200}
+                  height={30}
+                  className="rounded-lg"
+                />
+              </div>
+
+              {/* Status card */}
+              <div className="ml-2">
+                <p>
+                  <span className="font-semibold">Nama Produk :</span>
+                  {transJual.produk.nama_produk}
+                </p>
+                <p>
+                  <span className="font-semibold">Harga Produk :</span>
+                  {formatHarga(transJual.produk.harga)}
+                </p>
+                <p>
+                  <span className="font-semibold">Tanggal Post :</span>
+                  {formatTanggal(transJual.produk.tanggal_post)}
+                </p>
+              </div>
+
+              <div className="flex items-center space-x-4 ml-auto mr-4">
+                {statusPesanan ? (
+                  <p>
+                    <span className="font-semibold pr-4"></span> {statusPesanan}
                   </p>
-                </Link>
-              ))}
+                ) : (
+                  <button
+                    onClick={() =>
+                      cancelOrderBySeller(transJual.id_transaksi)
+                    }
+                    className="bg-[#0D96C4] text-white px-4 py-2 rounded-lg hover:bg-[#0C7BA8] transition"
+                  >
+                    Batalkan Pesanan
+                  </button>
+                )}
+              </div>
             </div>
-          </TabPanel>
+          );
+        })}
+      </TabPanel>
 
-          {/* tab transaksi penjualan */}
-          <TabPanel>
-            {transaksiJual.map((transJual) => {
-              const statusPesanan = getStatusPesanan(transJual); // Mendapatkan status pesanan
+      {/* tab transaksi pembelian */}
+      <TabPanel>
+        {transaksiBeli.map((transBeli) => {
+          const statusPesananBeli = getStatusPesanan(transBeli);
 
-              return (
-                <div
-                  key={transJual.id_transaksi}
-                  className="flex items-center bg-white rounded-lg shadow-md mt-2"
-                >
-                  {/* Image Section */}
-                  <div className="">
-                    <img
-                      src={transJual.produk.list_url_gambar[0]}
-                      alt="Product Image"
-                      width={200}
-                      height={30}
-                      className="rounded-lg"
-                    />
-                  </div>
+          return (
+            <div
+              key={transBeli.id_transaksi}
+              className="flex items-center bg-white rounded-lg shadow-md mt-2"
+            >
+              {/* Image Section */}
+              <div className="">
+                <img
+                  src={transBeli.produk.list_url_gambar[0]}
+                  alt="Product Image"
+                  width={200}
+                  height={30}
+                  className="rounded-lg"
+                />
+              </div>
 
-                  {/* Status card */}
-                  <div className="ml-2">
-                    <p>
-                      <span className="font-semibold">Nama Produk :</span>
-                      {transJual.produk.nama_produk}
-                    </p>
-                    <p>
-                      <span className="font-semibold">Harga Produk :</span>
-                      {formatHarga(transJual.produk.harga)}
-                    </p>
-                    <p>
-                      <span className="font-semibold">Tanggal Post :</span>
-                      {formatTanggal(transJual.produk.tanggal_post)}
-                    </p>
-                  </div>
+              {/* Status card */}
+              <div className="ml-4 flex-1 max-w-md">
+                <p>
+                  <span className="font-semibold">Nama Produk :</span>
+                  {transBeli.produk.nama_produk}
+                </p>
+                <p>
+                  <span className="font-semibold">Harga Produk :</span>
+                  {formatHarga(transBeli.produk.harga)}
+                </p>
+                <p>
+                  <span className="font-semibold">Tanggal Post :</span>
+                  {formatTanggal(transBeli.produk.tanggal_post)}
+                </p>
 
-                  <div className="flex items-center space-x-4 ml-auto">
-                    {/* Render status pesanan atau tombol batalkan pesanan */}
-                    {statusPesanan ? (
-                      <p>
-                        <span className="font-semibold pr-4"></span>{" "}
-                        {statusPesanan}
-                      </p>
-                    ) : (
-                      <button
-                        onClick={() =>
-                          cancelOrderBySeller(transJual.id_transaksi)
-                        } // Memanggil fungsi cancelOrder
-                        className="bg-[#0D96C4] text-white px-4 py-2 rounded-lg hover:bg-[#0C7BA8] transition"
-                      >
-                        Batalkan Pesanan
-                      </button>
-                    )}
-                  </div>
+                <p>
+                  <span className="font-semibold">Deskripsi Produk</span>
+                  {transBeli.produk.url_teks_deskripsi}
+                </p>
+              </div>
+
+              {statusPesananBeli ? (
+                <div className="flex items-center ml-auto mr-4">
+                  <p>
+                    <span className="font-semibold"></span>{" "}
+                    {statusPesananBeli}
+                  </p>
                 </div>
-              );
-            })}
-          </TabPanel>
+              ) : (
+                <div className="flex items-center ml-auto mr-4">
+                  <button
+                    onClick={() =>
+                      cancelOrderByBuyer(transBeli.id_transaksi)
+                    }
+                    className="bg-[#0D96C4] text-white px-4 py-2 rounded-lg hover:bg-[#0C7BA8] transition"
+                  >
+                    Batalkan Pesanan
+                  </button>
 
-          {/* tabl transaksi pembelian */}
-          <TabPanel>
-            {transaksiBeli.map((transBeli) => {
-              const statusPesananBeli = getStatusPesanan(transBeli); // Mendapatkan status pesanan
-
-              return (
-                <div
-                  key={transBeli.id_transaksi}
-                  className="flex items-center bg-white rounded-lg shadow-md mt-2"
-                >
-                  {/* Image Section */}
-                  <div className="">
-                    <img
-                      src={transBeli.produk.list_url_gambar[0]}
-                      alt="Product Image"
-                      width={200}
-                      height={30}
-                      className="rounded-lg"
-                    />
-                  </div>
-
-                  {/* Status card */}
-                  <div className="ml-4 flex-1 max-w-md">
-                    <p>
-                      <span className="font-semibold">Nama Produk :</span>
-                      {transBeli.produk.nama_produk}
-                    </p>
-                    <p>
-                      <span className="font-semibold">Harga Produk :</span>
-                      {formatHarga(transBeli.produk.harga)}
-                    </p>
-                    <p>
-                      <span className="font-semibold">Tanggal Post :</span>
-                      {formatTanggal(transBeli.produk.tanggal_post)}
-                    </p>
-
-                    <p>
-                      <span className="font-semibold">Deskripsi Produk</span>
-                      {transBeli.produk.url_teks_deskripsi}
-                    </p>
-                  </div>
-
-                  {/* Render status pesanan atau tombol batalkan pesanan */}
-
-                  {statusPesananBeli ? (
-                    <div className="flex items-center space-x-4 ml-auto">
-                      <p>
-                        <span className="font-semibold"></span>{" "}
-                        {statusPesananBeli}
-                      </p>
-                    </div>
-                  ) : (
-                    <div className="flex items-center space-x-4 ml-auto">
-                      <button
-                        onClick={() =>
-                          cancelOrderByBuyer(transBeli.id_transaksi)
-                        } // Memanggil fungsi cancelOrder
-                        className="bg-[#0D96C4] text-white px-4 py-2 rounded-lg hover:bg-[#0C7BA8] transition"
-                      >
-                        Batalkan Pesanan
-                      </button>
-
-                      <button
-                        onClick={() =>
-                          selesaikanPesanan(transBeli.id_transaksi)
-                        } // Memanggil fungsi selesaikanPesanan()
-                        className="bg-[#0D96C4] text-white px-4 py-2 rounded-lg hover:bg-[#0C7BA8] transition"
-                      >
-                        Pesanan Selesai
-                      </button>
-                    </div>
-                  )}
+                  <button
+                    onClick={() =>
+                      selesaikanPesanan(transBeli.id_transaksi)
+                    }
+                    className="bg-[#0D96C4] text-white px-4 py-2 rounded-lg hover:bg-[#0C7BA8] transition"
+                  >
+                    Pesanan Selesai
+                  </button>
                 </div>
-              );
-            })}
-          </TabPanel>
-        </Tabs>
-      </div>
-    </div>
-  );
+              )}
+            </div>
+          );
+        })}
+      </TabPanel>
+    </Tabs>
+  </div>
+</div>
+
+ );
 };
 
 export default SellerView;

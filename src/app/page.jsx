@@ -151,10 +151,10 @@ const Homepage = () => {
       {/* Carousel */}
       <Carousel slides={slides} />
       <div className="w-full justify-center align-middle my-5">
-        <div className="flex flex-row gap-8 h-28 align-middle justify-center">
+        <div className="flex flex-row gap-8 h-28 align-middle justify-center ">
           <Link
             href={"/category/4"}
-            className="bg-white rounded-2xl shadow-lg p-2 flex flex-col items-center"
+            className="bg-white rounded-2xl shadow-lg p-2 flex flex-col items-center hover:scale-105 transition"
           >
             <img
               src="/images/categories/Two white plates with blue rim.png"
@@ -165,7 +165,7 @@ const Homepage = () => {
 
           <Link
             href={"/category/1"}
-            className="bg-white rounded-2xl shadow-lg p-2 flex flex-col items-center"
+            className="bg-white rounded-2xl shadow-lg p-2 flex flex-col items-center hover:scale-105 transition"
           >
             <img
               src="/images/categories/laptop white screen.png"
@@ -176,7 +176,7 @@ const Homepage = () => {
 
           <Link
             href={"/category/2"}
-            className="bg-white rounded-2xl shadow-lg p-2 flex flex-col items-center"
+            className="bg-white rounded-2xl shadow-lg p-2 flex flex-col items-center hover:scale-105 transition"
           >
             <img
               src="/images/categories/green sofa with two pillows.png"
@@ -187,7 +187,7 @@ const Homepage = () => {
 
           <Link
             href={"/category/3"}
-            className="bg-white rounded-2xl shadow-lg p-2 flex flex-col items-center"
+            className="bg-white rounded-2xl shadow-lg p-2 flex flex-col items-center hover:scale-105 transition"
           >
             <img
               src="/images/categories/t-shirt mockup.png"

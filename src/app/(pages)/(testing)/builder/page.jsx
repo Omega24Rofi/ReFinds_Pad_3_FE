@@ -16,7 +16,7 @@ const PaginatedPage = () => {
 
   const fetchProduk = async () => {
     try {
-      const response = await api.get("/api/produk"); // Update API endpoint as needed
+      const response = await api.get("/api/produk/search_filter"); // Update API endpoint as needed
       setProdukData(response.data);
     } catch (error) {
       console.error("Error fetching product data:", error);
@@ -68,7 +68,7 @@ const PaginatedPage = () => {
             <img src="icons/sm/arrow-left.svg" alt="" />
           </button>
           <span className="px-4 py-2">
-            Page {currentPage} of {totalPages}
+            Halaman {currentPage} dari {totalPages}
           </span>
           <button
             onClick={goToNextPage}

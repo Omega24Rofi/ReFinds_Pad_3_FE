@@ -27,9 +27,10 @@ const ContactSeller = ({ params }) => {
         const response = await api.get(`/api/produk/${id}`, {
           headers: {
             Authorization: `Bearer ${token}`,
-          },
+          }, 
         });
         setDetailProduk(response.data);
+        console.log(response);
       } catch (error) {
         console.error("Error fetching transaksi pembelian:", error);
       }
@@ -106,9 +107,11 @@ const ContactSeller = ({ params }) => {
             <div className="mt-10">
               <p className="font-bold">Deskripsi produk</p>
               <p>{detailProduk.url_teks_deskripsi}</p>
+              <p className="font-bold mt-10">Alamat</p>
+              <p>{detailProduk.alamat.kecamatan}, {detailProduk.alamat.kota} </p>
             </div>
             <div className="flex flex-row align-middle mt-10 text-center h-fit w-12">
-              <Link href="/seller_view">
+              <Link href={`/seller_view/${detailProduk.user.id_user}`}>
                 <img
                   src={`${apiBaseUrl}/${detailProduk.user.url_foto_profil}`}
                   alt="Seller"
