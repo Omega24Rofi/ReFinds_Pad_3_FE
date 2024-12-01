@@ -15,11 +15,15 @@ const UserSetting = () => {
 
   const [isModalOpen, setIsModalOpen] = useState(false);
   const [newAddress, setNewAddress] = useState({
+    id_user: "",
     nama_lokasi: "",
     kecamatan: "",
     kota_kabupaten: "",
     provinsi: "",
     kode_pos: "",
+    deskripsi: "",
+    url_map: null,
+    is_default: null,
   });
 
   const [profilePicture, setProfilePicture] = useState(null);
@@ -44,6 +48,9 @@ const UserSetting = () => {
           no_telepon: response.data[0].no_telepon || "",
           url_foto_profil: response.data[0].url_foto_profil || "",
           alamat: response.data[0].alamat || [], // Setting alamat data
+        });
+        setNewAddress({
+          id_user: response.data[0].id_user,
         });
 
         setProfilePicturePreview(
@@ -93,11 +100,11 @@ const UserSetting = () => {
       formData.append("nama_asli_user", user.nama_asli_user);
       formData.append("email", user.email);
       formData.append("no_telepon", user.no_telepon);
-  
+
       if (profilePicture) {
         formData.append("foto_profil", profilePicture);
       }
-  
+
       // Update user data
       const response = await api.post("/api/update_user", formData, {
         headers: {
@@ -105,42 +112,60 @@ const UserSetting = () => {
           "Content-Type": "multipart/form-data",
         },
       });
-  
+
       console.log("User updated:", response.data);
-  
+
       // Handle new address submission
+      // Pastikan data alamat yang diperlukan sudah terisi
       if (
-        newAddress.nama_lokasi ||
-        newAddress.kecamatan ||
-        newAddress.kota_kabupaten ||
-        newAddress.provinsi ||
-        newAddress.kode_pos
+        !newAddress.id_user ||
+        !newAddress.nama_lokasi ||
+        !newAddress.provinsi ||
+        !newAddress.kota_kabupaten ||
+        !newAddress.kecamatan ||
+        !newAddress.kode_pos ||
+        !newAddress.deskripsi
       ) {
+        return;
+      }
+
+      // Optional: Validasi kode pos dan URL map jika ada
+      const isValidKodePos = /^[0-9]{5,10}$/.test(newAddress.kode_pos);
+
+
+      if (!isValidKodePos) {
+        alert("Kode pos tidak valid! Format: 5-10 angka.");
+        return;
+      }
+
+
+      try {
+        // Kirimkan data ke endpoint API untuk menambahkan alamat
         const addressResponse = await api.post(
-          "/api/alamat", // POST endpoint for new address
-          { ...newAddress },
+          "/api/alamat", // Endpoint API untuk menambahkan alamat
+          {
+            ...newAddress, // Mengirimkan seluruh data alamat yang baru
+          },
           {
             headers: {
-              Authorization: `Bearer ${token}`,
+              Authorization: `Bearer ${token}`, // Pastikan token autentikasi sudah benar
             },
           }
         );
-  
+
         console.log("New address added:", addressResponse.data);
-  
-        // Add the new address to the user's addresses
-        setUser((prevUser) => ({
-          ...prevUser,
-          alamat: [...prevUser.alamat, addressResponse.data],
-        }));
-  
-        alert("Alamat berhasil ditambahkan!");
+
+        alert("Perubahan berhasil dismpan dan Alamat berhasil ditambahkan!");
+        // Reset form atau navigasi ke halaman lain jika diperlukan
+      } catch (error) {
+        console.error("Error adding new address:", error);
+        alert("Terjadi kesalahan saat menambahkan alamat. Silakan coba lagi.");
       }
-  
+
       window.location.reload();
     } catch (error) {
       console.error("Error updating user data:", error);
-      alert("Gagal menambahkan alamat atau menyimpan perubahan.");
+      alert("Gagal menyimpan perubahan.");
     }
   };
 
@@ -312,10 +337,19 @@ const UserSetting = () => {
                 placeholder="Kode Pos"
                 className="block w-full border-gray-300 rounded-md shadow-sm"
               />
+              <input
+                type="text"
+                name="deskripsi"
+                value={newAddress.deskripsi}
+                onChange={(e) =>
+                  setNewAddress({ ...newAddress, deskripsi: e.target.value })
+                }
+                placeholder="Catatan/Deskripsi"
+                className="block w-full border-gray-300 rounded-md shadow-sm"
+              />
             </div>
             <button
               type="submit"
-              
               className="mt-4 bg-blue-500 text-white py-2 px-4 rounded"
             >
               Simpan Perubahan
