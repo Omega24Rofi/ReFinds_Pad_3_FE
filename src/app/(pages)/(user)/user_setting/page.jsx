@@ -190,7 +190,7 @@ const UserSetting = () => {
                 </div>
               ))
             ) : (
-              <div>No existing addresses available</div>
+              <div>Tidak ada alamat yg tersedia</div>
             )}
           </div>
           <button

@@ -3,11 +3,10 @@
 import React from "react";
 import "../../../globals.css";
 import Image from "next/image";
-
-//
 import { useState } from "react";
 import api from "@/utils/axios";
 import Link from "next/link";
+import { useRouter } from "next/navigation";
 
 const Register = () => {
   const [namaAkun, setNamaAkun] = useState("");
@@ -17,26 +16,39 @@ const Register = () => {
   const [passwordConfirmation, setPasswordConfirmation] = useState("");
   const [message, setMessage] = useState("");
   const [error, setError] = useState("");
+  const [registeredData, setRegisteredData] = useState("");
 
-  // fungsi untuk handle submission
+  const router = useRouter(); // untuk melakukan redirect setelah registrasi berhasil
+
+  // Fungsi untuk handle submission
   const handleSubmit = async (e) => {
-    e.preventDefault(); // Mencegah default refrsh
+    e.preventDefault(); // Mencegah default refresh
 
     try {
-      // mengirim data menggunakan axios ke API
-      // menunggu response dari exios
+      // Mengirim data menggunakan axios ke API
       const response = await api.post("http://localhost:8000/api/register", {
         nama_akun: namaAkun,
         nama_asli_user: namaAsliUser,
-        email, // short syntaxt bc nama var sama
+        email,
         password,
         password_confirmation: passwordConfirmation,
       });
 
-      // mengambil respons pesan dari BE
+      // Menyimpan data user yang terdaftar
       setMessage(response.data.message); // Set success message
-      
+      setRegisteredData(response.data.user);
+      console.log(response.data.user);
+
       setError(""); // Reset error
+
+      // Menampilkan alert jika registrasi berhasil
+      alert(response.data.message || "Registrasi berhasil!");
+
+      // Redirect setelah 2 detik
+      setTimeout(() => {
+        // Redirect ke halaman verifikasi dengan id_user
+        router.push(`/verifikasi_akun/${response.data.user.id_user}`);
+      }, 2000); // 2 detik delay sebelum redirect
     } catch (err) {
       if (err.response && err.response.data) {
         const errorMessage =
@@ -121,35 +133,33 @@ const Register = () => {
 
             {/* tombol register */}
             <div className="w-full flex justify-center">
-            <button
-              type="submit"
-              className="my-2 bg-mainblue text-white py-2 px-6 rounded-xl">
-              Register
-            </button>
+              <button
+                type="submit"
+                className="my-2 bg-mainblue text-white py-2 px-6 rounded-xl"
+              >
+                Register
+              </button>
             </div>
             <p className="text-center">
-              Sudah punya akun? Login{' '}
+              Sudah punya akun? Login{" "}
               <Link href="/login" className="text-blue-600">
                 Yuk!
               </Link>
             </p>
-            
+
             <br />
             {message && <p>{message}</p>}
             {error && <p>{error}</p>}
           </form>
         </div>
         <div className="colorcard w-1/3 h-full bg-login-gradient rounded-3xl p-0 flex justify-center align-middle">
-            <img
+          <img
             src="/images/Logo-White.svg"
             alt="Refinds Logo"
             className="w-2/5 h-auto"
           />
         </div>
-
-        
       </div>
-      
     </div>
   );
 };
