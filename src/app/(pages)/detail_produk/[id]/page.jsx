@@ -89,7 +89,7 @@ const ContactSeller = ({ params }) => {
           <div className="h-full rounded-2xl overflow-hidden w-1/2">
             <Slider {...carouselSettings}>
               {detailProduk.list_url_gambar.map((url, index) => (
-                <div key={index} className="h-full">
+                <div key={index} className="h-full  overflow-hidden">
                   <img
                     src={url}
                     alt={`Product image ${index + 1}`}
@@ -108,7 +108,7 @@ const ContactSeller = ({ params }) => {
               <p className="font-bold">Deskripsi produk</p>
               <p>{detailProduk.url_teks_deskripsi}</p>
               <p className="font-bold mt-10">Alamat</p>
-              <p>{detailProduk.alamat.kecamatan}, {detailProduk.alamat.kota} </p>
+              <p>{detailProduk.alamat.nama_lokasi}, {detailProduk.alamat.kecamatan}, {detailProduk.alamat.kota_kabupaten}, {detailProduk.alamat.provinsi}, {detailProduk.alamat.kode_pos} </p>
             </div>
             <div className="flex flex-row align-middle mt-10 text-center h-fit w-12">
               <Link href={`/seller_view/${detailProduk.user.id_user}`}>
