@@ -17,31 +17,29 @@ const Header = () => {
   const [IsDropDownOpen2, SetIsDropDownOpen2] = useState(false);
   const dropdownRef2 = useRef(null);
 
-  const [maxHarga, setMaxHarga] = useState('');
-  const [minHarga, setMinHarga] = useState('');
-
   const toggleDropDown = () => {
     SetIsDropDownOpen((prevState) => !prevState);
   };
 
+  const handleClickOutside = (event) => {
+    if (dropdownRef.current && !dropdownRef.current.contains(event.target)) {
+      SetIsDropDownOpen(false);
+    }
+  };
   const toggleDropDown2 = () => {
     SetIsDropDownOpen2((prevState) => !prevState);
   };
 
-  const handleClickOutside = (event) => {
-    if (
-      dropdownRef.current && !dropdownRef.current.contains(event.target) &&
-      dropdownRef2.current && !dropdownRef2.current.contains(event.target)
-    ) {
-      SetIsDropDownOpen(false);
+  const handleClickOutside2 = (event) => {
+    if (dropdownRef2.current && !dropdownRef2.current.contains(event.target)) {
       SetIsDropDownOpen2(false);
     }
   };
 
   useEffect(() => {
-    document.addEventListener("mousedown", handleClickOutside);
+    document.addEventListener("mousedown", handleClickOutside || handleClickOutside2);
     return () => {
-      document.removeEventListener("mousedown", handleClickOutside);
+      document.removeEventListener("mousedown", handleClickOutside || handleClickOutside2);
     };
   }, []);
 
@@ -55,19 +53,9 @@ const Header = () => {
     event.preventDefault();
     const searchInput = event.target.search.value;
     if (searchInput.trim() !== "") {
-      // Reset filters before performing a search
-      setMinHarga('');
-      setMaxHarga('');
-      setSelectedKategori([]); 
-      setSelectedSubkategori([]);
-      
-      // Trigger the search
-      router.push(
-        `/builder?keywords=${encodeURIComponent(searchInput)}&minPrice=${minHarga}&maxPrice=${maxHarga}`
-      );
+      router.push(`/builder?keywords=${encodeURIComponent(searchInput)}`);
     }
   };
-  
 
 
 const { kategoriData, subkategoriData } = useKategori();
@@ -75,7 +63,8 @@ const [selectedKategori, setSelectedKategori] = useState([]);
 const [selectedSubkategori, setSelectedSubkategori] = useState([]);
 const [antiKategori, setAntiKategori] = useState(false);
 const [filteredProducts, setFilteredProducts] = useState([]);
-
+const [maxHarga, setMaxHarga] = useState('');
+const [minHarga, setMinHarga] = useState('');
 
 // Toggle pemilihan Kategori dan Subkategori
 const handleKategoriChange = (id) => {
@@ -127,18 +116,21 @@ const handleSubkategoriChange = (id_subkategori) => {
 
 const fetchFilteredProducts = async () => {
   try {
-    console.log("Selected Kategori:", selectedKategori);
-    console.log("Selected Subkategori:", selectedSubkategori.map(sub => sub.id_subkategori));
-    const response = await api.post('/api/produk/filter', {
-      min_price: minHarga ? parseFloat(minHarga) : null,
-      max_price: maxHarga ? parseFloat(maxHarga) : null,
-    });
-    setFilteredProducts(response.data.data);
-    SetIsDropDownOpen2(false);
+      console.log("Selected Kategori:", selectedKategori);
+      console.log("Selected Subkategori:", selectedSubkategori.map(sub => sub.id_subkategori));
+      const response = await api.post('/api/produk/filter', {
+          array_subkategori: selectedSubkategori.map((sub) => sub.id_subkategori),
+          array_kategori: selectedKategori,
+          anti_kategori: antiKategori,
+          max_harga: maxHarga ? parseFloat(maxHarga) : null,
+          min_harga: minHarga ? parseFloat(minHarga) : null,
+      });
+      setFilteredProducts(response.data.data);
   } catch (error) {
-    console.error("Error fetching filtered products:", error);
+      console.error("Error fetching filtered products:", error);
   }
 };
+
 
 
   return (
@@ -175,13 +167,13 @@ const fetchFilteredProducts = async () => {
       />
       <img src="/icons/search.svg" alt="" className="h-8 my-auto" />
       <button
-        className="flex justify-center ml-2 h-12 relative items-center hover:font-bold hover:scale-105transition"
+        className="flex items-center text-center justify-center ml-2 h-12 relative"
         onClick={toggleDropDown2}
         type="button"
       >
-        <img src="/icons/sm/line.svg" alt="" className="block h-12 mr-2" />
-        <p>Filter</p>
-        <img src="/icons/sm/arrow_down.png" alt="" className="block ml-2" />
+        <img src="/icons/sm/line.svg" alt="" className="block h-12" />
+        <p className="block px-2">Filter</p>
+        <img src="/icons/sm/arrow_down.png" alt="" className="block" />
       </button>
 
       {/* Dropdown Filter */}
@@ -198,9 +190,43 @@ const fetchFilteredProducts = async () => {
             boxShadow: '0 4px 6px rgba(0, 0, 0, 0.1)',
           }}
         >
-          <h3 className="text-center font-bold text-lg mb-2" >Filter</h3>
+          <h3 style={{ textAlign: 'center', marginBottom: '10px' }}>Filter</h3>
           <div style={{ borderBottom: '1px solid #ccc', marginBottom: '10px' }}></div>
-          <div style={{ marginTop: '10px' }} className="flex">
+          {/* {kategoriData.map((kategori) => (
+            <div key={kategori.id_kategori} style={{ marginBottom: '15px' }}>
+              <label style={{ fontWeight: 'bold' }}>
+                <input
+                  type="checkbox"
+                  onChange={() => handleKategoriChange(kategori.id_kategori)}
+                  checked={selectedKategori.includes(kategori.id_kategori)}
+                  style={{ marginRight: '5px' }}
+                />
+                {kategori.nama_kategori}
+              </label>
+              <div style={{ marginLeft: '20px', marginTop: '5px' }} className="flex">
+                {subkategoriData
+                  .filter((sub) => sub.id_kategori === kategori.id_kategori)
+                  .map((sub) => (
+                    <label
+                      key={sub.id_subkategori}
+                      style={{ display: 'block', marginBottom: '5px' }}
+                    
+                    >
+                      <input
+                        type="checkbox"
+                        onChange={() => handleSubkategoriChange(sub.id_subkategori)}
+                        checked={selectedSubkategori.some(
+                          (selected) => selected.id_subkategori === sub.id_subkategori
+                        )}
+                        style={{ marginRight: '2px', marginLeft : '5px'}}
+                      />
+                      {sub.nama_subkategori}
+                    </label>
+                  ))}
+              </div>
+            </div>
+          ))} */}
+          <div style={{ marginTop: '10px' }} className="flex gap-2">
             <div style={{ marginBottom: '10px' }}>
               <label style={{ display: 'block', marginBottom: '5px' }}>
                 Min Harga:
@@ -250,7 +276,7 @@ const fetchFilteredProducts = async () => {
                 border: 'none',
                 cursor: 'pointer',
               }}
-              className="bg-blue_btn rounded-lg w-28 mx-auto hover:bg-blue_btn_hover hover:scale-110 transition"
+              className="bg-blue_btn rounded-lg w-28 mx-auto"
             >
               Terapkan
             </button>
@@ -267,7 +293,7 @@ const fetchFilteredProducts = async () => {
               <div className="my-auto">
                 <Link
                   href={"/post"}
-                  className="flex gap-2 bg-blue_btn px-6 py-1 rounded-lg hover:bg-blue_btn_hover hover:scale-105 transition"
+                  className="flex gap-2 bg-blue_btn px-6 py-1 rounded-lg"
                 >
                   <p className="text-black font-bold text-2xl">+</p>
                   <p className="text-white font-bold text-xl">Jual</p>
@@ -284,23 +310,15 @@ const fetchFilteredProducts = async () => {
                 {IsDropDownOpen && (
                   <div className="z-[99] absolute top-full right-[0.01rem] bg-white divide-y divide-gray-100 rounded-lg shadow w-44">
                     <ul className="py-2 text-sm text-gray-700 bg-lightbg rounded-lg">
-                      <li className="w-full px-3 py-2 bg-lightbg border-b-white border-b-2 hover:bg-lightbg_hover">
-                        <Link href={"/user_transaksi_penjualan"} className="flex gap-2 w-full">
-                          <img src="/icons/sm/acc_sm.svg" alt="" />
-                          <p>Profile</p>
-                        </Link>
+                      <li className="w-full px-3 py-2 bg-lightbg border-b-white border-b-2">
+                        <Link href={"/user_transaksi_penjualan"}>Profile</Link>
                       </li>
-                      <li className="w-full px-3 py-2 bg-lightbg border-b-white border-b-2 hover:bg-lightbg_hover">
-                        <Link href={"/user_setting"} className="flex gap-1 w-full">
-                          <img src="/icons/sm/setting.svg" alt="" />
-                          <p>Setting</p>
-                        </Link>
+                      <li className="w-full px-3 py-2 bg-lightbg border-b-white border-b-2">
+
+                        <Link href={"/user_setting"}>Setting</Link>
                       </li>
-                      <li className="w-full px-3 py-2 bg-lightbg hover:bg-lightbg_hover">
-                        <button onClick={logout} className="flex gap-1 w-full">
-                          <img src="/icons/sm/logout.svg" alt="" />
-                          <p>Sign Out</p>
-                        </button>
+                      <li className="w-full px-3 py-2 bg-lightbg ">
+                        <button onClick={logout}>Sign Out</button>
                       </li>
                     </ul>
                     

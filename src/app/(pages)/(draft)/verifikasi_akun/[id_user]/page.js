@@ -48,7 +48,8 @@ const VerifyAccount = ({ params }) => {
   };
 
   return (
-    <div className="max-w-lg mx-auto p-6 bg-white shadow-md rounded-md">
+    <div className="min-h-screen flex items-center">
+      <div className="max-w-lg mx-auto p-6 bg-white shadow-md rounded-md">
       <h1 className="text-2xl font-semibold text-center mb-6">
         Verifikasi Akun
       </h1>
@@ -84,6 +85,8 @@ const VerifyAccount = ({ params }) => {
       >
         {isLoading ? "Mengirim email verifikasi..." : "Kirim Link Verifikasi"}
       </button>
+      </div>
+      
     </div>
   );
 };
