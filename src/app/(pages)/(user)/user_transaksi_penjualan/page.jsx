@@ -12,8 +12,55 @@ const SellerView = () => {
 
   // transaksi beli
   const [transaksiBeli, setTransaksiBeli] = useState([]);
-  const [isModalOpen, setIsModalOpen] = useState(false); // Modal visibility
+  const [isModalOpen, setModalOpen] = useState(false);
+  const [idTransaksi, setIdTransaksi] = useState(0);
   const [selectedTransaction, setSelectedTransaction] = useState(null); // Transaction to review
+
+  const openModal = (id) => {
+    setModalOpen(true)
+    setIdTransaksi(id)
+    selesaikanPesanan(id)
+  };
+  const closeModal = () => setModalOpen(false);
+
+
+  const sendUlasan = (e) => {
+    e.preventDefault();
+  
+    // Get the form data
+    const form = document.getElementById('form-ulasan');
+    const formData = new FormData(form);
+  
+    // Get the values for rating, komentar (review), and id_transaksi
+    const rating = formData.get('rating');
+    const komentar = formData.get('komentar');
+    const idTransaksi = formData.get('id_transaksi');
+  
+    // Prepare the data object
+    const ulasanData = {
+      rating: rating,
+      komentar: komentar,
+      id_transaksi: idTransaksi,
+    };
+  
+    // Send the request using fetch
+    fetch('http://localhost:8000/api/ulasan', {
+      method: 'POST',
+      headers: {
+        'Content-Type': 'application/json',
+      },
+      body: JSON.stringify(ulasanData),
+    })
+    .then((response) => response.json()) // Assuming the API responds with JSON
+    .then((data) => {
+      alert('Ulasan dikirim');
+      console.log('Response from server:', data);
+      window.location.reload(); // Reload halaman
+    })
+    .catch((error) => {
+      console.error('Error submitting ulasan:', error);
+    });
+  };
 
   useEffect(() => {
     const fetchTransaksiBeli = async () => {
@@ -120,8 +167,7 @@ const SellerView = () => {
 
   
   const selesaikanPesanan = async (id) => {
-    // munculmodal()
-    // fetch()
+
 
     try {
       // Mengirimkan request ke API untuk menyelesaikan pesanan
@@ -138,13 +184,14 @@ const SellerView = () => {
       if (response.status === 200) {
         alert("Pesanan berhasil diselesaikan.");
 
-        // window.location.reload(); // Reload halaman
+
       }
     } catch (error) {
       console.error("Error menyelesaikan pesanan:", error);
       alert("Terjadi kesalahan, coba lagi nanti.");
     }
   };
+
 
   const getStatusPesanan = (transJual) => {
     // Kondisi pertama: Jika tgl_konfirm_selesai_pembeli tidak null
@@ -312,6 +359,7 @@ const SellerView = () => {
                 </p>
               </div>
 
+
               {statusPesananBeli ? (
                 <div className="flex items-center ml-auto mr-4">
                   <p>
@@ -332,12 +380,70 @@ const SellerView = () => {
 
                   <button
                     onClick={() =>
-                      selesaikanPesanan(transBeli.id_transaksi)
+                      openModal(transBeli.id_transaksi)
                     }
                     className="bg-[#0D96C4] text-white px-4 py-2 rounded-lg hover:bg-[#0C7BA8] transition"
                   >
                     Pesanan Selesai
                   </button>
+
+                          {/* modal rating */}
+        {isModalOpen && (
+        <div className="fixed inset-0 bg-black bg-opacity-50 flex justify-center items-center z-50">
+          <div className="modal-overlay bg-lightbluemain w-fit p-4 rounded-lg">
+            <div className="modal">
+              <h3 className="text-center font-bold">Penilaian Produk</h3>
+              <form id="form-ulasan" onSubmit={sendUlasan}>
+                {/* Placeholder Image */}
+                <img
+                  src={transBeli.produk.list_url_gambar[0]}
+                  alt="Produk"
+                  className="h-40 p-2 block mx-auto"
+                />
+                {/* Rating Options */}
+                <div className="flex gap-2 items-center mb-4">
+                  <p>Pelayanan Penjual :</p>
+                  {[1, 2, 3, 4, 5].map((rating) => (
+                    <label key={rating} className="flex items-center gap-1">
+                      <input type="radio" name="rating" value={rating} />
+                      {rating}
+                    </label>
+                  ))}
+                </div>
+                {/* Review Input */}
+                <div className="flex items-start">
+                  <label htmlFor="review" className="align-text-top mr-4">
+                    Ulasan:
+                  </label>
+                  <input type="hidden" name="id_transaksi" value={idTransaksi} />
+                  <textarea
+                    id="review"
+                    name="komentar"
+                    placeholder="Tulis ulasan Anda di sini..."
+                    className="border rounded-lg p-2 w-full"
+                  ></textarea>
+                </div>
+                {/* Modal Actions */}
+                <div className="modal-actions mx-auto w-full flex justify-center mt-4">
+                  <button
+                    type="submit"
+                    className="bg-blue_btn hover:bg_blue_btn text-white font-bold py-2 px-4 rounded-lg"
+                  >
+                    Kirim
+                  </button>
+                  <button
+                    type="button"
+                    onClick={closeModal}
+                    className="ml-2 bg-gray-500 hover:bg-gray-600 text-white font-bold py-2 px-4 rounded-lg"
+                  >
+                    Batal
+                  </button>
+                </div>
+              </form>
+            </div>
+          </div>
+        </div>
+      )}
                 </div>
               )}
             </div>
@@ -345,37 +451,11 @@ const SellerView = () => {
         })}
       </TabPanel>
     </Tabs>
+
+
   </div>
 
-  <div className="modal-overlay bg-lightbluemain w-fit p-4">
-      <div className="modal">
-        <h3 className="text-center font-bold">Penilaian Produk</h3>
-        <form action="" method="post">
-          <div className="flex gap-2 items-center">
-            <label htmlFor="rating1">1</label>
-            <input type="radio" name="rating_seller" id="rating1" value={1}/>
-            <label htmlFor="rating2">2</label>
-            <input type="radio" name="rating_seller" id="rating2"  value={2}/>
-            <label htmlFor="rating3">3</label>
-            <input type="radio" name="rating_seller" id="rating3"  value={3}/>
-            <label htmlFor="rating4">4</label>
-            <input type="radio" name="rating_seller" id="rating4"  value={4}/>
-            <label htmlFor="rating5">5</label>
-            <input type="radio" name="rating_seller" id="rating5"  value={5}/>
-          </div>
-          <div className="flex items-start">
-            <label htmlFor="" className="align-text-top">Ulasan :</label>
-            <textarea
-              placeholder="Tulis ulasan Anda di sini..."
-            ></textarea>
-          </div>
-          <div className="modal-actions flex gap-2 mx-auto">
-            <button className="bg-blue_btn hover:bg_blue_btn text-white font-bold py-2 px-4 rounded-lg">Batal</button>
-            <button className="bg-blue_btn hover:bg_blue_btn text-white font-bold py-2 px-4 rounded-lg">Kirim</button>
-          </div>
-        </form>
-      </div>
-    </div>
+
 </div>
 
  );

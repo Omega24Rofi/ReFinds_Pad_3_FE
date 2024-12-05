@@ -23,6 +23,7 @@ const ContactSeller = ({ params }) => {
 
   useEffect(() => {
     const fetchTransaksiBeli = async () => {
+      const token = localStorage.getItem("token");
       try {
         const response = await api.get(`/api/produk/${id}`, {
           headers: {

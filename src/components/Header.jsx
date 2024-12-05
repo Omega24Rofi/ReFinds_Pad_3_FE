@@ -238,6 +238,17 @@ const Header = () => {
                 {IsDropDownOpen && (
                   <div className="z-[99] absolute top-full right-[0.01rem] bg-white divide-y divide-gray-100 rounded-lg shadow w-44">
                     <ul className="py-2 text-sm text-gray-700 bg-lightbg rounded-lg">
+                      {userDataX.level_account === "admin" && (
+                        <li className="w-full px-3 py-2 bg-lightbg border-b-white border-b-2 hover:bg-lightbg_hover">
+                          <Link
+                            href={"/admin_dashboard"}
+                            className="flex gap-2 w-full"
+                          >
+                            <img src="/icons/sm/admin.svg" alt="" />
+                            <p>Admin Dashboard</p>
+                          </Link>
+                        </li>
+                      )}
                       <li className="w-full px-3 py-2 bg-lightbg border-b-white border-b-2 hover:bg-lightbg_hover">
                         <Link
                           href={"/user_transaksi_penjualan"}
@@ -289,4 +300,4 @@ const Header = () => {
   );
 };
 
-export default Header;
+export default Header;   
