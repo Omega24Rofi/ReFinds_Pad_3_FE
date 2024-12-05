@@ -260,40 +260,7 @@ const Homepage = () => {
         </div>
       </div>
 
-      <h1>Homepage</h1>
-      <ul>
-        <li>
-          <Link href={"/login"}>Login</Link>
-        </li>
-        <li>
-          <Link href={"/register"}>Register</Link>
-        </li>
-        <li>
-          <Link href={"/post"}>POST</Link>
-        </li>
-        <li>
-          <Link href={"/display"}>DISPLAY</Link>
-        </li>
-        <li>
-          <Link href={"/testing_user_data"}>USER DATA</Link>
-        </li>
-        {/* <li><Link href={"/admin_acc"}>ADMIN ACC</Link></li> */}
-        <li>
-          <Link href={"/admin_dashboard"}>Admin DashBoard</Link>
-        </li>
-        <li>
-          <Link href={"/dashboard"}>DashBoard</Link>
-        </li>
-        <li>
-          <Link href={"/dashboard"}>DashBoard</Link>
-        </li>
 
-        <br />
-        <br />
-        <li>
-          <button onClick={logout}>Logout</button>
-        </li>
-      </ul>
     </div>
   );
 };
