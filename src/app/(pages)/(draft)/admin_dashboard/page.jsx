@@ -8,6 +8,26 @@ const ProdukList = () => {
   const { kategoriData } = useKategori();
   console.log("KATEGORI_DATA:", kategoriData);
 
+
+
+  const handleAccProduk = async (id_produk, isAccepted) => {
+    try {
+      // Kirim request ke API dengan parameter true (Terima) atau false (Tolak)
+      const response = await api.get(
+        `/api/produk/acc/${id_produk}/${isAccepted}`
+      );
+
+      // Jika berhasil, reload halaman
+      if (response.status === 200) {
+        alert(`Produk ${isAccepted ? "diterima" : "ditolak"}!`);
+        window.location.reload();
+      }
+    } catch (error) {
+      console.error("Gagal mengubah status produk:", error);
+      alert("Terjadi kesalahan saat memproses permintaan.");
+    }
+  };
+
   ///////////////////// USE EFFECT UNTUK FETCHING USER DATA
   const [userData, setUserData] = useState(null);
   const [loading, setLoading] = useState(true); // State untuk loading
@@ -37,9 +57,9 @@ const ProdukList = () => {
   useEffect(() => {
     const fetchProduks = async () => {
       try {
-        let url = "/api/produk";
+        let url = "/api/produk/status/unacc";
         if (selectedKategori) {
-          url = `/api/produk/kategori/${selectedKategori}`;
+            url = `/api/produk/status/unacc/kategori/${selectedKategori}`;
         }
         const response = await api.get(url);
         setProduks(response.data); // Simpan data produk ke state
@@ -66,11 +86,15 @@ const ProdukList = () => {
 
   return (
     <div className="min-h-screen">
-      <h1 className="text-center mt-5 text-2xl font-bold">Persetujuan Posting Produk</h1>
+      <h1 className="text-center mt-5 text-2xl font-bold">
+        Persetujuan Posting Produk
+      </h1>
 
       {/* Menampilkan dropdown kategori */}
       <div className="w-[90%] mx-auto mt-5">
-        <label htmlFor="kategori" className="block mb-2">Pilih Kategori:</label>
+        <label htmlFor="kategori" className="block mb-2">
+          Pilih Kategori:
+        </label>
         <select
           id="kategori"
           name="kategori"
@@ -106,7 +130,11 @@ const ProdukList = () => {
                 <img
                   src={produk.list_url_gambar[0]}
                   alt="gambar_produk"
-                  style={{ width: "150px", height: "150px", objectFit: "cover" }}
+                  style={{
+                    width: "150px",
+                    height: "150px",
+                    objectFit: "cover",
+                  }}
                 />
                 <div className="product-info ml-2 p-4 pr-5 w-[70%]">
                   <p>Nama Produk: {produk.nama_produk}</p>
@@ -119,10 +147,16 @@ const ProdukList = () => {
                   <button>
                     <img src="/icons/info.svg" alt="info" />
                   </button>
-                  <button className="button bg-blue_btn text-white text-lg font-bold w-28 py-2 rounded-xl">
+                  <button
+                    className="button bg-blue_btn text-white text-lg font-bold w-28 py-2 rounded-xl"
+                    onClick={() => handleAccProduk(produk.id_produk, true)}
+                  >
                     Terima
                   </button>
-                  <button className="button bg-blue_btn text-white text-lg font-bold w-28 py-2 rounded-xl">
+                  <button
+                    className="button bg-red-500 text-white text-lg font-bold w-28 py-2 rounded-xl"
+                    onClick={() => handleAccProduk(produk.id_produk, false)}
+                  >
                     Tolak
                   </button>
                 </div>
