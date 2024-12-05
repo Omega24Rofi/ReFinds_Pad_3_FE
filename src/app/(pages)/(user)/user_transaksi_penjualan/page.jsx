@@ -243,7 +243,7 @@ const SellerView = () => {
             <Link
               href={`/detail_produk/${userProduk.id_produk}`}
               key={userProduk.id_produk}
-              className="card min-h-fit bg-white box-content w-40 m-2 rounded-lg"
+              className="hover:scale-90 card sm:h-72 min-h-fit h-64 bg-white box-content sm:w-[13rem] md:w-[11.4rem] m-2 rounded-lg overflow-hidden shadow-md"
             >
               <img
                 src={userProduk.list_url_gambar[0]}

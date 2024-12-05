@@ -6,7 +6,7 @@ const Footer = () => {
       {/* Customer Care Section */}
       <div className="w-full md:w-[40%] mb-6 md:mb-0">
         <p className="font-bold text-lg mb-4">Customer Care</p>
-        <div className="contact flex flex-col md:flex-row w-full md:w-[75%] justify-between gap-4">
+        <div className="contact flex flex-row w-full md:w-[75%] sm:justify-start md:justify-between sm:gap-8 md:gap-4">
           <div>
             <div className="flex items-center gap-2">
               <img src="/icons/round-phone.svg" alt="phone logo" />

@@ -88,8 +88,8 @@ const ContactSeller = ({ params }) => {
   return (
     <div className="min-h-screen">
       {detailProduk ? (
-        <div className="w-[90%] mx-auto mt-10 bg-lightbg flex flex-row rounded-2xl overflow-hidden">
-          <div className="h-full rounded-2xl overflow-hidden w-1/2">
+        <div className="sm:w-[95%] md:w-[90%] mx-auto my-10 bg-lightbg flex sm:flex-col md:flex-row rounded-2xl overflow-hidden">
+          <div className="h-full rounded-2xl overflow-hidden sm:w-full md:w-1/2">
             <Slider {...carouselSettings}>
               {detailProduk.list_url_gambar.map((url, index) => (
                 <div key={index} className="h-full  overflow-hidden">
@@ -102,7 +102,7 @@ const ContactSeller = ({ params }) => {
               ))}
             </Slider>
           </div>
-          <div className="h-full w-[50%] p-5 flex justify-center flex-col">
+          <div className="h-full sm:w-full md:w-1/2 p-5 flex justify-center flex-col">
             <p className="font-bold text-2xl">{detailProduk.nama_produk}</p>
             <p className="text-2xl text-[#0087E0] mt-2">
               {formatHarga(detailProduk.harga)}

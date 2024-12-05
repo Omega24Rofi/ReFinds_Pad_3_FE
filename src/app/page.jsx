@@ -63,7 +63,7 @@ const Carousel = ({ slides }) => {
   }, [currentIndex]);
 
   return (
-    <div className="relative w-full h-[100vh] mx-auto overflow-hidden">
+    <div className="relative md:w-full sm:h-[70vh] md:h-[100vh] mx-auto overflow-hidden">
       {/* Konten Carousel */}
       <div
         id="slider"
@@ -147,51 +147,55 @@ const Homepage = () => {
   }, []);
 
   return (
-    <div className="min-h-screen">
+    <div className="min-h-screen overflow-hidden">
       {/* Carousel */}
       <Carousel slides={slides} />
       <div className="w-full justify-center align-middle my-5">
-        <div className="flex flex-row gap-8 h-28 align-middle justify-center ">
+        <div className="flex flex-row sm:gap-1 py-4 md:gap-8 h-fit align-middle justify-center sm:w-fit md:w-full overflow-scroll">
           <Link
             href={"/category/4"}
-            className="bg-white rounded-2xl shadow-lg p-2 flex flex-col items-center hover:scale-105 transition"
+            className="sm:w-64 md:w-fit bg-white rounded-2xl shadow-lg pl-2 pr-4 flex sm:flex-row sm:scale-75 md:scale-100 md:flex-col items-center hover:scale-105 transition"
           >
             <img
               src="/images/categories/Two white plates with blue rim.png"
               alt="alat rumah tangga"
-            />
-            <p className="px-2 text-center mt-4">Alat Rumah Tangga</p>
+              className="my-auto"
+              />
+            <p className="px-2 text-center mt-4 ">Alat Rumah Tangga</p>
           </Link>
 
           <Link
             href={"/category/1"}
-            className="bg-white rounded-2xl shadow-lg p-2 flex flex-col items-center hover:scale-105 transition"
-          >
+            className="sm:w-64 md:w-fit bg-white rounded-2xl shadow-lg p-2 flex sm:flex-row sm:scale-75 md:scale-100 md:flex-col items-center hover:scale-105 transition"
+            >
             <img
               src="/images/categories/laptop white screen.png"
               alt="elektronik"
-            />
+              className="my-auto"
+              />
             <p className="px-2 text-center">Elektronik</p>
           </Link>
 
           <Link
             href={"/category/2"}
-            className="bg-white rounded-2xl shadow-lg p-2 flex flex-col items-center hover:scale-105 transition"
-          >
+            className="sm:w-64 md:w-fit bg-white rounded-2xl shadow-lg p-2 flex sm:flex-row sm:scale-75 md:scale-100 md:flex-col items-center hover:scale-105 transition"
+            >
             <img
               src="/images/categories/green sofa with two pillows.png"
               alt="perabotan"
-            />
+              className="my-auto"
+              />
             <p className="px-2 text-center">Furniture</p>
           </Link>
 
           <Link
             href={"/category/3"}
-            className="bg-white rounded-2xl shadow-lg p-2 flex flex-col items-center hover:scale-105 transition"
-          >
+            className="sm:w-64 md:w-fit bg-white rounded-2xl shadow-lg p-2 flex sm:flex-row sm:scale-75 md:scale-100 md:flex-col items-center hover:scale-105 transition"
+            >
             <img
               src="/images/categories/t-shirt mockup.png"
               alt="pakaian & outfit lainnya"
+              className="my-auto"
             />
             <p className="px-2 text-center">Pakaian</p>
           </Link>
@@ -199,14 +203,14 @@ const Homepage = () => {
       </div>
 
       {/* top produk */}
-      <div className="w-[80%] bg-lightbg flex-wrap mt-10 m-auto py-6 rounded-2xl px-2 justify-evenly">
+      <div className="sm:w-[75%] md:w-[80%] bg-lightbg flex-wrap mt-10 m-auto py-6 rounded-2xl px-2 justify-evenly">
         <p className="text-xl font-bold text-black px-2">Top Product</p>
-        <div className="flex flex-wrap">
+        <div className="flex flex-wrap sm:justify-evenly md:justify-center ">
           {topProduks.slice(0, 6).map((TopProduk) => (
             <Link
               href={`/detail_produk/${TopProduk.id_produk}`} // URL dinamis dengan id_produk
               key={TopProduk.id_produk}
-              className="card min-h-fit h-64 bg-white box-content w-[11.4rem] m-2 rounded-lg overflow-hidden shadow-md"
+              className="hover:scale-90 card sm:h-72 min-h-fit h-64 bg-white box-content sm:w-[13rem] md:w-[11.4rem] m-2 rounded-lg overflow-hidden shadow-md"
             >
               <div className="h-44 w-full overflow-hidden flex align-center justify-center">
                 <img
@@ -230,14 +234,14 @@ const Homepage = () => {
       </div>
 
       {/* produk terbaru        */}
-      <div className="w-[80%] bg-lightbg flex-wrap mt-10 m-auto py-6 rounded-2xl px-2 justify-evenly">
+      <div className="sm:w-[75%] md:w-[80%] bg-lightbg flex-wrap my-10 m-auto py-6 rounded-2xl px-2 justify-evenly">
         <p className="text-xl font-bold text-black px-2">Produk Terbaru</p>
-        <div className="flex flex-wrap">
+        <div className="flex flex-wrap sm:justify-evenly md:justify-center">
           {produks.slice(0, 18).map((produk) => (
             <Link
               href={`/detail_produk/${produk.id_produk}`} // URL dinamis dengan id_produk
               key={produk.id_produk}
-              className="card min-h-fit h-64 bg-white box-content w-[11.4rem] m-2 rounded-lg overflow-hidden shadow-md"
+              className="hover:scale-90 card sm:h-72 min-h-fit  md:h-64 bg-white box-content sm:w-[12.5rem] md:w-[11.4rem] m-2 rounded-lg overflow-hidden shadow-md"
             >
               <div className="h-44 w-full overflow-hidden flex align-center justify-center">
                 <img

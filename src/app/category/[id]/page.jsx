@@ -63,18 +63,18 @@ export const Category = ({ params }) => {
           </h1>
         )}
       </div>
-      <div className="w-[80%] bg-lightbg flex-wrap -mt-12 m-auto py-6 rounded-2xl px-2 justify-evenly">
+      <div className="sm:w-[90%] md:w-[80%] bg-lightbg flex-wrap -mt-12 m-auto py-6 rounded-2xl px-2 justify-evenly">
         {/* <p className="text-xl font-bold text-black px-2"></p> */}
         {isLoading ? (
           <p>Loading...</p> // Tampilkan loading saat data masih diambil
         ) : (
-          <div className="flex flex-wrap">
+          <div className="flex flex-wrap sm:justify-evenly md:justify-start">
             {kategorisProduks.length > 0 ? (
               kategorisProduks.map((kategorisProduk) => (
                 <Link
                   href={`/detail_produk/${kategorisProduk.id_produk}`} // URL dinamis dengan id_produk
                   key={kategorisProduk.id_produk}
-                  className="card min-h-fit h-64 bg-white box-content w-[11.4rem] m-2 rounded-lg overflow-hidden shadow-md"
+                  className="hover:scale-90 card sm:h-72 min-h-fit h-64 bg-white box-content sm:w-[13rem] md:w-[11.4rem] m-2 rounded-lg overflow-hidden shadow-md"
                 >
                   <div className="h-44 w-full overflow-hidden flex align-center justify-center">
                     <img
