@@ -15,11 +15,13 @@ const Footer = () => {
             <p>086277961340</p>
           </div>
           <div>
-            <div className="flex items-center gap-2">
-              <img src="/icons/email.svg" alt="email logo" />
-              <p>Email</p>
+            <div>
+              <a href="mailto:kewiruskmtedi@gmail.com" className="flex items-center gap-2">
+                <img src="/icons/email.svg" alt="email logo" />
+                <p>Email</p>
+              </a>
             </div>
-            <p>RefindsBuy@mail.com</p>
+            <p>kewiruskmtedi@gmail.com</p>
           </div>
         </div>
       </div>
@@ -30,7 +32,7 @@ const Footer = () => {
         <ul className="flex flex-wrap md:flex-row gap-4 md:gap-8">
           <li className="flex items-center gap-2">
             <img src="/icons/instagram.svg" alt="ig-logo" />
-            <a href="#">Refinds</a>
+            <a href="https://www.instagram.com/kewirus_kmtedi?igsh=Mnd0MnQ3NXdieWlr" target='_blank'>Refinds</a>
           </li>
           <li className="flex items-center gap-2">
             <img src="/icons/youtube_icon.svg" alt="yt-logo" />
