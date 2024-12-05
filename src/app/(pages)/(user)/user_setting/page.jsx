@@ -93,7 +93,7 @@ const UserSetting = () => {
   // Handle form submission to update user data and add address
   const handleSubmit = async (e) => {
     e.preventDefault();
-  
+
     try {
       const formData = new FormData();
       formData.append("nama_akun", user.nama_akun);
@@ -115,53 +115,62 @@ const UserSetting = () => {
 
       console.log("User updated:", response.data);
 
-      // Handle new address submission
-      // Pastikan data alamat yang diperlukan sudah terisi
-      if (
-        !newAddress.id_user ||
-        !newAddress.nama_lokasi ||
-        !newAddress.provinsi ||
-        !newAddress.kota_kabupaten ||
-        !newAddress.kecamatan ||
-        !newAddress.kode_pos ||
-        !newAddress.deskripsi
-      ) {
-        return;
+      // Cek apakah alamat perlu ditambahkan
+      const addressFields = [
+        newAddress.id_user,
+        newAddress.nama_lokasi,
+        newAddress.provinsi,
+        newAddress.kota_kabupaten,
+        newAddress.kecamatan,
+        newAddress.kode_pos,
+        newAddress.deskripsi,
+      ];
+
+      // Hanya kirim alamat jika ada perubahan pada alamat
+      const isAddressChanged = addressFields.some(
+        (field) => field !== "" && field !== null
+      );
+
+      if (isAddressChanged) {
+        // Validasi alamat hanya jika ada perubahan
+        if (
+          !newAddress.id_user ||
+          !newAddress.nama_lokasi ||
+          !newAddress.provinsi ||
+          !newAddress.kota_kabupaten ||
+          !newAddress.kecamatan ||
+          !newAddress.kode_pos ||
+          !newAddress.deskripsi
+        ) {
+          // alert("Semua field alamat harus diisi.");
+          return;
+        }
+
+        // Validasi kode pos
+        const isValidKodePos = /^[0-9]{5,10}$/.test(newAddress.kode_pos);
+        if (!isValidKodePos) {
+          alert("Kode pos tidak valid! Format: 5-10 angka.");
+          return;
+        }
+
+        try {
+          // Kirimkan data alamat ke API jika ada perubahan
+          const addressResponse = await api.post(
+            "/api/alamat",
+            { ...newAddress },
+            { headers: { Authorization: `Bearer ${token}` } }
+          );
+          console.log("New address added:", addressResponse.data);
+          alert("Alamat berhasil ditambahkan!");
+        } catch (error) {
+          console.error("Error adding new address:", error);
+          alert("Terjadi kesalahan saat menambahkan alamat.");
+        }
+      } else {
+        console.log("Tidak ada perubahan alamat.");
       }
 
-      // Optional: Validasi kode pos dan URL map jika ada
-      const isValidKodePos = /^[0-9]{5,10}$/.test(newAddress.kode_pos);
-
-
-      if (!isValidKodePos) {
-        alert("Kode pos tidak valid! Format: 5-10 angka.");
-        return;
-      }
-
-
-      try {
-        // Kirimkan data ke endpoint API untuk menambahkan alamat
-        const addressResponse = await api.post(
-          "/api/alamat", // Endpoint API untuk menambahkan alamat
-          {
-            ...newAddress, // Mengirimkan seluruh data alamat yang baru
-          },
-          {
-            headers: {
-              Authorization: `Bearer ${token}`, // Pastikan token autentikasi sudah benar
-            },
-          }
-        );
-
-        console.log("New address added:", addressResponse.data);
-
-        alert("Perubahan berhasil dismpan dan Alamat berhasil ditambahkan!");
-        // Reset form atau navigasi ke halaman lain jika diperlukan
-      } catch (error) {
-        console.error("Error adding new address:", error);
-        alert("Terjadi kesalahan saat menambahkan alamat. Silakan coba lagi.");
-      }
-
+      // Reset atau navigasi jika perlu
       window.location.reload();
     } catch (error) {
       console.error("Error updating user data:", error);
@@ -286,7 +295,9 @@ const UserSetting = () => {
               />
             </div>
             <div>
-              <label className="mt-2 block text-sm font-medium">Tambah Alamat</label>
+              <label className="mt-2 block text-sm font-medium">
+                Tambah Alamat
+              </label>
               <input
                 type="text"
                 name="nama_lokasi"
