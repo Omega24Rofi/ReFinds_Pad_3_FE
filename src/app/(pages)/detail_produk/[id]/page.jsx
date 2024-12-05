@@ -113,7 +113,7 @@ const ContactSeller = ({ params }) => {
               <p className="font-bold mt-10">Alamat</p>
               <p>{detailProduk.alamat.nama_lokasi}, {detailProduk.alamat.kecamatan}, {detailProduk.alamat.kota_kabupaten}, {detailProduk.alamat.provinsi}, {detailProduk.alamat.kode_pos} </p>
             </div>
-            <div className="flex flex-row align-middle mt-10 text-center h-fit w-12">
+            <div className="flex flex-col align-middle mt-10 text-center h-fit w-12">
               <Link href={`/seller_view/${detailProduk.user.id_user}`}>
                 <img
                   src={`${apiBaseUrl}/${detailProduk.user.url_foto_profil}`}
@@ -122,6 +122,10 @@ const ContactSeller = ({ params }) => {
                 />
                 <p className="font-semibold">{detailProduk.user.nama_akun}</p>
               </Link>
+              <div className="h-12 bg-red-700">
+                <img src="/icons/sm/star.svg" alt="" />
+                <p className="font-semibold">{detailProduk.user.nama_akun}</p>
+              </div>
             </div>
             <button
               onClick={handlePesanClick}

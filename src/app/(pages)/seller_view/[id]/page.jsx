@@ -85,12 +85,17 @@ const SellerView = ({ params }) => {
                     <div>
                         {detailSeller ? (
                             <>
-
-                                <img
-                                    src={`${apiBaseUrl}/${detailSeller.url_foto_profil}`}
-                                    alt={detailSeller.nama_akun}
-                                    className="h-16 rounded-full"
-                                />
+                                <div className='flex flex-col justify-center items-center flex-wrap'>
+                                    <img
+                                        src={`${apiBaseUrl}/${detailSeller.url_foto_profil}`}
+                                        alt={detailSeller.nama_akun}
+                                        className="h-16 rounded-full"
+                                    />
+                                    <span className='w-full flex flex-row justify-center items-center gap-1 text-center mt-1'>
+                                        <img src="/icons/sm/star.svg" alt="" />
+                                        <p className='font-semibold'>{parseFloat(detailSeller.average_rating).toFixed(1)}</p>
+                                    </span>
+                                </div>
                             </>
                             
                         ) : (
