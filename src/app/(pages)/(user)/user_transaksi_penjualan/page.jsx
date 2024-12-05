@@ -238,7 +238,7 @@ const SellerView = () => {
 
       {/* tab users produk */} 
       <TabPanel>
-        <div className="flex flex-row flex-wrap -mt-10 m-auto py-6 rounded-2xl px-2">
+        <div className="flex flex-row flex-wrap justify-evenly -mt-10 m-auto py-6 rounded-2xl px-2">
           {userProduks.map((userProduk) => (
             <Link
               href={`/detail_produk/${userProduk.id_produk}`}
@@ -250,9 +250,14 @@ const SellerView = () => {
                 alt=""
                 className="h-36 w-full"
               />
-              <p className="px-2">{userProduk.nama_produk}</p>
-              <p className="text-blue-300 px-2">
+              <p className="pb-12 px-2 h-8 mt-2 text-[18px] ">
+                {userProduk.nama_produk}
+              </p>
+              <p className="text-blue_btn px-2 font-bold ">
                 {formatHarga(userProduk.harga)}
+              </p>
+              <p className="text-right pt-2 ">
+                {formatTanggal(userProduk.tanggal_post)}
               </p>
             </Link>
           ))}
@@ -325,7 +330,7 @@ const SellerView = () => {
           return (
             <div
               key={transBeli.id_transaksi}
-              className="flex items-center bg-white rounded-lg shadow-md mt-2"
+              className="flex sm:flex-col md:flex-row items-center bg-white rounded-lg shadow-md mt-2 sm:py-4 md:py-0"
             >
               {/* Image Section */}
               <div className="">
@@ -333,13 +338,12 @@ const SellerView = () => {
                   src={transBeli.produk.list_url_gambar[0]}
                   alt="Product Image"
                   width={200}
-                  height={30}
-                  className="rounded-lg"
+                  className="rounded-lg h-full"
                 />
               </div>
 
               {/* Status card */}
-              <div className="ml-4 flex-1 max-w-md">
+              <div className="ml-4 flex-1 max-w-md sm:mt-4 md:mt-0">
                 <p>
                   <span className="font-semibold">Nama Produk :</span>
                   {transBeli.produk.nama_produk}
@@ -368,7 +372,7 @@ const SellerView = () => {
                   </p>
                 </div>
               ) : (
-                <div className="flex items-center ml-auto mr-4 gap-2">
+                <div className="flex justify-center items-center sm:py-4 md:py-0 sm:w-full md:w-auto mx-auto ml-auto mr-4 gap-2">
                   <button
                     onClick={() =>
                       cancelOrderByBuyer(transBeli.id_transaksi)
@@ -389,7 +393,7 @@ const SellerView = () => {
 
                           {/* modal rating */}
         {isModalOpen && (
-        <div className="fixed inset-0 bg-black bg-opacity-50 flex justify-center items-center z-50">
+        <div className="fixed inset-0 bg-black bg-opacity-20 flex justify-center items-center z-50">
           <div className="modal-overlay bg-lightbluemain w-fit p-4 rounded-lg">
             <div className="modal">
               <h3 className="text-center font-bold">Penilaian Produk</h3>
