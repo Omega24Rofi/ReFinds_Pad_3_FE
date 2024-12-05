@@ -143,6 +143,7 @@ const UserSetting = () => {
           !newAddress.deskripsi
         ) {
           // alert("Semua field alamat harus diisi.");
+          window.location.reload();
           return;
         }
 
