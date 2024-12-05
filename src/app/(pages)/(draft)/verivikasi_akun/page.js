@@ -47,7 +47,7 @@ const VerifyAccount = ({ params }) => {
       <h1 className="text-xl font-semibold mb-4">Verifikasi Akun</h1>
 
       {/* Status message */}
-      <p className={`mb-4 ${isLoading ? "text-gray-500" : "text-blue-500"}`}>
+      <p className={`mb-4 ${isLoading ? "text-gray-500" : "text-mainblue"}`}>
         {status}
       </p>
 
@@ -56,7 +56,7 @@ const VerifyAccount = ({ params }) => {
         type="button"
         onClick={handleVerification}
         disabled={isLoading}
-        className="px-6 py-2 bg-blue-500 text-white rounded-md hover:bg-blue-600 disabled:opacity-50 disabled:cursor-not-allowed"
+        className="px-6 py-2 bg-blue_btn text-white rounded-lg hover:bg-blue_btn_hover disabled:opacity-50 disabled:cursor-not-allowed"
       >
         {isLoading ? "Verifikasi..." : "Verifikasi Akun"}
       </button>

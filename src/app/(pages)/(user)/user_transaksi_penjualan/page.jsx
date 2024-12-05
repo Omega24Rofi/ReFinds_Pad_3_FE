@@ -12,6 +12,9 @@ const SellerView = () => {
 
   // transaksi beli
   const [transaksiBeli, setTransaksiBeli] = useState([]);
+  const [isModalOpen, setIsModalOpen] = useState(false); // Modal visibility
+  const [selectedTransaction, setSelectedTransaction] = useState(null); // Transaction to review
+
   useEffect(() => {
     const fetchTransaksiBeli = async () => {
       try {
@@ -115,7 +118,11 @@ const SellerView = () => {
     }
   };
 
+  
   const selesaikanPesanan = async (id) => {
+    // munculmodal()
+    // fetch()
+
     try {
       // Mengirimkan request ke API untuk menyelesaikan pesanan
       const response = await api.get(
@@ -131,7 +138,7 @@ const SellerView = () => {
       if (response.status === 200) {
         alert("Pesanan berhasil diselesaikan.");
 
-        window.location.reload(); // Reload halaman
+        // window.location.reload(); // Reload halaman
       }
     } catch (error) {
       console.error("Error menyelesaikan pesanan:", error);
@@ -300,7 +307,7 @@ const SellerView = () => {
                 </p>
 
                 <p>
-                  <span className="font-semibold">Deskripsi Produk</span>
+                  <span className="font-semibold">Deskripsi Produk :</span>
                   {transBeli.produk.url_teks_deskripsi}
                 </p>
               </div>
@@ -339,6 +346,36 @@ const SellerView = () => {
       </TabPanel>
     </Tabs>
   </div>
+
+  <div className="modal-overlay bg-lightbluemain w-fit p-4">
+      <div className="modal">
+        <h3 className="text-center font-bold">Penilaian Produk</h3>
+        <form action="" method="post">
+          <div className="flex gap-2 items-center">
+            <label htmlFor="rating1">1</label>
+            <input type="radio" name="rating_seller" id="rating1" value={1}/>
+            <label htmlFor="rating2">2</label>
+            <input type="radio" name="rating_seller" id="rating2"  value={2}/>
+            <label htmlFor="rating3">3</label>
+            <input type="radio" name="rating_seller" id="rating3"  value={3}/>
+            <label htmlFor="rating4">4</label>
+            <input type="radio" name="rating_seller" id="rating4"  value={4}/>
+            <label htmlFor="rating5">5</label>
+            <input type="radio" name="rating_seller" id="rating5"  value={5}/>
+          </div>
+          <div className="flex items-start">
+            <label htmlFor="" className="align-text-top">Ulasan :</label>
+            <textarea
+              placeholder="Tulis ulasan Anda di sini..."
+            ></textarea>
+          </div>
+          <div className="modal-actions flex gap-2 mx-auto">
+            <button className="bg-blue_btn hover:bg_blue_btn text-white font-bold py-2 px-4 rounded-lg">Batal</button>
+            <button className="bg-blue_btn hover:bg_blue_btn text-white font-bold py-2 px-4 rounded-lg">Kirim</button>
+          </div>
+        </form>
+      </div>
+    </div>
 </div>
 
  );

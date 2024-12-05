@@ -49,7 +49,7 @@ const VerifyAccount = ({ params }) => {
 
   return (
     <div className="min-h-screen flex items-center">
-      <div className="max-w-lg mx-auto p-6 bg-white shadow-md rounded-md">
+      <div className="max-w-md mx-auto p-6 bg-white shadow-lg rounded-lg">
       <h1 className="text-2xl font-semibold text-center mb-6">
         Verifikasi Akun
       </h1>
@@ -57,7 +57,7 @@ const VerifyAccount = ({ params }) => {
       {/* Status message */}
       <p
         className={`mb-4 text-center ${
-          isLoading ? "text-gray-500" : "text-blue-500"
+          isLoading ? "text-gray-500" : "text-mainblue"
         }`}
       >
         {status}
@@ -81,7 +81,7 @@ const VerifyAccount = ({ params }) => {
         type="button"
         onClick={handleVerification}
         disabled={isLoading}
-        className="w-full py-2 mt-4 bg-blue-500 text-white font-semibold rounded-md hover:bg-blue-600 disabled:opacity-50 disabled:cursor-not-allowed"
+        className="w-full py-2 mt-4 bg-blue_btn text-white font-semibold rounded-lg hover:bg-blue_btn_hover disabled:opacity-50 disabled:cursor-not-allowed"
       >
         {isLoading ? "Mengirim email verifikasi..." : "Kirim Link Verifikasi"}
       </button>
