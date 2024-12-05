@@ -5,7 +5,7 @@ import Image from "next/image";
 import Link from "next/link";
 import api from "@/utils/axios";
 import { useRouter } from "next/navigation";
-import Linkify from "react-linkify";
+// import Linkify from "react-linkify";
 
 const Login = ({ params }) => {
   const router = useRouter();
