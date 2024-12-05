@@ -116,17 +116,17 @@ const ProdukList = () => {
         <ul>
           {/* Menampilkan produk yang telah difilter berdasarkan kategori */}
           {produks.map((produk) => (
-            <li key={produk.id_produk} className="flex flex-row mb-5">
+            <li key={produk.id_produk} className="flex flex-row mb-5 ">
               <div className="mr-2 my-auto">
                 <img
-                  src="/images/testimage/account_circle.png"
+                  src={produk.user.url_foto_profil}
                   alt="Foto Profil"
                   style={{ width: "50px", height: "50px", borderRadius: "50%" }}
                   className="mx-auto"
                 />
-                <h2>contoh_user</h2>
+                <h2>{produk.user.nama_akun}</h2>
               </div>
-              <div className="flex flex-row bg-white justify-center align-middle rounded-xl">
+              <div className="flex flex-row bg-white justify-center align-middle rounded-xl w-full overflow-hidden">
                 <img
                   src={produk.list_url_gambar[0]}
                   alt="gambar_produk"
