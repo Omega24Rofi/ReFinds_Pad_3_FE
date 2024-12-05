@@ -368,7 +368,7 @@ const SellerView = () => {
                   </p>
                 </div>
               ) : (
-                <div className="flex items-center ml-auto mr-4">
+                <div className="flex items-center ml-auto mr-4 gap-2">
                   <button
                     onClick={() =>
                       cancelOrderByBuyer(transBeli.id_transaksi)
