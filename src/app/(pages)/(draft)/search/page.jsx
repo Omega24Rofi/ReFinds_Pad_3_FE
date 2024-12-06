@@ -92,7 +92,7 @@ const PaginatedPage = () => {
             <Link
               href={`/detail_produk/${produk.id_produk}`}
               key={produk.id_produk}
-              className="card min-h-fit bg-white box-content w-40 m-2 rounded-lg"
+              className="hover:scale-90 card sm:h-72 min-h-fit  md:h-64 bg-white box-content sm:w-[12.5rem] md:w-[11.4rem] m-2 rounded-lg overflow-hidden shadow-md"
             >
               <img
                 src={produk.list_url_gambar[0]}
