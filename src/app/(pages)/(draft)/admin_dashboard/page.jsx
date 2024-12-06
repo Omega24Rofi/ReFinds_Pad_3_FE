@@ -6,6 +6,7 @@ import useKategori from "@/hooks/useKategori";
 
 const ProdukList = () => {
   const { kategoriData } = useKategori();
+  const apiBaseUrl = process.env.NEXT_PUBLIC_API_BASE_URL;
   console.log("KATEGORI_DATA:", kategoriData);
 
 
@@ -119,7 +120,8 @@ const ProdukList = () => {
             <li key={produk.id_produk} className="flex flex-row mb-5 ">
               <div className="mr-2 my-auto">
                 <img
-                  src={produk.user.url_foto_profil}
+                  // `${apiBaseUrl}/${response.data[0].url_foto_profil}`
+                  src={`${apiBaseUrl}/${produk.user.url_foto_profil}`}
                   alt="Foto Profil"
                   style={{ width: "50px", height: "50px", borderRadius: "50%" }}
                   className="mx-auto"
