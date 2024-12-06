@@ -26,7 +26,7 @@ const VerifyAccount = ({ params }) => {
 
     try {
       const response = await axios.get(
-        `${process.env.NEXT_PUBLIC_API_URL}/api/send-verification-token/${id_user}`,
+        `${process.env.NEXT_PUBLIC_API_BASE_URL}/api/send-verification-token/${id_user}`,
         {}
       );
 

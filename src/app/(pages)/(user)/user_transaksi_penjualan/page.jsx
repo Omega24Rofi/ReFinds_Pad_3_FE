@@ -49,7 +49,7 @@ const SellerView = () => {
     };
   
     // Send the request using fetch
-    fetch(`${process.env.NEXT_PUBLIC_API_URL}/api/ulasan`, {
+    fetch(`${process.env.NEXT_PUBLIC_API_BASE_URL}/api/ulasan`, {
       method: 'POST',
       headers: {
         'Content-Type': 'application/json',
