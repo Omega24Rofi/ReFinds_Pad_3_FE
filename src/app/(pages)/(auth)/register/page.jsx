@@ -26,7 +26,7 @@ const Register = () => {
 
     try {
       // Mengirim data menggunakan axios ke API
-      const response = await api.post("http://localhost:8000/api/register", {
+      const response = await api.post('${process.env.NEXT_PUBLIC_API_URL}/api/register', {
         nama_akun: namaAkun,
         nama_asli_user: namaAsliUser,
         email,

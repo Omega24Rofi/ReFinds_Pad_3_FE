@@ -20,7 +20,7 @@ const handleSubmit = async (e) => {
   console.log("Form submitted");
 
   try {
-    const response = await api.post("http://localhost:8000/api/login", {
+    const response = await api.post('${process.env.NEXT_PUBLIC_API_URL}/api/login', {
       email,
       password,
     });
