@@ -4,7 +4,12 @@ import { useEffect, useState } from 'react';
 
 const TransaksiPembelian = () => {
   const [transaksiBeli, setTransaksiBeli] = useState([]);
-  const token = localStorage.getItem("token");
+  const [token, setToken] = useState(null);
+
+  useEffect(() => {
+    const storedToken = localStorage.getItem("token");
+    setToken(storedToken);
+  }, []); 
 
   useEffect(() => {
     const fetchTransaksiBeli = async () => {

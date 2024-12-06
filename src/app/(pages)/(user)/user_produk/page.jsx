@@ -5,7 +5,12 @@ import api from '@/utils/axios';
 
 const ProdukUser = () => {
   const [produk, setProduk] = useState([]);
-  const token = localStorage.getItem("token");
+  const [token, setToken] = useState(null);
+
+  useEffect(() => {
+    const storedToken = localStorage.getItem("token");
+    setToken(storedToken);
+  }, []); 
 
   useEffect(() => {
     const fetchProduk = async () => {

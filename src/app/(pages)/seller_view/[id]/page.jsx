@@ -4,7 +4,6 @@ import 'react-tabs/style/react-tabs.css';
 import Link from 'next/link';
 import React, { useState, useEffect } from "react";
 import Slider from "react-slick"; // Import the carousel
-import Head from "next/head";
 import useAuth from "@/hooks/useAuth";
 import api from "@/utils/axios";
 import { formatPhoneNumber } from '@/utils/formatPhoneNumber';

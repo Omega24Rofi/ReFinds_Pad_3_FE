@@ -2,7 +2,6 @@
 
 import { useEffect, useState } from "react";
 import withAuth from "@/components/withAuth";
-import Image from "next/image";
 import Link from "next/link";
 // import SplashScreen from "@/app/components/splashScreen";
 

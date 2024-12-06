@@ -3,6 +3,7 @@ import { useState, useEffect } from "react";
 import Link from "next/link";
 import api from "@/utils/axios";
 import { useRouter, useSearchParams } from "next/navigation";
+import { Suspense } from "react";
 
 const ITEMS_PER_PAGE = 30; // Number of items per page
 
@@ -132,4 +133,10 @@ const PaginatedPage = () => {
   );
 };
 
-export default PaginatedPage;
+const PaginatedPageWithSuspense = () => (
+  <Suspense fallback={<div>Loading...</div>}>
+    <PaginatedPage />
+  </Suspense>
+);
+
+export default PaginatedPageWithSuspense;

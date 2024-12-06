@@ -1,5 +1,6 @@
 "use client";
 import api from "@/utils/axios";
+import Image from "next/image";
 import { useEffect, useState } from "react";
 import { processImage } from "@/utils/processImage"; // Import image processing utility
 
@@ -28,8 +29,15 @@ const UserSetting = () => {
 
   const [profilePicture, setProfilePicture] = useState(null);
   const [profilePicturePreview, setProfilePicturePreview] = useState(null);
-  const token = localStorage.getItem("token");
+  
   const apiBaseUrl = process.env.NEXT_PUBLIC_API_BASE_URL;
+  const [token, setToken] = useState(null);
+
+  useEffect(() => {
+    const storedToken = localStorage.getItem("token");
+    setToken(storedToken);
+  }, []); 
+
 
   // Fetch user data
   useEffect(() => {
@@ -220,7 +228,7 @@ const UserSetting = () => {
       <div className="bg-lightbg shadow-md rounded p-6">
         <form onSubmit={handleSubmit} className="space-y-4">
           <div className="flex items-center space-x-4">
-            <img
+            <Image
               src={profilePicturePreview || "/default-profile.png"}
               alt="Preview Foto Profil"
               className="w-28 h-28 rounded-full object-cover"

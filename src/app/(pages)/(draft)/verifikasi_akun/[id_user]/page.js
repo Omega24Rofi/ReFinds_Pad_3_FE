@@ -4,7 +4,7 @@
 // Frontend Next.js akan mengirimkan token ke backend Laravel melalui API (POST /api/account/verify).
 // Backend memverifikasi token dan mengubah status akun pengguna jika token valid.
 "use client";
-import { useRouter } from "next/navigation";
+// import { useRouter } from "next/navigation";
 import axios from "axios";
 import { useState } from "react";
 

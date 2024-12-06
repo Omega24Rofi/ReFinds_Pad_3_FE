@@ -8,7 +8,12 @@ import { formatTanggal } from "@/utils/dateFormatter";
 import { formatHarga } from "@/utils/priceFormatter";
 
 const SellerView = () => {
-  const token = localStorage.getItem("token");
+  const [token, setToken] = useState(null);
+
+  useEffect(() => {
+    const storedToken = localStorage.getItem("token");
+    setToken(storedToken);
+  }, []); 
 
   // transaksi beli
   const [transaksiBeli, setTransaksiBeli] = useState([]);

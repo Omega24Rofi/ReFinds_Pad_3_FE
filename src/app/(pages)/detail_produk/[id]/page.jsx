@@ -2,7 +2,6 @@
 import React, { useState, useEffect } from "react";
 import Slider from "react-slick"; // Import the carousel
 import Link from "next/link";
-import Head from "next/head";
 import useAuth from "@/hooks/useAuth";
 import api from "@/utils/axios";
 import { formatPhoneNumber } from "@/utils/formatPhoneNumber"; // Import phone number formatter
