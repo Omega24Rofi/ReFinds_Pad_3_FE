@@ -14,7 +14,7 @@ const SubmitProductPage = () => {
   const [userData, setUserData] = useState(null);
   const { kategoriData, subkategoriData } = useKategori();
   const [fileName, setFileName] = useState("");
-  const jumlahGambar = 3; // Jumlah gambar produk
+  const jumlahGambar = 5; // Jumlah gambar produk
   const [message, setMessage] = useState("");
   const [error, setError] = useState("");
   const [loading, setLoading] = useState(true);
@@ -340,36 +340,45 @@ const SubmitProductPage = () => {
             </div>
 
             <div>
-              {Array.from({ length: jumlahGambar }).map((_, index) => (
-                <div key={index} className="mb-3">
-                  <label
-                    htmlFor={`gambar_produk${index}`}
-                    className="form-label"
-                  >
-                    Gambar Produk {index + 1}{" "}
-                    {index === 0 ? "(required)" : "(optional)"}:
-                  </label>
-                  <input
-                    type="file"
-                    className="form-control"
-                    id={`gambar_produk${index}`}
-                    name={`gambar_produk${index}`}
-                    onChange={(e) => handleChange(e, index)}
-                    // requied = true, jika gambar index ke 0
-                    required={index === 0}
-                  />
+              {formData.gambar_produk.map((_, index) => {
+                // Hanya tampilkan tombol jika gambar sebelumnya sudah terisi
+                if (index > 0 && !formData.gambar_produk[index - 1])
+                  return null;
 
-                  {formData.gambar_produk_preview[index] && (
-                    <Image
-                      src={formData.gambar_produk_preview[index]}
-                      alt={`Gambar Produk ${index + 1}`}
-                      width={200}
-                      height={200}
-                      style={{ marginTop: "10px" }}
+                return (
+                  <div key={index} className="mb-5">
+                    <button
+                      type="button"
+                      className="bg-blue-500 text-white py-2 px-4 rounded hover:bg-blue-600 focus:outline-none focus:ring focus:ring-blue-300"
+                      onClick={() =>
+                        document.getElementById(`gambar_produk${index}`).click()
+                      }
+                    >
+                      Tambahkan Gambar {index + 1}{" "}
+                      {index === 0 ? "(required)" : "(optional)"}
+                    </button>
+
+                    <input
+                      type="file"
+                      id={`gambar_produk${index}`}
+                      name={`gambar_produk${index}`}
+                      className="hidden"
+                      onChange={(e) => handleChange(e, index)}
+                      required={index === 0}
                     />
-                  )}
-                </div>
-              ))}
+
+                    {formData.gambar_produk_preview[index] && (
+                      <img
+                        src={formData.gambar_produk_preview[index]}
+                        alt={`Gambar Produk ${index + 1}`}
+                        width={200}
+                        height={200}
+                        style={{ marginTop: "10px", borderRadius: "8px" }}
+                      />
+                    )}
+                  </div>
+                );
+              })}
             </div>
             
 
