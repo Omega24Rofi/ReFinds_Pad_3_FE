@@ -139,7 +139,7 @@ const ProdukList = () => {
                 <div className="product-info ml-2 p-4 pr-5 w-[70%]">
                   <p>Nama Produk: {produk.nama_produk}</p>
                   <p>Harga: Rp {produk.harga}</p>
-                  <p>Deskripsi produk: {produk.deskripsi}</p>
+                  <p>Deskripsi produk: {produk.url_teks_deskripsi}</p>
                 </div>
 
                 {/* Tombol untuk menerima atau menolak produk */}
