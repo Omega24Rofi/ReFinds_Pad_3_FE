@@ -349,7 +349,7 @@ const SubmitProductPage = () => {
                   <div key={index} className="mb-5">
                     <button
                       type="button"
-                      className="bg-blue-500 text-white py-2 px-4 rounded hover:bg-blue-600 focus:outline-none focus:ring focus:ring-blue-300"
+                      className="bg-blue_btn text-white py-2 px-4 rounded-xl hover:bg-blue_btn_hover focus:outline-none focus:ring focus:ring-blue-300"
                       onClick={() =>
                         document.getElementById(`gambar_produk${index}`).click()
                       }
