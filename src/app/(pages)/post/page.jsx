@@ -380,71 +380,9 @@ const SubmitProductPage = () => {
                 );
               })}
             </div>
-            <div>
-              {Array.from({ length: jumlahGambar }).map((_, index) => (
-                <div key={index} className="mb-3">
-                  <label
-                    htmlFor={`gambar_produk${index}`}
-                    className="form-label"
-                  >
-                    Gambar Produk {index + 1}{" "}
-                    {index === 0 ? "(required)" : "(optional)"}:
-                  </label>
-                  <input
-                    type="file"
-                    className="form-control"
-                    id={`gambar_produk${index}`}
-                    name={`gambar_produk${index}`}
-                    onChange={(e) => handleChange(e, index)}
-                    // requied = true, jika gambar index ke 0
-                    required={index === 0}
-                  />
 
-                  {formData.gambar_produk_preview[index] && (
-                    <Image
-                      src={formData.gambar_produk_preview[index]}
-                      alt={`Gambar Produk ${index + 1}`}
-                      width={200}
-                      height={200}
-                      style={{ marginTop: "10px" }}
-                    />
-                  )}
-                </div>
-              ))}
-            </div>
             
-            <div>
-              {Array.from({ length: jumlahGambar }).map((_, index) => (
-                <div key={index} className="mb-3">
-                  <label
-                    htmlFor={`gambar_produk${index}`}
-                    className="form-label"
-                  >
-                    Gambar Produk {index + 1}{" "}
-                    {index === 0 ? "(required)" : "(optional)"}:
-                  </label>
-                  <input
-                    type="file"
-                    className="form-control"
-                    id={`gambar_produk${index}`}
-                    name={`gambar_produk${index}`}
-                    onChange={(e) => handleChange(e, index)}
-                    // requied = true, jika gambar index ke 0
-                    required={index === 0}
-                  />
 
-                  {formData.gambar_produk_preview[index] && (
-                    <Image
-                      src={formData.gambar_produk_preview[index]}
-                      alt={`Gambar Produk ${index + 1}`}
-                      width={200}
-                      height={200}
-                      style={{ marginTop: "10px" }}
-                    />
-                  )}
-                </div>
-              ))}
-            </div>
 
             {/* Submit Button */}
             <button
