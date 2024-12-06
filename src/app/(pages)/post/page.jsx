@@ -380,7 +380,6 @@ const SubmitProductPage = () => {
                 );
               })}
             </div>
-            
 
             {/* Submit Button */}
             <button
