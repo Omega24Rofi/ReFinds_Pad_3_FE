@@ -3,6 +3,9 @@
 @tailwind utilities;
 @import url('https://fonts.googleapis.com/css2?family=Open+Sans:wght@300;400;600;700;800&display=swap');
 
+::-webkit-scrollbar{
+  display: none;
+}
 
 :root {
   --background: #ffffff;
@@ -24,6 +27,9 @@ body {
 
 .bg-login-gradient {
   background: linear-gradient(45deg, #007399 8%, #0099CC 38%, #33CCFF 100%);
+}
+.bg-login-gradient2 {
+  background: linear-gradient(180deg, #0C96C4 10%, #54C0E5 60%, #B5E1EE 100%);
 }
 
 

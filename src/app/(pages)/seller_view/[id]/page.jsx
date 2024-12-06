@@ -138,12 +138,12 @@ const SellerView = ({ params }) => {
                     </TabList>
 
                     <TabPanel>
-                        <div className="flex flex-row flex-wrap -mt-10 m-auto py-6 rounded-2xl px-2">
+                        <div className="flex flex-row flex-wrap -mt-10 m-auto py-6 rounded-2xl px-2 sm:justify-evenly md:justify-start">
                             {availableProducts.map((produk) => (
                                 <Link
                                     href={`/detail_produk/${produk.id_produk}`}
                                     key={produk.id_produk}
-                                    className="card min-h-fit bg-white box-content w-40 m-2 rounded-lg overflow-hidden"
+                                    className="hover:scale-90 card sm:h-72 min-h-fit h-64 bg-white box-content sm:w-[13rem] md:w-[11.4rem] m-2 rounded-lg overflow-hidden shadow-md"
                                 >
                                     <img
                                         src={produk.list_url_gambar[0] || "/images/testimage/image.png"}
@@ -160,13 +160,11 @@ const SellerView = ({ params }) => {
                     <TabPanel>
                         {soldProducts.map((produk) => (
                             <div className="flex items-center bg-white rounded-lg shadow-md mt-2" key={produk.id_produk}>
-                                <div className="rounded-lg w-60 overflow-hidden">
+                                <div className="rounded-lg w-64 overflow-hidden">
                                     <img
                                         src={produk.list_url_gambar[0] || "/images/testimage/image.png"}
                                         alt="Product Image"
-                                        width={200}
-                                        height={50}
-                                        
+                                        className='h-fit'
                                     />
                                 </div>
                                 <div className="ml-2">

@@ -62,9 +62,23 @@ const Register = () => {
   };
 
   return (
-    <div className="bg-lightbg min-h-screen h-screen flex items-center justify-center">
-      <div className="container w-2/3  h-[90%] bg-white flex items-start rounded-3xl shadow-2xl">
-        <div className="logside w-2/3 p-8">
+    <div className="bg-lightbg min-h-screen h-screen flex sm:flex-col md:flex-row items-center justify-center w-full">
+      <div className="flex-nowrap relative -top-32 sm:block md:hidden h-1/3 colorcard w-full bg-login-gradient2 flex flex-row items-center justify-center rounded-3xl">
+          <span className="flex mt-16 justify-evenly">
+            <img
+              src="/images/Logo-White.svg"
+              alt="Refinds Logo"
+              className="w-1/4 mx-auto"
+            />
+            <img
+              src="/images/text-logosvg.svg"
+              alt="Refinds Logo"
+              className="w-2/5 mx-auto"
+            />
+          </span>
+      </div>
+      <div className="sm:relative z-50 sm:-top-72 md:top-0 sm:w-[80%] md:w-2/3 sm:h-1/2 md:h-[90vh] bg-white flex flex-row rounded-3xl shadow-2xl sm:justify-end md:justify-start">
+        <div className="logside sm:w-full md:w-2/3 p-8 mx-auto">
           <h1 className="font-bold text-2xl mb-4">Register</h1>
           <form onSubmit={handleSubmit}>
             <label htmlFor="email" className="block mb-4">
@@ -152,7 +166,7 @@ const Register = () => {
             {error && <p>{error}</p>}
           </form>
         </div>
-        <div className="colorcard w-1/3 h-full bg-login-gradient rounded-3xl p-0 flex justify-center align-middle">
+        <div className="colorcard w-1/3 h-full bg-login-gradient rounded-3xl p-0 sm:hidden md:flex justify-center align-middle">
           <img
             src="/images/Logo-White.svg"
             alt="Refinds Logo"
