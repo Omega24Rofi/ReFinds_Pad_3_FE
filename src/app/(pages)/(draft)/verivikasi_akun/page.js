@@ -26,7 +26,7 @@ const VerifyAccount = ({ params }) => {
 
     try {
       const response = await axios.post(
-        '${process.env.NEXT_PUBLIC_API_URL}/api/account/verify',
+        `${process.env.NEXT_PUBLIC_API_URL}/api/account/verify`,
         { id_user }
       );
 
