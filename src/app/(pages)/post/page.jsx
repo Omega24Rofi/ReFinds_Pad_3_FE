@@ -170,7 +170,7 @@ const SubmitProductPage = () => {
   
   return (
     <div className="min-h-screen">
-      <header className="w-full max-h-fit h-fit py-5 px-10 bg-lightbluemain flex flex-row align-bottom">
+      <header className="w-full max-h-fit  h-fit py-5 px-10 bg-lightbluemain flex flex-row align-bottom">
         <Link href={"/"}>
           <img
             src="/icons/left_arrow.svg"
@@ -183,10 +183,10 @@ const SubmitProductPage = () => {
         </p>
       </header>
       <div className="flex justify-center align-middle">
-        <div className="container mt-4 flex justify-center align-middle ">
+        <div className="container mt-4 flex justify-center align-middle mb-8 ">
           <form
             onSubmit={handleSubmit}
-            className="bg-blue_sl w-[90%] p-4 rounded-2xl"
+            className="bg-blue_sl w-[90%] p-4 rounded-2xl "
           >
             {/* Nama Produk */}
             <p className="font-bold text-lg mt-4">Detail Barang</p>
