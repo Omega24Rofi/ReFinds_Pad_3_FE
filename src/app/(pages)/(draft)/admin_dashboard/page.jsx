@@ -8,6 +8,8 @@ import Slider from 'react-slick';
 import "slick-carousel/slick/slick.css"; 
 import "slick-carousel/slick/slick-theme.css";
 import LazyLoad from "react-lazyload";
+import withLevel from "@/components/withLevel";
+
 
 
 const ProdukList = () => {
@@ -16,6 +18,8 @@ const ProdukList = () => {
   const [selectedProduct, setSelectedProduct] = useState(null);
   const apiBaseUrl = process.env.NEXT_PUBLIC_API_BASE_URL;
   console.log("KATEGORI_DATA:", kategoriData);
+
+
 
 
   const openDetail = (produk) => {
@@ -236,4 +240,6 @@ const ProdukList = () => {
   );
 };
 
-export default ProdukList;
+const requiredLevels = ["admin", "superadmin"];
+const shouldRender = true;
+export default withLevel(ProdukList, requiredLevels, shouldRender);
