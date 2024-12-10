@@ -22,24 +22,23 @@ const ContactSeller = ({ params }) => {
 
   useEffect(() => {
     const fetchTransaksiBeli = async () => {
-      const token = localStorage.getItem("token");
       try {
-        const response = await api.get(`/api/produk/${id}`, {
-          headers: {
-            Authorization: `Bearer ${token}`,
-          }, 
-        });
-        setDetailProduk(response.data);
+        const token = localStorage.getItem("token"); 
+        const headers = token ? { Authorization: `Bearer ${token}` } : {}; 
+  
+        const response = await api.get(`/api/produk/${id}`, { headers });
+        setDetailProduk(response.data || {}); 
         console.log(response);
       } catch (error) {
         console.error("Error fetching transaksi pembelian:", error);
       }
     };
-
-    if (token && id) {
+  
+    if (id) { 
       fetchTransaksiBeli();
     }
-  }, [token, id]);
+  }, [id]); 
+  
 
   const handlePesanClick = async () => {
     try {

@@ -24,28 +24,32 @@ export const Category = ({ params }) => {
   useEffect(() => {
     const fetchProduk = async () => {
       try {
+        const headers = token
+          ? { Authorization: `Bearer ${token}` }
+          : {}; // Optional header
+  
         const response = await api.get(`/api/produk/kategori/${id}`, {
-          headers: {
-            Authorization: `Bearer ${token}`,
-          },
+          headers,
         });
+  
         console.log("PRODUK", response.data);
-        // Periksa apakah data valid sebelum mengubah state
+  
         if (response.data) {
-          setKategorisProduks(response.data); // Ambil hanya array produk
+          setKategorisProduks(response.data);
         } else {
           console.error("Invalid response structure:", response.data);
-          setKategorisProduks([]); // Tetap atur state meskipun data tidak valid
+          setKategorisProduks([]);
         }
       } catch (error) {
         console.error("Error fetching produk:", error);
       } finally {
-        setIsLoading(false); // Selesai memuat data
+        setIsLoading(false);
       }
     };
-
-    if (token) fetchProduk();
-  }, [token, id]); // Tambahkan dependensi `id` untuk merespon perubahan URL kategori
+  
+    fetchProduk();
+  }, [token, id]);
+   // Tambahkan dependensi `id` untuk merespon perubahan URL kategori
 
   return (
     <div className="min-h-screen mb-12 ">
@@ -69,13 +73,13 @@ export const Category = ({ params }) => {
         {isLoading ? (
           <p>Loading...</p> // Tampilkan loading saat data masih diambil
         ) : (
-          <div className="flex flex-wrap sm:justify-evenly md:justify-start">
+          <div className="flex flex-wrap sm:justify-evenly justify-start">
             {kategorisProduks.length > 0 ? (
               kategorisProduks.map((kategorisProduk) => (
                 <Link
                   href={`/detail_produk/${kategorisProduk.id_produk}`} // URL dinamis dengan id_produk
                   key={kategorisProduk.id_produk}
-                  className="hover:scale-90 card sm:h-72 min-h-fit h-64 bg-white box-content sm:w-[13rem] md:w-[11.4rem] m-2 rounded-lg overflow-hidden shadow-md"
+                  className="hover:scale-90 card h-72 bg-white box-content sm:w-[13rem] w-[8.55rem] m-2 rounded-lg overflow-hidden shadow-md"
                 >
                   <div className="h-44 w-full overflow-hidden flex align-center justify-center">
                     <img
