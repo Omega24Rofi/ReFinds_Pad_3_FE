@@ -11,8 +11,9 @@ import { formatHarga } from '@/utils/priceFormatter';
 import "slick-carousel/slick/slick.css"; // Import slick styles
 import "slick-carousel/slick/slick-theme.css"; // Import slick theme styles
 import { formatTanggal } from '@/utils/dateFormatter';
+import withAuthViewSeller from "@/components/withAuthViewSeller"; // Import the HOC
 
-const SellerView = ({ params }) => {
+const SellerView = ({ params, userData }) => {
     const { id } = params;
     const apiBaseUrl = process.env.NEXT_PUBLIC_API_BASE_URL;
     const token = localStorage.getItem("token");
@@ -70,8 +71,7 @@ const SellerView = ({ params }) => {
         const formattedPhoneNumber = formatPhoneNumber(nomorTelepon); // Ensure `formatPhoneNumber` is defined
         const waLink = `https://wa.me/${formattedPhoneNumber}`;
         window.location.href = waLink;
-      };
-      
+    };
 
     if (loading) {
         return <div>Loading...</div>; // Show loading state until the data is fetched
@@ -96,7 +96,6 @@ const SellerView = ({ params }) => {
                                     </span>
                                 </div>
                             </>
-                            
                         ) : (
                             <p>Loading...</p>
                         )}
@@ -190,4 +189,5 @@ const SellerView = ({ params }) => {
     );
 };
 
-export default SellerView;
+// Wrap the SellerView component with the HOC
+export default withAuthViewSeller(SellerView);

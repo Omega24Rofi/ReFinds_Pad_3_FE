@@ -205,12 +205,12 @@ const Homepage = () => {
       {/* top produk */}
       <div className="sm:w-[75%] md:w-[80%] bg-lightbg flex-wrap mt-10 m-auto py-6 rounded-2xl px-2 justify-evenly">
         <p className="text-xl font-bold text-black px-2">Top Product</p>
-        <div className="flex flex-wrap sm:justify-evenly justify-center ">
+        <div className="flex flex-wrap sm:justify-evenly md:justify-center ">
           {topProduks.slice(0, 6).map((TopProduk) => (
             <Link
               href={`/detail_produk/${TopProduk.id_produk}`} // URL dinamis dengan id_produk
               key={TopProduk.id_produk}
-              className="hover:scale-90 card h-72 bg-white box-content sm:w-[13rem] w-[8.55rem] m-2 rounded-lg overflow-hidden shadow-md"
+              className="hover:scale-90 card h-72 bg-white box-content sm:w-[12.8rem] w-[8.55rem] m-2 rounded-lg overflow-hidden shadow-md"
             >
               <div className="h-44 w-full overflow-hidden flex align-center justify-center">
                 <img
@@ -241,7 +241,7 @@ const Homepage = () => {
             <Link
               href={`/detail_produk/${produk.id_produk}`} // URL dinamis dengan id_produk
               key={produk.id_produk}
-              className="hover:scale-90 card h-72 bg-white box-content sm:w-[13rem] w-[8.55rem] m-2 rounded-lg overflow-hidden shadow-md"
+              className="hover:scale-90 card h-72 bg-white box-content sm:w-[12.8rem] w-[8.55rem] m-2 rounded-lg overflow-hidden shadow-md"
             >
               <div className="h-44 w-full overflow-hidden flex align-center justify-center">
                 <img
